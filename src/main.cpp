@@ -315,16 +315,23 @@ void CoefficientWiseOperation()
 
 void EigenMapExample()
 {
-    int array[9];
-    for(int i = 0; i < 9; ++i)
+    int array[12];
+    for(int i = 0; i < 12; ++i)
     {
          array[i] = i;
     }
+    Eigen::MatrixXi a;
+    a= Map<MatrixXi,0,OuterStride<> >(array,6, 2, OuterStride<>(6));
+    std::cout<<a <<std::endl;
 
-//    Eigen::MatrixXi a(3,3);
-    Eigen::MatrixXi a(9,1);
-    a= Map<Matrix3i>(array);
-    cout << a << endl;
+
+    int * a_Matrix_ptr=a.data();
+
+    for(std::size_t i =0;i<a.rows()*a.cols();i++)
+    {
+        std::cout<<a_Matrix_ptr[i]<<std::endl;
+    }
+
 
 }
 
