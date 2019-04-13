@@ -1,3 +1,0 @@
-g++ -I /path/to/eigen/ main.cpp -o main
-g++ main.cpp `pkg-config eigen3 --cflags` -o main
- 

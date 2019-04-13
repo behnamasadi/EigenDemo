@@ -1,12 +1,24 @@
 cmake_minimum_required(VERSION 2.8)
 project(EigenDemo)
 
+# Check for c++11 support
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+IF(COMPILER_SUPPORTS_CXX11)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ELSEIF(COMPILER_SUPPORTS_CXX0X)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+ELSE()
+  MESSAGE(ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+ENDIF()
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 set(CMAKE_BUILD_TYPE Debug)
 
 find_package (Eigen3 REQUIRED)
-find_package (orocos_kdl REQUIRED)
+#find_package (orocos_kdl REQUIRED)
 
 MESSAGE("EIGEN3_FOUND: " ${EIGEN3_FOUND})
 MESSAGE("EIGEN3_INCLUDE_DIR: " ${EIGEN3_INCLUDE_DIR})
@@ -14,10 +26,10 @@ MESSAGE("EIGEN3_VERSION: " ${EIGEN3_VERSION})
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
+MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
+include_directories(${orocos_kdl_INCLUDE_DIRS})
 
 
 add_executable(main src/main.cpp)
 target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
-
-
 
