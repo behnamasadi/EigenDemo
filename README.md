@@ -538,4 +538,7 @@ void EigenMapExample()
 */
     std::cout<< dynamicMatrix<<std::endl;
 ```
+Refrences [1](http://ros-developer.com/2019/03/27/eigen-unaryexpr-function-pointer-lambda-expression-example/) 
+[2](http://ros-developer.com/2019/03/27/matrix-decomposition-with-eigen-qr-cholesky-decomposition-lu-ul/) [3](http://ros-developer.com/2019/03/27/eigen-memory-mapping/) [4](http://ros-developer.com/2019/03/27/eigen-arrays-matrices-and-vectors-definition-initialization-and-coefficient-wise-operations/)
+
 ![alt text](https://img.shields.io/badge/license-BSD-blue.svg)
