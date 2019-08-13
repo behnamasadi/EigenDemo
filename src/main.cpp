@@ -5,6 +5,7 @@
 #include <vector>
 #include <iomanip> 
 
+#include <kdl/frames.hpp>
 
 void eigenValueSolver()
 {
@@ -283,27 +284,22 @@ void checkMatrixsimilarity()
     // EXPECT_THAT(result_array, Pointwise(NearWithPrecision(0.1), expected_array));
 }
 
+Eigen::Matrix3d eulerAnglesToRotationMatrix(double roll, double pitch,double yaw)
+{
+    Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitX());
+    Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitY());
+    Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitZ());
+    Eigen::Quaternion<double> q = yawAngle * pitchAngle * rollAngle;
+    Eigen::Matrix3d rotationMatrix = q.matrix();
+    return rotationMatrix;
+}
+
 void transformation()
 {
-    // If you are working with OpenGL 4x4 matrices then Affine3f and Affine3d are
-    // what you want.
-    // Since Eigen defaults to column-major storage, you can directly use the
-    // Transform::data() method to pass your transformation matrix to OpenGL.
-
-    // construct a Transform:
-    //	Transform t(AngleAxis(angle,axis));
-    // or like this:
-    //	Transform t;
-    //	t = AngleAxis(angle,axis);
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // But note that unfortunately, because of how C++ works, you can not do this:
-    //  Transform t = AngleAxis(angle,axis);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    //
-
-    /*
+/*
+Great Tutorial:
+http://planning.cs.uiuc.edu/node102.html
+http://euclideanspace.com/maths/geometry/rotations/conversions/index.htm
 
   yaw:
       A yaw is a counterclockwise rotation of alpha about the  z-axis. The
@@ -334,85 +330,60 @@ void transformation()
 
 
 
-      It is important to note that   R_z R_y R_x performs the roll first, then
-  the pitch, and finally the yaw
+      It is important to note that   R_z R_y R_x performs the roll first, then the pitch, and finally the yaw
       Roration matrix: R_z*R_y*R_x
 
+*/
 
 
+/////////////////////////////////////Rotation Matrix (Tait–Bryan)///////////////////////////////
 
-
-  */
-
-
-    //AngleAxis<float> aa(angle_in_radian, Vector3f(ax,ay,az));
     double roll, pitch, yaw;
-       roll=M_PI/3;
-       pitch=M_PI/4;
-       yaw=M_PI/6;
-//     roll = M_PI / 2;
-//     pitch = M_PI / 2;
-//     yaw = 0;
+    roll=M_PI/3;
+    pitch=M_PI/4;
+    yaw=M_PI/6;
+
+    std::cout << "Roll : " <<  roll << std::endl;
+    std::cout << "Pitch : " << pitch  << std::endl;
+    std::cout << "Yaw : " << yaw  << std::endl;
+
+
+
+    // Roll, Pitch, Yaw to Rotation Matrix
+    //Eigen::AngleAxis<double> rollAngle(roll, Eigen::Vector3d(1,0,0));
     Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitX());
     Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitY());
     Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitZ());
 
+
+
+//////////////////////////////////////// Quaternion ///////////////////////////////////////////
     Eigen::Quaternion<double> q = yawAngle * pitchAngle * rollAngle;
 
+    
+    //Quaternion to Rotation Matrix
     Eigen::Matrix3d rotationMatrix = q.matrix();
+    std::cout << "3x3 Rotation Matrix" << std::endl;
+
     std::cout << rotationMatrix << std::endl;
 
     Eigen::Quaterniond quaternion_mat(rotationMatrix);
-    std::cout << "quaternion_mat.x(): " << quaternion_mat.x() << std::endl;
-    std::cout << "quaternion_mat.y(): " << quaternion_mat.y() << std::endl;
-    std::cout << "quaternion_mat.z(): " << quaternion_mat.z() << std::endl;
-    std::cout << "quaternion_mat.w(): " << quaternion_mat.w() << std::endl;
-
-    /**/
-//    KDL::Frame F;
-//    F.M = F.M.RPY(roll, pitch, yaw);
-//    std::cout << F.M(0, 0) << " " << F.M(0, 1) << " " << F.M(0, 2) << std::endl;
-//    std::cout << F.M(1, 0) << " " << F.M(1, 1) << " " << F.M(1, 2) << std::endl;
-//    std::cout << F.M(2, 0) << " " << F.M(2, 1) << " " << F.M(2, 2) << std::endl;
-
-//    double x, y, z, w;
-//    F.M.GetQuaternion(x, y, z, w);
-//    std::cout << "x: " << x << std::endl;
-//    std::cout << "y: " << y << std::endl;
-//    std::cout << "z: " << z << std::endl;
-//    std::cout << "w: " << w << std::endl;
-
-    /*
-
-      Eigen::Affine3d transform_2 = Eigen::Affine3d::Identity();
-
-      // Define a translation of 2.5 meters on the x axis.
-      transform_2.translation() << 2.5, 1.0, 0.5;
-
-      // The same rotation matrix as before; tetha radians arround Z axis
-      transform_2.rotate (yawAngle*pitchAngle *rollAngle );
-      std::cout<<transform_2.matrix() <<std::endl;
-
-      std::cout<<transform_2.translation()<<std::endl;
-
-      std::cout<<transform_2.translation().x()<<std::endl;
-      std::cout<<transform_2.translation().y()<<std::endl;
-      std::cout<<transform_2.translation().z()<<std::endl;
-  */
+    std::cout << "Quaternion X: " << quaternion_mat.x() << std::endl;
+    std::cout << "Quaternion Y: " << quaternion_mat.y() << std::endl;
+    std::cout << "Quaternion Z: " << quaternion_mat.z() << std::endl;
+    std::cout << "Quaternion W: " << quaternion_mat.w() << std::endl;
 
 
 
-    /*
-Eigen::AngleAxis< _Scalar >::AngleAxis	(	const MatrixBase< Derived > & 	m	)
-inlineexplicit
-Constructs and initialize the angle-axis rotation from a 3x3 rotation matrix.
-    */
+//////////////////////////////////////// Rodrigues ///////////////////////////////////////////
 
-    std::cout<<"--------------------------------" <<std::endl;
-    std::cout<<rotationMatrix <<std::endl;
 
+    //Rotation Matrix to Rodrigues
     Eigen::AngleAxisd rodrigues(rotationMatrix );
-    std::cout<<rodrigues.angle() <<std::endl;
+    std::cout<<"Rodrigues Angle:\n"<<rodrigues.angle() <<std::endl;
+
+    std::cout<<"Rodrigues Axis:" <<std::endl;
+
     std::cout<<rodrigues.axis().x() <<std::endl;
     std::cout<<rodrigues.axis().y() <<std::endl;
     std::cout<<rodrigues.axis().z() <<std::endl;
@@ -420,64 +391,86 @@ Constructs and initialize the angle-axis rotation from a 3x3 rotation matrix.
 
 
 
-//http://euclideanspace.com/maths/geometry/rotations/conversions/index.htm
-
 
     Eigen::Vector3d vector3d(2.3,3.1,1.7);
-
     Eigen::Vector3d vector3dNormalized=vector3d.normalized();
     double theta=M_PI/7;
-    std::cout<<"----------normalized vector(our angle axis)-----------" <<std::endl;
-    std::cout<<vector3dNormalized <<std::endl;
-    //Eigen::AngleAxisd AngleAxisConversion();
     Eigen::AngleAxisd angleAxisConversion(theta,vector3dNormalized);
     Eigen::Matrix3d rotationMatrixConversion;
 
-
-    // Angle Axis (Rodrigues) to Matrix
+    // Angle Axis (Rodrigues) to Rotation Matrix
     rotationMatrixConversion=angleAxisConversion.toRotationMatrix();
 
-    // Axis Angle to Euler
-
-    // Angle Axis (Rodrigues) to Quaternion
-
-    // Euler to Matrix
-
-    // Euler to Quaternion
-
-    // Matrix to Euler
-
-    // Matrix to Axis Angle
-
-    // Matrix to Quaternion
-
-    // Quaternion to Angle
-
-    // Quaternion to Euler
-
-    // Quaternion to Matrix
-
-    // Euler to Axis Angle
-
-// 	mat == AngleAxisf(ea[0], Vector3f::UnitZ())
-//      * AngleAxisf(ea[1], Vector3f::UnitX())
-//      * AngleAxisf(ea[2], Vector3f::UnitZ());
-    //Eigen::Matrix3d::eulerAngles mat(0,1,2);
-
+    
+    //Rotation Matrix to Quaternion
+    
     Eigen::Quaterniond QuaternionConversion(rotationMatrixConversion);
-    Eigen::Vector3d ea = rotationMatrixConversion.eulerAngles(2, 0, 2);
+
+    //Rotation Matrix to Euler Angle (Proper)
+    Eigen::Vector3d euler_angles = rotationMatrixConversion.eulerAngles(2, 0, 2);
+
     //Eigen::Quaterniond
-    Eigen::Quaterniond tmp = Eigen::AngleAxisd(ea[0], Eigen::Vector3d::UnitZ())
-     * Eigen::AngleAxisd(ea[1], Eigen::Vector3d::UnitX())
-     * Eigen::AngleAxisd(ea[2], Eigen::Vector3d::UnitZ());
-
-     //tmp==ea
-     std::cout<<"These two vectors are equal:" <<std::endl;
-// 	 std::cout<<tmp <<std::endl;
-// 	 std::cout<<ea <<std::endl;
+    Eigen::Quaterniond tmp = Eigen::AngleAxisd(euler_angles[0], Eigen::Vector3d::UnitZ())
+     * Eigen::AngleAxisd(euler_angles[1], Eigen::Vector3d::UnitX())
+     * Eigen::AngleAxisd(euler_angles[2], Eigen::Vector3d::UnitZ());
 
 
 
+
+////////////////////////////////////////Comparing with KDL////////////////////////////////////////
+     KDL::Frame F;
+     F.M = F.M.RPY(roll, pitch, yaw);
+     std::cout << F.M(0, 0) << " " << F.M(0, 1) << " " << F.M(0, 2) << std::endl;
+     std::cout << F.M(1, 0) << " " << F.M(1, 1) << " " << F.M(1, 2) << std::endl;
+     std::cout << F.M(2, 0) << " " << F.M(2, 1) << " " << F.M(2, 2) << std::endl;
+
+     double x, y, z, w;
+     F.M.GetQuaternion(x, y, z, w);
+     std::cout << "KDL Frame Quaternion:" << std::endl;
+     std::cout << "x: " << x << std::endl;
+     std::cout << "y: " << y << std::endl;
+     std::cout << "z: " << z << std::endl;
+     std::cout << "w: " << w << std::endl;
+
+
+
+////////////////////////////////////////Comparing with KDL////////////////////////////////////////
+
+    Eigen::Matrix3d rotation;
+    rotation= eulerAnglesToRotationMatrix(roll, pitch,yaw);
+
+    double 	txLeft, tyLeft, tzLeft;
+    txLeft=-1;
+    tyLeft=0.0;
+    tzLeft=-4.0;
+
+    Eigen::Affine3f t1;
+    Eigen::Matrix4f M;
+    Eigen::Vector3d translation;
+    translation<<txLeft,tyLeft,tzLeft;
+
+    M<<  rotation(0,0),rotation(0,1),rotation(0,2),translation(0,0)
+     ,rotation(1,0),rotation(1,1),rotation(1,2),translation(1,0)
+     ,rotation(2,0),rotation(2,1),rotation(2,2),translation(2,0)
+     ,0,0,0,1;
+
+
+    t1 = M;
+
+
+    Eigen::Affine3d transform_2 = Eigen::Affine3d::Identity();
+
+
+    // Define a translation of 2.5 meters on the x axis.
+    transform_2.translation() << 2.5, 1.0, 0.5;
+
+    // The same rotation matrix as before; tetha radians arround Z axis
+    transform_2.rotate (yawAngle*pitchAngle *rollAngle );
+    std::cout<<transform_2.matrix() <<std::endl;
+    std::cout<<transform_2.translation()<<std::endl;
+    std::cout<<transform_2.translation().x()<<std::endl;
+    std::cout<<transform_2.translation().y()<<std::endl;
+    std::cout<<transform_2.translation().z()<<std::endl;
 
 }
 
@@ -520,6 +513,7 @@ void determiningRollPitchYawFromRotationMatrix()
               << M_PI / atan2(rotationMatrix(1, 0), rotationMatrix(0, 0))
               << std::endl;
 }
+
 
 //unaryExpr, Lambda Expression, function pointer ,in place update
 double ramp(double x)
@@ -837,13 +831,13 @@ Positive semi-definite same as above except zTMz>=0 or  z*Mz>=0
 
     Example:
             ┌2  -1  0┐
-        M=	|-1  2 -1|
+        M=  |-1  2 -1|
             |0 - 1  2|
             └        ┘
           ┌ a ┐
         z=| b |
           | c |
-          └	  ┘
+          └   ┘
         zTMz=a^2 +c^2+ (a-b)^2+ (b-c)^2
 
 Cholesky decomposition:

@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 set(CMAKE_BUILD_TYPE Debug)
 
 find_package (Eigen3 REQUIRED)
-#find_package (orocos_kdl REQUIRED)
+find_package (orocos_kdl REQUIRED)
 
 MESSAGE("EIGEN3_FOUND: " ${EIGEN3_FOUND})
 MESSAGE("EIGEN3_INCLUDE_DIR: " ${EIGEN3_INCLUDE_DIR})
@@ -27,6 +27,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 
 MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
 MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
+MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
 include_directories(${orocos_kdl_INCLUDE_DIRS})
 
 
