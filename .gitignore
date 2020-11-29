@@ -1,0 +1,4 @@
+build/*
+sandbox/*
+*.user
+*.kdev4
