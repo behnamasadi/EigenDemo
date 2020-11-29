@@ -24,6 +24,9 @@ MESSAGE("EIGEN3_INCLUDE_DIR: " ${EIGEN3_INCLUDE_DIR})
 MESSAGE("EIGEN3_VERSION: " ${EIGEN3_VERSION})
 include_directories(${EIGEN3_INCLUDE_DIR})
 
+MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
+MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
+include_directories(${orocos_kdl_INCLUDE_DIRS})
 
 find_package(orocos_kdl)
 IF(${orocos_kdl_FOUND})
@@ -36,8 +39,6 @@ ENDIF()
 add_executable(main src/main.cpp)
 target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
 target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
-
-
 
 IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 	ADD_SUBDIRECTORY(src/sandbox)
