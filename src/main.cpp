@@ -1,9 +1,13 @@
-#include <Eigen/Dense>
-#include <Eigen/Eigenvalues>
-#include <Eigen/Geometry>
 #include <iostream>
 #include <vector>
 #include <iomanip>
+
+#include <Eigen/Dense>
+#include <Eigen/Eigenvalues>
+#include <Eigen/Geometry>
+#include <eigen3/unsupported/Eigen/NumericalDiff>
+#include <unsupported/Eigen/NonLinearOptimization>
+#include <unsupported/Eigen/NumericalDiff>
 
 //The value of KDL_FOUND has been set via target_compile_definitions in CMake
 
@@ -545,14 +549,56 @@ void unaryExprExample()
     std::cout << x.unaryExpr(std::ptr_fun(ramp)) << std::endl;
 
 }
+
+template<typename T>
+T pseudoInverse(const T &a, double epsilon = std::numeric_limits<double>::epsilon())
+{
+    //Eigen::DecompositionOptions flags;
+    int flags;
+    // For a non-square matrix
+    if(a.cols()!=a.rows())
+    {
+        flags=Eigen::ComputeThinU | Eigen::ComputeThinV;
+    }
+    else
+    {
+        flags=Eigen::ComputeFullU | Eigen::ComputeFullV;
+    }
+    Eigen::JacobiSVD< T > svd(a ,flags);
+
+    double tolerance = epsilon * std::max(a.cols(), a.rows()) *svd.singularValues().array().abs()(0);
+    return svd.matrixV() *  (svd.singularValues().array().abs() > tolerance).select(svd.singularValues().array().inverse(), 0).matrix().asDiagonal() * svd.matrixU().adjoint();
+}
+
 void SVD_Example()
 {
-    /*
+/*
 
-     AX=0;
-     A, U, V=SVD(A);
-     A* U(Index of last column)=0;
-     */
+AX=0;
+A, U, V=SVD(A);
+A* U(Index of last column)=0;
+
+1) Full SVD
+    A  mxn
+    U  mxm
+    Σ  mxn
+    V* nxn
+
+
+2) Thin SVD
+    A  mxn
+    U  mxn
+    Σ  nxn
+    V* nxn
+
+3) Compact SVD
+
+4) Truncated SVD
+Ref: https://en.wikipedia.org/wiki/Singular_value_decomposition#Thin_SVD
+
+*/
+
+    std::cout<<"********************** 1) Full SVD ***********************************" <<std::endl;
 
     Eigen::MatrixXd A;
     A.setRandom(3,4);
@@ -561,6 +607,13 @@ void SVD_Example()
     Eigen::JacobiSVD<Eigen::MatrixXd> svd(A, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
 
+    std::cout<< "Size of original matrix:"<<  A.rows()<<","<<A.cols() <<std::endl;
+
+    std::cout<< "Size of U matrix:"<<  svd.matrixU().rows()<<","<<svd.matrixU().cols() <<std::endl;
+
+    std::cout<< "Size of Σ matrix:"<<  svd.singularValues().rows()<<","<<svd.singularValues().cols() <<std::endl;
+
+    std::cout<< "Size of V matrix:"<<  svd.matrixV().rows()<<","<<svd.matrixV().cols() <<std::endl;
 
     std::cout << "Its singular values are:" << std::endl << svd.singularValues() << std::endl;
 
@@ -581,13 +634,93 @@ void SVD_Example()
     std::cout<<Sigma <<std::endl;
 
     std::cout<<"This should be very close to A" <<std::endl;
+    Eigen::MatrixXd A_reconstructed= U*Sigma*V.transpose();
     std::cout<<U*Sigma*V.transpose() <<std::endl;
 
 
     std::cout<<"This should be zero vector (solution of the problem A*V.col( V.cols()-1))" <<std::endl;
     std::cout<<A*V.col( V.cols()-1)<<std::endl;
 
+
+    Eigen::MatrixXd diff = A - A_reconstructed;
+    std::cout << "diff:\n" << diff.array().abs().sum() << "\n";
+
+
+    std::cout<<"********************** 2) Thin SVD ***********************************" <<std::endl;
+    Eigen::MatrixXd C;
+    C.setRandom(27,18);
+    Eigen::JacobiSVD<Eigen::MatrixXd> svd_thin( C, Eigen::ComputeThinU | Eigen::ComputeThinV);
+
+    std::cout<< "Size of original matrix:"<<  C.rows()<<","<<C.cols() <<std::endl;
+
+    std::cout<< "Size of U matrix:"<<  svd_thin.matrixU().rows()<<","<<svd_thin.matrixU().cols() <<std::endl;
+
+    std::cout<< "Size of Σ matrix:"<<  svd_thin.singularValues().rows()<<","<<svd_thin.singularValues().cols() <<std::endl;
+
+    std::cout<< "Size of V matrix:"<<  svd_thin.matrixV().rows()<<","<<svd_thin.matrixV().cols() <<std::endl;
+
+    Eigen::MatrixXd C_reconstructed = svd_thin.matrixU() * svd_thin.singularValues().asDiagonal() * svd_thin.matrixV().transpose();
+
+    std::cout << "diff:\n" << (C - C_reconstructed).array().abs().sum() << "\n";
+
+    Eigen::MatrixXd pinv_C =svd_thin.matrixV()*svd_thin.singularValues().asDiagonal() * svd_thin.matrixU().transpose();
+
+//    Eigen::MatrixXd pinv_C =svd.matrixV()*svd.singularValues().asDiagonal() ;
+
+//    MatrixXd diff = Cp - C;
+//    cout << "diff:\n" << diff.array().abs().sum() << "\n";
+
+   std::cout<< "Size of pinv_C matrix:"<<  pinv_C.rows()<<","<<pinv_C.cols() <<std::endl;
+
+
+   //std::cout << "pinv_C*C:\n" << pinv_C*C << "\n";
+
+
+   Eigen::MatrixXd pinv = C.completeOrthogonalDecomposition().pseudoInverse();
+
+   Eigen::MatrixXd pinv2 = pseudoInverse(C);
+
+   std::cout << "xxx" << (pinv2*C).rows()<< "," <<(pinv2*C).cols()  << "\n";
+   std::cout << "xxx" << (pinv2*C).array().abs().sum() << "\n";
+
+   std::cout << "xxx" << (pinv-pinv2).array().abs().sum() << "\n";
+
+/*
+Ref:
+    https://gist.github.com/javidcf/25066cf85e71105d57b6
+    https://eigen.tuxfamily.org/bz/show_bug.cgi?id=257#c8
+    https://gist.github.com/pshriwise/67c2ae78e5db3831da38390a8b2a209f
+    https://math.stackexchange.com/questions/19948/pseudoinverse-matrix-and-svd
+*/
 }
+
+
+template <class MatT>
+Eigen::Matrix<typename MatT::Scalar, MatT::ColsAtCompileTime, MatT::RowsAtCompileTime>
+pseudoinverse(const MatT &mat, typename MatT::Scalar tolerance = typename MatT::Scalar{1e-4}) // choose appropriately
+{
+    typedef typename MatT::Scalar Scalar;
+    auto svd = mat.jacobiSvd(Eigen::ComputeFullU | Eigen::ComputeFullV);
+    const auto &singularValues = svd.singularValues();
+    Eigen::Matrix<Scalar, MatT::ColsAtCompileTime, MatT::RowsAtCompileTime> singularValuesInv(mat.cols(), mat.rows());
+    singularValuesInv.setZero();
+    for (unsigned int i = 0; i < singularValues.size(); ++i) {
+        if (singularValues(i) > tolerance)
+        {
+            singularValuesInv(i, i) = Scalar{1} / singularValues(i);
+        }
+        else
+        {
+            singularValuesInv(i, i) = Scalar{0};
+        }
+    }
+    return svd.matrixV() * singularValuesInv * svd.matrixU().adjoint();
+}
+
+
+
+
+
 
 void qRDecomposition(Eigen::MatrixXd &A,Eigen::MatrixXd &Q, Eigen::MatrixXd &R)
 {
@@ -914,10 +1047,419 @@ void matrixReshaping()
     //https://eigen.tuxfamily.org/dox/group__TutorialBlockOperations.html
 }
 
-
-int main()
+void MatrixPowersPolynomials()
 {
+
+    //Rectangular Diagonal
+    // rectangular diagonal  matrix is an n × d matrix in which each entry (i, j) has a non-zero value if and  only if i = j.
+    // diagonal matrix is a matrix in which the entries outside the main diagonal are all zero;
+
+
+    //A block diagonal matrix contains square blocks B 1…B r of (possibly) nonzero entries along the diagonal. All other entries are zero. Although each
+    //block is square, they need not be of the same size.
+
+    //Upper and Lower Triangular Matrix) A square matrix is an upper triangular matrix if all entries (i, j) below its main diagonal (i.e.,
+    //satisfying i > j) are zeros.
+
+    // The product of uppertriangular matrices is upper triangular.
+    //c(i,j)=0 if i>j c(i,j)=sum(a(i,k)*b(k,j))
+    //i>j
+    //if i>k a(i,k)=0
+    //if i<k -> j<k -> b(k,j)=0
+
+    //Inverse of Triangular Matrix Is Triangula
+
+    //Strictly Triangular Matrix) A matrix is said to be strictlytriangular if it is triangularandall its diagonal elements are zeros.
+
+    //The zeroth power of a matrix is defined to be the identity matrix
+    //When a matrix satisfies A^k = 0 for some integer k, it is referred to as nilpotent.
+    //all strictly triangular matrices (triangular with zero main diagonal)of size d × d satisfy A^d = 0.
+    //product of two upper triangular is a triangular matrix
+
+    //polynomial function f(A) of a square matrix in  much the same way as one computes polynomials of scalars.
+    //f(x) = 3x^2 + 5x + 2 -> f(A) = 3A^2 + 5A + 2
+    //Two    polynomials f(A) and g(A) of the same matrix A will always commute f(A)g(A)=g(A)f(A)
+
+    //Commutativity of Multiplication with Inverse if AB=I then BA=I
+    //When the inverse of a matrix exists, it is always unique
+    //Inverse of Triangular Matrix Is Triangular
+    //Inv(A^n)=Inv(A)^n
+
+    //An orthogonal matrix is a square matrix whose inverse is its transpose: A*A^T=A^T*A=I
+    //all column columns/ rows are perpendicular
+
+    //The multiplication of an n × d matrix A with a d-dimensional column
+    //vector to create an n-dimensional column vector is often interpreted as
+    //a linear transformation from d-dimensional space to n-dimensional space
+/*
+    a11   a12         a11      a12
+    a21   a22  x1 =x1 a21 + x2 a22
+    a31   a32  x2     a31      a32
+
+Therefore, the n × d matrix A is occasionally represented in terms of its ordered set of ndimensional columns
+A nxd= [a1 a2 ... ad]
+
+ low-rank update
+ Linear regression least-squares classification, support-vector machines, and logistic regression
+ Matrix factorization is an alternative term for matrix decomposition
+ recommender systems
+
+Regression
+the only difference from classification is that the array contains numerical values (rather than categorical ones)
+The dependent
+variable is also referred to as a response variable, target variable, or regressand in the case of regression
+The independent variables are also referred to as regressors.more than two classes like {Red,
+Green, Blue} cannot be ordered, and are therefore different from regression
+
+
+convex objective functions like linear regression
+
+https://medium.com/@wisnutandaseru/proving-eulers-identity-using-taylor-series-2771089cd780
+Householder Reflections
+Directional derivative
+chain rule for multivariale derivative
+multivariant fourier transform
+
+
+
+inverse of I+A?
+https://math.stackexchange.com/questions/298616/what-is-inverse-of-ia/298623
+https://en.wikipedia.org/wiki/Woodbury_matrix_identity
+
+
+https://en.m.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations#Matrix_algebra
+*/
 
 }
 
+void transformExample()
+{
+/*
+The class Eigen::Transform  represents either
+1) an affine, or
+2) a projective transformation
+using homogenous calculus.
+
+For instance, an affine transformation A is composed of a linear part L and a translation t such that transforming a point p by A is equivalent to:
+
+p' = L * p + t
+
+Using homogeneous vectors:
+
+    [p'] = [L t] * [p] = A * [p]
+    [1 ]   [0 1]   [1]       [1]
+
+Ref: https://stackoverflow.com/questions/35416880/what-does-transformlinear-return-in-the-eigen-library
+
+Difference Between Projective and Affine Transformations
+1) The projective transformation does not preserve parallelism, length, and angle. But it still preserves collinearity and incidence.
+2) Since the affine transformation is a special case of the projective transformation,
+it has the same properties. However unlike projective transformation, it preserves parallelism.
+
+Ref: https://www.graphicsmill.com/docs/gm5/Transformations.htm
+*/
+
+    float arrVertices [] = { -1.0 , -1.0 , -1.0 ,
+    1.0 , -1.0 , -1.0 ,
+    1.0 , 1.0 , -1.0 ,
+    -1.0 , 1.0 , -1.0 ,
+    -1.0 , -1.0 , 1.0 ,
+    1.0 , -1.0 , 1.0 ,
+    1.0 , 1.0 , 1.0 ,
+    -1.0 , 1.0 , 1.0};
+    Eigen::MatrixXf mVertices = Eigen::Map < Eigen::Matrix <float , 3 , 8 > > ( arrVertices ) ;
+    Eigen::Transform <float , 3 , Eigen::Affine > t = Eigen::Transform <float , 3 , Eigen::Affine >::Identity();
+    t.scale ( 0.8f ) ;
+    t.rotate ( Eigen::AngleAxisf (0.25f * M_PI , Eigen::Vector3f::UnitX () ) ) ;
+    t.translate ( Eigen::Vector3f (1.5 , 10.2 , -5.1) ) ;
+    std::cout << t * mVertices.colwise().homogeneous () << std::endl;
+}
+
+Eigen::Matrix4f createAffinematrix(float a, float b, float c, Eigen::Vector3f trans)
+{
+    {
+        Eigen::Transform<float, 3, Eigen::Affine> t;
+        t = Eigen::Translation<float, 3>(trans);
+        t.rotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
+        t.rotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
+        t.rotate(Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ()));
+        return t.matrix();
+    }
+
+
+    {
+    /*
+    The difference between the first implementation and the second is like the difference between "Fix Angle" and "Euler Angle", you can
+    https://www.youtube.com/watch?v=09xVHo1JudY
+    */
+        Eigen::Transform<float, 3, Eigen::Affine> t;
+        t = Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ());
+        t.prerotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
+        t.prerotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
+        t.pretranslate(trans);
+        return t.matrix();
+    }
+}
+
+////////////////////////////C++ Functor////////////////////////////
+/*** print the name of some types... ***/
+
+template<typename type>
+std::string name_of_type()
+{
+    return "other";
+}
+
+template<>
+std::string name_of_type<int>()
+{
+    return "int";
+}
+
+template<>
+std::string name_of_type<float>()
+{
+    return "float";
+}
+
+template<>
+std::string name_of_type<double>()
+{
+    return "double";
+}
+
+template<typename scalar>
+struct product_functor
+{
+    product_functor(scalar a, scalar b) : m_a(a), m_b(b)
+    {
+        std::cout << "Type: " << name_of_type<scalar>() << ". Computing the product of " << a << " and " << b << ".";
+    }
+    // the objective function a*b
+    scalar f() const
+    {
+        return m_a * m_b;
+    }
+
+private:
+    scalar m_a, m_b;
+};
+
+struct sum_of_ints_functor
+{
+    sum_of_ints_functor(int a, int b) : m_a(a), m_b(b)
+    {
+        std::cout << "Type: int. Computing the sum of the two ints " << a << " and " << b << ".";
+    }
+
+    int f() const
+    {
+        return m_a + m_b;
+    }
+
+    private:
+    int m_a, m_b;
+};
+
+template<typename functor_type>
+void call_and_print_return_value(const functor_type& functor_object)
+{
+    std::cout << " The result is: " << functor_object.f() << std::endl;
+}
+
+void functorExample()
+{
+    call_and_print_return_value(sum_of_ints_functor(3,5));
+    call_and_print_return_value(product_functor<float>(0.2f,0.4f));
+}
+
+
+////////////////////////////Eigen Functor////////////////////////////
+
+/*
+
+Refs
+1) https://github.com/daviddoria/Examples/blob/master/c%2B%2B/Eigen/LevenbergMarquardt/CurveFitting.cpp
+2) https://stackoverflow.com/questions/18509228/how-to-use-the-eigen-unsupported-levenberg-marquardt-implementation
+
+*/
+// Generic functor
+template<typename _Scalar, int NX = Eigen::Dynamic, int NY = Eigen::Dynamic>
+struct Functor
+{
+    // Information that tells the caller the numeric type (eg. double) and size (input / output dim)
+    typedef _Scalar Scalar;
+    enum {
+        InputsAtCompileTime = NX,
+        ValuesAtCompileTime = NY
+};
+// Tell the caller the matrix sizes associated with the input, output, and jacobian
+typedef Eigen::Matrix<Scalar,InputsAtCompileTime,1> InputType;
+typedef Eigen::Matrix<Scalar,ValuesAtCompileTime,1> ValueType;
+typedef Eigen::Matrix<Scalar,ValuesAtCompileTime,InputsAtCompileTime> JacobianType;
+
+// Local copy of the number of inputs
+int m_inputs, m_values;
+
+// Two constructors:
+Functor() : m_inputs(InputsAtCompileTime), m_values(ValuesAtCompileTime) {}
+Functor(int inputs, int values) : m_inputs(inputs), m_values(values) {}
+
+// Get methods for users to determine function input and output dimensions
+int inputs() const { return m_inputs; }
+int values() const { return m_values; }
+
+};
+
+///////////////////////////////////// Levenberg Marquardt Examples /////////////////////////////////////
+
+
+// y = 10*(x0+3)^2 + (x1-5)^2
+struct simpleFunctor : Functor<double>
+{
+    simpleFunctor(void): Functor<double>(2,2)
+    {
+
+    }
+    int operator()(const Eigen::VectorXd &x, Eigen::VectorXd &fvec) const
+    {
+        // Implement y = 10*(x0+3)^2 + (x1-5)^2
+        //fvec(0) = 10.0*pow(x(0)+3.0,2) +  pow(x(1)-5.0,2);
+        //fvec(1) = 0;
+        fvec(0) = 10.0*pow(x(0)+3.0,2) ;
+        fvec(1) = pow(x(1)-5.0,2);
+        return 0;
+    }
+};
+
+void simpleFunctorExample()
+{
+    Eigen::VectorXd x(2);
+    x(0) = 2.0;
+    x(1) = 3.0;
+    std::cout << "starting x: \n" << x << std::endl;
+
+    simpleFunctor functor;
+    Eigen::NumericalDiff<simpleFunctor> numDiff(functor);
+
+    Eigen::MatrixXd fjac(2,2);
+    numDiff.df(x,fjac);
+
+
+    std::cout << "jacobian of matrix at "<< x(0)<<","<<x(1)  <<" is:\n " << fjac << std::endl;
+
+    Eigen::LevenbergMarquardt<Eigen::NumericalDiff<simpleFunctor>,double> lm(numDiff);
+    lm.parameters.maxfev = 2000;
+    lm.parameters.xtol = 1.0e-10;
+    std::cout <<"maximum number of function evaluation: " <<lm.parameters.maxfev << std::endl;
+
+    int ret = lm.minimize(x);
+    std::cout <<"number of iterations: " <<lm.iter << std::endl;
+
+    std::cout << "x that minimizes the function: \n" << x << std::endl;
+
+    //std::cout << "optimized value: "<<ret << std::endl;
+
+    std::cout << "press [ENTER] to continue " << std::endl;
+    std::cin.get();
+
+}
+
+
+// https://en.wikipedia.org/wiki/Test_functions_for_optimization
+// Booth Function
+// Implement f(x,y) = (x + 2*y -7)^2 + (2*x + y - 5)^2
+struct BoothFunctor : Functor<double>
+{
+    // Simple constructor
+    BoothFunctor(): Functor<double>(2,2) {}
+
+    // Implementation of the objective function
+    int operator()(const Eigen::VectorXd &z, Eigen::VectorXd &fvec) const
+    {
+        double x = z(0);   double y = z(1);
+        /*
+        * Evaluate the Booth function.
+        * Important: LevenbergMarquardt is designed to work with objective functions that are a sum
+        * of squared terms. The algorithm takes this into account: do not do it yourself.
+        * In other words: objFun = sum(fvec(i)^2)
+        */
+        fvec(0) = x + 2*y - 7;
+        fvec(1) = 2*x + y - 5;
+        return 0;
+    }
+};
+
+
+void testBoothFun() {
+    std::cout << "Testing the Booth function..." << std::endl;
+    Eigen::VectorXd zInit(2); zInit << 1.87, 2.032;
+    std::cout << "zInit: " << zInit.transpose() << std::endl;
+    Eigen::VectorXd zSoln(2); zSoln << 1.0, 3.0;
+    std::cout << "zSoln: " << zSoln.transpose() << std::endl;
+
+    BoothFunctor functor;
+    Eigen::NumericalDiff<BoothFunctor> numDiff(functor);
+    Eigen::LevenbergMarquardt<Eigen::NumericalDiff<BoothFunctor>,double> lm(numDiff);
+    lm.parameters.maxfev = 1000;
+    lm.parameters.xtol = 1.0e-10;
+    std::cout << "max fun eval: " << lm.parameters.maxfev << std::endl;
+    std::cout << "x tol: " << lm.parameters.xtol << std::endl;
+
+    Eigen::VectorXd z = zInit;
+    int ret = lm.minimize(z);
+    std::cout << "iter count: " << lm.iter << std::endl;
+    std::cout << "return status: " << ret << std::endl;
+    std::cout << "zSolver: " << z.transpose() << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+// y = 2*(x0-3)^2 + 4*(x1+1)^3
+struct simpleMultiPolynomialFunctor : Functor<double>
+{
+    // Simple constructor
+    simpleMultiPolynomialFunctor(): Functor<double>(2,1) {}
+
+    // Implementation of the objective function
+    int operator()(const Eigen::VectorXd &z, Eigen::VectorXd &fvec) const
+    {
+        double x0 = z(0);
+        double x1 = z(1);
+
+        fvec(0) = 2*pow((x0-3),2) + 4*pow((x1+1),3);
+
+        return 0;
+    }
+};
+
+
+void numericalDifferentiationExample()
+{
+    int diffMode= Eigen::NumericalDiffMode::Forward; //Eigen::NumericalDiffMode::Central
+
+//    Eigen::JacobiSVD<Eigen::MatrixXd> svd(A, Eigen::ComputeFullU | Eigen::ComputeFullV);
+
+    simpleMultiPolynomialFunctor functor;
+    Eigen::NumericalDiff<simpleMultiPolynomialFunctor> numDiff(functor);
+
+
+    Eigen::VectorXd x(2);
+    x(0) = 2.0;
+    x(1) = 3.0;
+    std::cout << "starting x: \n" << x << std::endl;
+
+    Eigen::MatrixXd fjac(1,2);
+    numDiff.df(x,fjac);
+
+    std::cout << "numerical differentiation at \n"<<x <<"\n is: \n" << fjac << std::endl;
+}
+
+
+
+int main(int argc, char *argv[])
+{
+    //simpleFunctorExample();
+    numericalDifferentiationExample();
+    return 0;
+}
 

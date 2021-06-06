@@ -40,6 +40,11 @@ add_executable(main src/main.cpp)
 target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
 target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
 
-IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
-	ADD_SUBDIRECTORY(src/sandbox)
-ENDIF()
+
+add_executable(task src/task.cpp)
+target_link_libraries (task ${EIGEN3_LIBRARIES} )
+
+
+#IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
+#	ADD_SUBDIRECTORY(src/sandbox)
+#ENDIF()
