@@ -1276,13 +1276,7 @@ void functorExample()
 
 ////////////////////////////Eigen Functor////////////////////////////
 
-/*
 
-Refs
-1) https://github.com/daviddoria/Examples/blob/master/c%2B%2B/Eigen/LevenbergMarquardt/CurveFitting.cpp
-2) https://stackoverflow.com/questions/18509228/how-to-use-the-eigen-unsupported-levenberg-marquardt-implementation
-
-*/
 // Generic functor
 template<typename _Scalar, int NX = Eigen::Dynamic, int NY = Eigen::Dynamic>
 struct Functor
@@ -1414,19 +1408,18 @@ void testBoothFun() {
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
 
-// y = 2*(x0-3)^2 + 4*(x1+1)^3
+
 struct simpleMultiPolynomialFunctor : Functor<double>
 {
     // Simple constructor
-    simpleMultiPolynomialFunctor(): Functor<double>(2,1) {}
+    simpleMultiPolynomialFunctor(): Functor<double>(3,2) {}
 
     // Implementation of the objective function
-    int operator()(const Eigen::VectorXd &z, Eigen::VectorXd &fvec) const
+    int operator()(const Eigen::VectorXd &x, Eigen::VectorXd &fvec) const
     {
-        double x0 = z(0);
-        double x1 = z(1);
 
-        fvec(0) = 2*pow((x0-3),2) + 4*pow((x1+1),3);
+        fvec(0) = 2*pow(x(0),2) + 5*x(1) +pow(x(2),3);
+        fvec(1) = 3*x(0) + 2*pow(x(1),3)+ x(1)*x(2);
 
         return 0;
     }
@@ -1435,26 +1428,42 @@ struct simpleMultiPolynomialFunctor : Functor<double>
 
 void numericalDifferentiationExample()
 {
-    int diffMode= Eigen::NumericalDiffMode::Forward; //Eigen::NumericalDiffMode::Central
+    int diffMode= Eigen::NumericalDiffMode::Central; //Eigen::NumericalDiffMode::Central
 
-//    Eigen::JacobiSVD<Eigen::MatrixXd> svd(A, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
     simpleMultiPolynomialFunctor functor;
-    Eigen::NumericalDiff<simpleMultiPolynomialFunctor> numDiff(functor);
+    Eigen::NumericalDiff<simpleMultiPolynomialFunctor,Eigen::NumericalDiffMode::Central> numDiff(functor);
 
 
-    Eigen::VectorXd x(2);
-    x(0) = 2.0;
-    x(1) = 3.0;
-    std::cout << "starting x: \n" << x << std::endl;
+    Eigen::VectorXd x(3);
+    x(0) = -1.0;
+    x(1) = 1.0;
+    x(2) = 1.0;
 
-    Eigen::MatrixXd fjac(1,2);
+    Eigen::MatrixXd fjac(2,3);
     numDiff.df(x,fjac);
 
-    std::cout << "numerical differentiation at \n"<<x <<"\n is: \n" << fjac << std::endl;
+    std::cout << "numerical differentiation at \n"<<x <<"\nis: \n" << fjac << std::endl;
 }
 
+/*
 
+Refs
+1) https://github.com/daviddoria/Examples/blob/master/c%2B%2B/Eigen/LevenbergMarquardt/CurveFitting.cpp
+2) https://stackoverflow.com/questions/18509228/how-to-use-the-eigen-unsupported-levenberg-marquardt-implementation
+https://github.com/daviddoria/Examples/blob/master/c%2B%2B/Eigen/LevenbergMarquardt/CurveFitting.cpp
+https://stackoverflow.com/questions/48213584/understanding-levenberg-marquardt-enumeration-returns
+https://www.ultimatepp.org/reference$Eigen_demo$en-us.html
+https://ethz-adrl.github.io/ct/ct_doc/doc/html/core_tut_linearization.html
+
+*/
+
+
+///////////////////////////////////////////////// AutoDiffScalar /////////////////////////////////////////////////
+/*
+Refs:
+https://joelcfd.com/automatic-differentiation/
+*/
 
 int main(int argc, char *argv[])
 {
