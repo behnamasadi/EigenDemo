@@ -223,8 +223,26 @@ void normaliseAngle(T &q)
     q=sign*remainder(q,2*M_PI);
     if(sign<0)
         q=q+2*M_PI;
+}
+
+template <typename  T>
+void normaliseAngle2(T &q)
+{
+    int sign=signum(q);
+    //q=fabs(q);
+    q=remainder(q,sign*2*M_PI);
+    if(-2*M_PI<=q && q <=-M_PI)
+    {
+            q=q+2*M_PI;
+    }
+
+    else if(+M_PI<=q && q <=2*M_PI)
+    {
+            q=2*M_PI-q;
+    }
 
 }
+
 
 
 void normaliseAngle(Eigen::VectorXd &q)
@@ -234,6 +252,15 @@ void normaliseAngle(Eigen::VectorXd &q)
         normaliseAngle(q(i));
     }
 }
+
+void normaliseAngle2(Eigen::VectorXd &q)
+{
+    for(std::size_t i=0;i<q.rows();i++)
+    {
+        normaliseAngle2(q(i));
+    }
+}
+
 
 int main()
 {
@@ -254,7 +281,7 @@ int main()
     {
         Eigen::VectorXd q(3);
         q(0) = M_PI/2;
-        q(1) = -M_PI/2;
+        q(1) = -M_PI;
         q(2) = M_PI/4;
 
 //        q(0) = 0;
@@ -322,7 +349,7 @@ int main()
             delta_q=j_pinv*delta_p;
 
             q=q+delta_q;
-            normaliseAngle(q);
+            normaliseAngle2(q);
 
             i++;
             std::cout<<"i: \n" <<i<<std::endl;
@@ -337,6 +364,12 @@ int main()
         std::cout<<"transformatioToPose(goal): \n" <<transformatioToPose(goal) <<std::endl;
         std::cout<<"p(q): \n" <<p(q) <<std::endl;
     }
+    double t=-5*M_PI/2;
+    normaliseAngle2(t);
+    std::cout<<"t: " <<t <<std::endl;
+    t=+5*M_PI/2;
+    normaliseAngle2(t);
+    std::cout<<"t: " <<t <<std::endl;
     return 0;
 }
 
