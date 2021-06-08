@@ -1455,6 +1455,7 @@ https://github.com/daviddoria/Examples/blob/master/c%2B%2B/Eigen/LevenbergMarqua
 https://stackoverflow.com/questions/48213584/understanding-levenberg-marquardt-enumeration-returns
 https://www.ultimatepp.org/reference$Eigen_demo$en-us.html
 https://ethz-adrl.github.io/ct/ct_doc/doc/html/core_tut_linearization.html
+https://robotics.stackexchange.com/questions/20673/why-with-the-pseudo-inverse-it-is-possible-to-invert-the-jacobian-matrix-even-in
 
 */
 
@@ -1464,6 +1465,26 @@ https://ethz-adrl.github.io/ct/ct_doc/doc/html/core_tut_linearization.html
 Refs:
 https://joelcfd.com/automatic-differentiation/
 */
+
+
+void matrixCondition()
+{
+    //https://www.youtube.com/watch?v=GDYmWtWWtNQ
+    //https://stackoverflow.com/questions/33575478/how-can-you-find-the-condition-number-in-eigen/33577450
+    //https://math.stackexchange.com/questions/2817630/why-is-the-condition-number-of-a-matrix-given-by-these-eigenvalues
+
+}
+
+void matrixRank()
+{
+//https://stackoverflow.com/questions/31041921/how-to-get-rank-of-a-matrix-in-eigen-library
+}
+
+
+void broadcastingExample()
+{
+    //https://eigen.tuxfamily.org/dox/group__TutorialReductionsVisitorsBroadcasting.html
+}
 
 int main(int argc, char *argv[])
 {
