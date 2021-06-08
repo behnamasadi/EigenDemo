@@ -40,6 +40,12 @@ add_executable(main src/main.cpp)
 target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
 target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
 
+add_executable(non_linear_optimiser src/non_linear_optimiser.cpp)
+target_link_libraries (non_linear_optimiser ${EIGEN3_LIBRARIES}  )
+
+
+
+
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 #	ADD_SUBDIRECTORY(src/sandbox)
 #ENDIF()

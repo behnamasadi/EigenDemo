@@ -1446,6 +1446,61 @@ void numericalDifferentiationExample()
     std::cout << "numerical differentiation at \n"<<x <<"\nis: \n" << fjac << std::endl;
 }
 
+/***********************************************************************************************/
+
+// https://en.wikipedia.org/wiki/Test_functions_for_optimization
+// Himmelblau's Function
+// Implement f(x,y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
+struct HimmelblauFunctor : Functor<double>
+{
+    // Simple constructor
+    HimmelblauFunctor(): Functor<double>(2,2) {}
+
+    // Implementation of the objective function
+    int operator()(const Eigen::VectorXd &z, Eigen::VectorXd &fvec) const
+    {
+        double x = z(0);   double y = z(1);
+        /*
+        * Evaluate Himmelblau's function.
+        * Important: LevenbergMarquardt is designed to work with objective functions that are a sum
+        * of squared terms. The algorithm takes this into account: do not do it yourself.
+        * In other words: objFun = sum(fvec(i)^2)
+        */
+        fvec(0) = x * x + y - 11;
+        fvec(1) = x + y * y - 7;
+        return 0;
+    }
+};
+
+void testHimmelblauFun()
+{
+    std::cout << "Testing the Himmelblau function..." << std::endl;
+    // Eigen::VectorXd zInit(2); zInit << 0.0, 0.0;  // soln 1
+    // Eigen::VectorXd zInit(2); zInit << -1, 1;  // soln 2
+    // Eigen::VectorXd zInit(2); zInit << -1, -1;  // soln 3
+    Eigen::VectorXd zInit(2); zInit << 1, -1;  // soln 4
+    std::cout << "zInit: " << zInit.transpose() << std::endl;
+    std::cout << "soln 1: [3.0, 2.0]" << std::endl;
+    std::cout << "soln 2: [-2.805118, 3.131312]" << std::endl;
+    std::cout << "soln 3: [-3.77931, -3.28316]" << std::endl;
+    std::cout << "soln 4: [3.584428, -1.848126]" << std::endl;
+
+    HimmelblauFunctor functor;
+    Eigen::NumericalDiff<HimmelblauFunctor> numDiff(functor);
+    Eigen::LevenbergMarquardt<Eigen::NumericalDiff<HimmelblauFunctor>,double> lm(numDiff);
+    lm.parameters.maxfev = 1000;
+    lm.parameters.xtol = 1.0e-10;
+    std::cout << "max fun eval: " << lm.parameters.maxfev << std::endl;
+    std::cout << "x tol: " << lm.parameters.xtol << std::endl;
+
+    Eigen::VectorXd z = zInit;
+    int ret = lm.minimize(z);
+    std::cout << "iter count: " << lm.iter << std::endl;
+    std::cout << "return status: " << ret << std::endl;
+    std::cout << "zSolver: " << z.transpose() << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
 /*
 
 Refs
@@ -1458,6 +1513,7 @@ https://ethz-adrl.github.io/ct/ct_doc/doc/html/core_tut_linearization.html
 https://robotics.stackexchange.com/questions/20673/why-with-the-pseudo-inverse-it-is-possible-to-invert-the-jacobian-matrix-even-in
 
 */
+
 
 
 ///////////////////////////////////////////////// AutoDiffScalar /////////////////////////////////////////////////
