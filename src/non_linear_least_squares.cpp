@@ -93,45 +93,22 @@ int values() const { return m_values; }
 typedef std::vector<Eigen::Vector2d,Eigen::aligned_allocator<Eigen::Vector2d> > Point2DVector;
 
 //Point2DVector GeneratePoints(const unsigned int numberOfPoints)
-Point2DVector GeneratePoints()
-{
-    Point2DVector points;
-    points.push_back(Eigen::Vector2d(0.038,0.050));
-    points.push_back(Eigen::Vector2d(0.194,0.127));
-    points.push_back(Eigen::Vector2d(0.425,0.094));
-    points.push_back(Eigen::Vector2d(0.626,0.2122));
-    points.push_back(Eigen::Vector2d(1.253,0.2729));
-    points.push_back(Eigen::Vector2d(2.500,0.2665));
-    points.push_back(Eigen::Vector2d(3.740,0.3317));
-
-    return points;
-}
 
 struct SubstrateConcentrationFunctor : Functor<double>
 {
 
-    //SubstrateConcentrationFunctor(void): Functor<double>(2,7)
-    SubstrateConcentrationFunctor(Point2DVector points): Functor<double>(2,7)
-    //InputsAtCompileTime = NX, ValuesAtCompileTime = NY
+    SubstrateConcentrationFunctor(Eigen::MatrixXd points): Functor<double>(points.cols(),points.rows())
     {
-//        Point2DVector points;
-//        points.push_back(Eigen::Vector2d(0.038,0.050));
-//        points.push_back(Eigen::Vector2d(0.194,0.127));
-//        points.push_back(Eigen::Vector2d(0.425,0.094));
-//        points.push_back(Eigen::Vector2d(0.626,0.2122));
-//        points.push_back(Eigen::Vector2d(1.253,0.2729));
-//        points.push_back(Eigen::Vector2d(2.500,0.2665));
-//        points.push_back(Eigen::Vector2d(3.740,0.3317));
         this->Points = points;
     }
 
     int operator()(const Eigen::VectorXd &z, Eigen::VectorXd &r) const
     {
         double x_i,y_i,beta1,beta2;
-        for(unsigned int i = 0; i < this->Points.size(); ++i)
+        for(unsigned int i = 0; i < this->Points.rows(); ++i)
         {
-            y_i=this->Points[i](1);
-            x_i=this->Points[i](0);
+            y_i=this->Points.row(i)(1);
+            x_i=this->Points.row(i)(0);
             beta1=z(0);
             beta2=z(1);
             r(i) =y_i-(beta1*x_i) /(beta2+x_i);
@@ -139,31 +116,46 @@ struct SubstrateConcentrationFunctor : Functor<double>
 
         return 0;
     }
+    Eigen::MatrixXd Points;
 
-  Point2DVector Points;
-
-  int inputs() const { return 2; } // There are two parameters of the model
-  int values() const { return this->Points.size(); } // The number of observations
+    int inputs() const { return 2; } // There are two parameters of the model, beta1, beta2
+    int values() const { return this->Points.rows(); } // The number of observations
 };
 
 
 
 void SubstrateConcentrationLeastSquare()
 {
+/*
+our data:
 
-    SubstrateConcentrationFunctor functor(GeneratePoints());
+x     y
+0.038,0.050;
+0.194,0.127;
+0.425,0.094;
+0.626,0.2122;
+1.253,0.2729;
+2.500,0.2665;
+3.740,0.3317;
+
+the last column in the matrix shold be "y"
+
+*/
+
+
+    Eigen::MatrixXd points(7,2);
+
+
+    points.row(0)<< 0.038,0.050;
+    points.row(1)<<0.194,0.127;
+    points.row(2)<<0.425,0.094;
+    points.row(3)<<0.626,0.2122;
+    points.row(4)<<1.253,0.2729;
+    points.row(5)<<2.500,0.2665;
+    points.row(6)<<3.740,0.3317;
+
+    SubstrateConcentrationFunctor functor(points);
     Eigen::NumericalDiff<SubstrateConcentrationFunctor,Eigen::NumericalDiffMode::Central> numDiff(functor);
-
-
-//    Point2DVector points;
-//    functor.Points.push_back(Eigen::Vector2d(0.038,0.050));
-//    functor.Points.push_back(Eigen::Vector2d(0.194,0.127));
-//    functor.Points.push_back(Eigen::Vector2d(0.425,0.094));
-//    functor.Points.push_back(Eigen::Vector2d(0.626,0.2122));
-//    functor.Points.push_back(Eigen::Vector2d(1.253,0.2729));
-//    functor.Points.push_back(Eigen::Vector2d(2.500,0.2665));
-//    functor.Points.push_back(Eigen::Vector2d(3.740,0.3317));
-
 
     std::cout<<"functor.Points.size(): " <<functor.Points.size()<<std::endl;
     Eigen::VectorXd beta(2);
@@ -178,8 +170,6 @@ void SubstrateConcentrationLeastSquare()
     Eigen::VectorXd r(7);
     functor(beta,r);
     std::cout<<r<<std::endl;
-
-
 
     //βᵏ⁺¹=βᵏ- (JᵀJ)⁻¹Jᵀr(βᵏ)
     for(int i=0;i<10;i++)

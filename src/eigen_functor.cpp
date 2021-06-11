@@ -1,4 +1,9 @@
+#include <unsupported/Eigen/NonLinearOptimization>
+#include <unsupported/Eigen/NumericalDiff>
 
+
+#include <iostream>
+#include <vector>
 ////////////////////////////C++ Functor////////////////////////////
 /*** print the name of some types... ***/
 
@@ -71,4 +76,9 @@ void functorExample()
     call_and_print_return_value(product_functor<float>(0.2f,0.4f));
 }
 
+
+int main()
+{
+    functorExample();
+}
 

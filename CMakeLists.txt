@@ -40,17 +40,27 @@ add_executable(main src/main.cpp)
 target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
 target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
 
-add_executable(non_linear_optimiser src/non_linear_optimiser.cpp)
-target_link_libraries (non_linear_optimiser ${EIGEN3_LIBRARIES}  )
-
-add_executable(nonl_inear_regression src/non_linear_regression.cpp)
+add_executable(non_linear_regression src/non_linear_regression.cpp)
 target_link_libraries (non_linear_regression ${EIGEN3_LIBRARIES}  )
 
-add_executable(nonlinear_least_squares src/nonlinear_least_squares.cpp)
-target_link_libraries (nonlinear_least_squares ${EIGEN3_LIBRARIES}  )
+add_executable(non_linear_least_squares src/non_linear_least_squares.cpp)
+target_link_libraries (non_linear_least_squares ${EIGEN3_LIBRARIES}  )
 
 add_executable(numerical_diff src/numerical_diff.cpp)
 target_link_libraries (numerical_diff ${EIGEN3_LIBRARIES}  )
+
+add_executable(levenberg_marquardt src/levenberg_marquardt.cpp)
+target_link_libraries (levenberg_marquardt ${EIGEN3_LIBRARIES}  )
+
+add_executable(eigen_functor src/eigen_functor.cpp)
+target_link_libraries (eigen_functor ${EIGEN3_LIBRARIES}  )
+
+add_executable(auto_diff src/auto_diff.cpp)
+target_link_libraries (auto_diff ${EIGEN3_LIBRARIES}  )
+
+
+
+
 
 
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
