@@ -43,7 +43,14 @@ target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
 add_executable(non_linear_optimiser src/non_linear_optimiser.cpp)
 target_link_libraries (non_linear_optimiser ${EIGEN3_LIBRARIES}  )
 
+add_executable(nonl_inear_regression src/non_linear_regression.cpp)
+target_link_libraries (non_linear_regression ${EIGEN3_LIBRARIES}  )
 
+add_executable(nonlinear_least_squares src/nonlinear_least_squares.cpp)
+target_link_libraries (nonlinear_least_squares ${EIGEN3_LIBRARIES}  )
+
+add_executable(numerical_diff src/numerical_diff.cpp)
+target_link_libraries (numerical_diff ${EIGEN3_LIBRARIES}  )
 
 
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
