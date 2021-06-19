@@ -1,7 +1,5 @@
-///////////////////////////////////////////////// AutoDiffScalar /////////////////////////////////////////////////
 /*
-Refs:
-https://joelcfd.com/automatic-differentiation/
+Refs: https://joelcfd.com/automatic-differentiation/
 */
 
 #include <iostream>

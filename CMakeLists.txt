@@ -37,8 +37,8 @@ IF(${orocos_kdl_FOUND})
 ENDIF()
 
 add_executable(main src/main.cpp)
-target_link_libraries (main ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
-target_compile_definitions(main PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
+target_link_libraries (main ${EIGEN3_LIBRARIES}  )
+
 
 add_executable(non_linear_regression src/non_linear_regression.cpp)
 target_link_libraries (non_linear_regression ${EIGEN3_LIBRARIES}  )
@@ -59,9 +59,47 @@ add_executable(auto_diff src/auto_diff.cpp)
 target_link_libraries (auto_diff ${EIGEN3_LIBRARIES}  )
 
 
+add_executable(matrix_array_vector src/matrix_array_vector.cpp)
+target_link_libraries (matrix_array_vector ${EIGEN3_LIBRARIES}  )
 
 
+add_executable(unaryExpr src/unaryExpr.cpp)
+target_link_libraries (unaryExpr ${EIGEN3_LIBRARIES}  )
 
+add_executable(memory_mapping src/memory_mapping.cpp)
+target_link_libraries (memory_mapping ${EIGEN3_LIBRARIES}  )
+
+add_executable(matrix_broadcasting src/matrix_broadcasting.cpp)
+target_link_libraries (matrix_broadcasting ${EIGEN3_LIBRARIES}  )
+
+add_executable(matrix_decomposition src/matrix_decomposition.cpp)
+target_link_libraries (matrix_decomposition ${EIGEN3_LIBRARIES}  )
+
+add_executable(gram_schmidt_orthogonalization src/gram_schmidt_orthogonalization.cpp)
+target_link_libraries (gram_schmidt_orthogonalization ${EIGEN3_LIBRARIES}  )
+
+
+add_executable(check_matrixsimilarity src/check_matrixsimilarity.cpp)
+target_link_libraries (check_matrixsimilarity ${EIGEN3_LIBRARIES}  )
+
+add_executable(geometry_transformation src/geometry_transformation.cpp)
+target_link_libraries (geometry_transformation ${EIGEN3_LIBRARIES}  ${orocos_kdl_LIBRARIES})
+target_compile_definitions(geometry_transformation PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
+
+
+add_executable(eigen_value_eigen_vector src/eigen_value_eigen_vector.cpp)
+target_link_libraries (eigen_value_eigen_vector ${EIGEN3_LIBRARIES}  )
+
+
+add_executable(matrix_rank src/matrix_rank.cpp)
+target_link_libraries (matrix_rank ${EIGEN3_LIBRARIES}  )
+
+add_executable(matrix_condition src/matrix_condition.cpp)
+target_link_libraries (matrix_condition ${EIGEN3_LIBRARIES}  )
+
+
+add_executable(singular_value_decomposition src/singular_value_decomposition.cpp)
+target_link_libraries (singular_value_decomposition ${EIGEN3_LIBRARIES}  )
 
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 #	ADD_SUBDIRECTORY(src/sandbox)
