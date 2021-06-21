@@ -164,18 +164,24 @@ The Gram–Schmidt process has the followings steps:
 
 <img src="images/gram_schmidt4.png">
 <br>
+
+
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{2}&=\mathbf%20{v}%20_{2}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{2}),&\mathbf%20{e}%20_{2}&={\frac%20{\mathbf%20{u}%20_{2}}{\|\mathbf%20{u}%20_{2}\|}}%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} \\\mathbf {u} _{2}&=\mathbf {v} _{2}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{2}),&\mathbf {e} _{2}&={\frac {\mathbf {u} _{2}}{\|\mathbf {u} _{2}\|}} \end{aligned}}}">
+
+<br>
 <br>
 
 
-
-
-
-
 Due to rounding errors, the vectors <img src="https://latex.codecogs.com/svg.latex?\mathbf%20{u}_{k}" alt="https://latex.codecogs.com/svg.latex?\mathbf {u}_{k}"/> are often not quite orthogonal, therefore, it is said that the (classical) Gram–Schmidt process is numerically unstable. This can be stabilized by a small modification, where 
-Instead of computing the vector <img src="https://latex.codecogs.com/svg.latex?\mathbf%20{u}_{k}" alt="https://latex.codecogs.com/svg.latex?\mathbf {u}_{k}"/> as
+Instead of computing the vector <img src="https://latex.codecogs.com/svg.latex?\mathbf%20{u}_{k}" alt="https://latex.codecogs.com/svg.latex?\mathbf {u}_{k}"/> as:
 
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\mathbf%20{u}%20_{k}=\mathbf%20{v}%20_{k}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{k})-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{k})-\cdots%20-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{k-1}}(\mathbf%20{v}%20_{k})}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle \mathbf {u} _{k}=\mathbf {v} _{k}-\operatorname {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{k})-\operatorname {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{k})-\cdots -\operatorname {proj} _{\mathbf {u} _{k-1}}(\mathbf {v} _{k})}"/>
 
+<br>
+<br>
+We do the following:
+<br>
+<br>
 
 
 <img src="https://latex.codecogs.com/svg.latex?%20{\displaystyle%20{\begin{aligned}\mathbf%20{u}%20_{k}^{(1)}&=\mathbf%20{v}%20_{k}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{k}),\\\mathbf%20{u}%20_{k}^{(2)}&=\mathbf%20{u}%20_{k}^{(1)}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{2}}\left(\mathbf%20{u}%20_{k}^{(1)}\right),\\&\;\;\vdots%20\\\mathbf%20{u}%20_{k}^{(k-2)}&=\mathbf%20{u}%20_{k}^{(k-3)}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{k-2}}\left(\mathbf%20{u}%20_{k}^{(k-3)}\right),\\\mathbf%20{u}%20_{k}^{(k-1)}&=\mathbf%20{u}%20_{k}^{(k-2)}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{k-1}}\left(\mathbf%20{u}%20_{k}^{(k-2)}\right),\\\mathbf%20{u}%20_{k}&={\frac%20{\mathbf%20{u}%20_{k}^{(k-1)}}{\left\|\mathbf%20{u}%20_{k}^{(k-1)}\right\|}}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?
@@ -191,33 +197,56 @@ Instead of computing the vector <img src="https://latex.codecogs.com/svg.latex?\
 <img src="images/gram_schmidt6.png" />
 <br>
 <br>
+
+
+<img alt="https://latex.codecogs.com/svg.latex?{v}_{3}^{'}=   \mathbf {u}_{3}^{(1)}" src="https://latex.codecogs.com/svg.latex?{v}_{3}^{%27}=%20%20%20\mathbf%20{u}_{3}^{(1)}"/>
+
+
+<img src="https://latex.codecogs.com/svg.latex?%20{\displaystyle%20{\begin{aligned}%20\mathbf%20{u}_{3}^{(1)}&=\mathbf%20{v}%20_{3}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{3})\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?
+{\displaystyle {\begin{aligned} \mathbf {u}_{3}^{(1)}&=\mathbf {v} _{3}-\operatorname {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{3})\end{aligned}}}" />
+
+
+
+
+
 <img src="images/gram_schmidt7.png" />
 <br>
 <br>
 
+<img alt="https://latex.codecogs.com/svg.latex?\mathbf{u}_{3}=   \mathbf {u}_{3}^{(2)}" src="https://latex.codecogs.com/svg.latex?\mathbf{u}_{3}=%20%20%20\mathbf%20{u}_{3}^{(2)}"/>
+
+
+<img src="https://latex.codecogs.com/svg.latex?%20{\displaystyle%20{\begin{aligned}%20\mathbf%20{u}_{3}^{(2)}&=\mathbf%20{u}^{(1)}%20_{3}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{u}^{(1)}%20_{3})\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?
+{\displaystyle {\begin{aligned} \mathbf {u}_{3}^{(2)}&=\mathbf {u}^{(1)} _{3}-\operatorname {proj} _{\mathbf {u} _{2}}(\mathbf {u}^{(1)} _{3})\end{aligned}}}" />
+
+We can now express the  s over our newly computed orthonormal basis:
+
+
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}\mathbf%20{v}%20_{1}&=\left\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{1}\right\rangle%20\mathbf%20{e}%20_{1}\\\mathbf%20{v}%20_{2}&=\left\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{2}\right\rangle%20\mathbf%20{e}%20_{1}+\left\langle%20\mathbf%20{e}%20_{2},\mathbf%20{v}%20_{2}\right\rangle%20\mathbf%20{e}%20_{2}\\\mathbf%20{v}%20_{3}&=\left\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{3}\right\rangle%20\mathbf%20{e}%20_{1}+\left\langle%20\mathbf%20{e}%20_{2},\mathbf%20{v}%20_{3}\right\rangle%20\mathbf%20{e}%20_{2}+\left\langle%20\mathbf%20{e}%20_{3},\mathbf%20{v}%20_{3}\right\rangle%20\mathbf%20{e}%20_{3}\\&\;\;\vdots%20\\\mathbf%20{v}%20_{k}&=\sum%20_{j=1}^{k}\left\langle%20\mathbf%20{e}%20_{j},\mathbf%20{v}%20_{k}\right\rangle%20\mathbf%20{e}%20_{j}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}\mathbf {v} _{1}&=\left\langle \mathbf {e} _{1},\mathbf {v} _{1}\right\rangle \mathbf {e} _{1}\\\mathbf {v} _{2}&=\left\langle \mathbf {e} _{1},\mathbf {v} _{2}\right\rangle \mathbf {e} _{1}+\left\langle \mathbf {e} _{2},\mathbf {v} _{2}\right\rangle \mathbf {e} _{2}\\\mathbf {v} _{3}&=\left\langle \mathbf {e} _{1},\mathbf {v} _{3}\right\rangle \mathbf {e} _{1}+\left\langle \mathbf {e} _{2},\mathbf {v} _{3}\right\rangle \mathbf {e} _{2}+\left\langle \mathbf {e} _{3},\mathbf {v} _{3}\right\rangle \mathbf {e} _{3}\\&\;\;\vdots \\\mathbf {v} _{k}&=\sum _{j=1}^{k}\left\langle \mathbf {e} _{j},\mathbf {v} _{k}\right\rangle \mathbf {e} _{j}\end{aligned}}}" />
+<br>
+<br>
 
 
 
- 
+This can be written in matrix form:
+<br>
+<br>
+
+<img src="https://latex.codecogs.com/svg.latex?A%20=%20QR" alt="https://latex.codecogs.com/svg.latex?A = QR" />
+
+<br>
+<br>
 
 
 
 
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20Q={\begin{bmatrix}\mathbf%20{e}%20_{1}&\cdots%20&\mathbf%20{e}%20_{n}\end{bmatrix}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle Q={\begin{bmatrix}\mathbf {e} _{1}&\cdots &\mathbf {e} _{n}\end{bmatrix}}}" />
+
+<br>
+<br>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20R={\begin{bmatrix}\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{1}\rangle%20&\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{2}\rangle%20&\langle%20\mathbf%20{e}%20_{1},\mathbf%20{v}%20_{3}\rangle%20&\cdots%20\\0&\langle%20\mathbf%20{e}%20_{2},\mathbf%20{v}%20_{2}\rangle%20&\langle%20\mathbf%20{e}%20_{2},\mathbf%20{v}%20_{3}\rangle%20&\cdots%20\\0&0&\langle%20\mathbf%20{e}%20_{3},\mathbf%20{v}%20_{3}\rangle%20&\cdots%20\\\vdots%20&\vdots%20&\vdots%20&\ddots%20\end{bmatrix}}.}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle R={\begin{bmatrix}\langle \mathbf {e} _{1},\mathbf {v} _{1}\rangle &\langle \mathbf {e} _{1},\mathbf {v} _{2}\rangle &\langle \mathbf {e} _{1},\mathbf {v} _{3}\rangle &\cdots \\0&\langle \mathbf {e} _{2},\mathbf {v} _{2}\rangle &\langle \mathbf {e} _{2},\mathbf {v} _{3}\rangle &\cdots \\0&0&\langle \mathbf {e} _{3},\mathbf {v} _{3}\rangle &\cdots \\\vdots &\vdots &\vdots &\ddots \end{bmatrix}}.}" />
 
 
 
