@@ -132,12 +132,29 @@ The Gram–Schmidt process has the followings steps:
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{2}&=\mathbf%20{v}%20_{2}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{2}),&\mathbf%20{e}%20_{2}&={\frac%20{\mathbf%20{u}%20_{2}}{\|\mathbf%20{u}%20_{2}\|}}%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} \\\mathbf {u} _{2}&=\mathbf {v} _{2}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{2}),&\mathbf {e} _{2}&={\frac {\mathbf {u} _{2}}{\|\mathbf {u} _{2}\|}} \end{aligned}}}">
 <br>
 <br>
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{3}&=\mathbf%20{v}%20_{3}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{3})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{3}),&\mathbf%20{e}%20_{3}&={\frac%20{\mathbf%20{u}%20_{3}}{\|\mathbf%20{u}%20_{3}\|}}%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} 
+\\\mathbf {u} _{3}&=\mathbf {v} _{3}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{3})-\mathrm {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{3}),&\mathbf {e} _{3}&={\frac {\mathbf {u} _{3}}{\|\mathbf {u} _{3}\|}}
+ \end{aligned}}}">
+<br>
+<br>
 
+
+
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{4}&=\mathbf%20{v}%20_{4}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{4})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{4})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{3}}(\mathbf%20{v}%20_{4}),&\mathbf%20{e}%20_{4}&={\mathbf%20{u}%20_{4}%20\over%20\|\mathbf%20{u}%20_{4}\|}\\&{}\%20\%20\vdots%20&&{}\%20\%20\vdots%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}
+\\\mathbf {u} _{4}&=\mathbf {v} _{4}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{4})-\mathrm {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{4})-\mathrm {proj} _{\mathbf {u} _{3}}(\mathbf {v} _{4}),&\mathbf {e} _{4}&={\mathbf {u} _{4} \over \|\mathbf {u} _{4}\|}\\&{}\ \ \vdots &&{}\ \ \vdots
+ \end{aligned}}}">
+ <br>
+<br>
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\mathbf%20{u}%20_{k}=\mathbf%20{v}%20_{k}-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{k})-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{k})-\cdots%20-\operatorname%20{proj}%20_{\mathbf%20{u}%20_{k-1}}(\mathbf%20{v}%20_{k})}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle \mathbf {u} _{k}=\mathbf {v} _{k}-\operatorname {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{k})-\operatorname {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{k})-\cdots -\operatorname {proj} _{\mathbf {u} _{k-1}}(\mathbf {v} _{k})}"/>
 
 <br>
 <br>
+<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{k}&=\mathbf%20{v}%20_{k}-\sum%20_{j=1}^{k-1}\mathrm%20{proj}%20_{\mathbf%20{u}%20_{j}}(\mathbf%20{v}%20_{k}),&\mathbf%20{e}%20_{k}&={\frac%20{\mathbf%20{u}%20_{k}}{\|\mathbf%20{u}%20_{k}\|}}.%20\end{aligned}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} 
+\\\mathbf {u} _{k}&=\mathbf {v} _{k}-\sum _{j=1}^{k-1}\mathrm {proj} _{\mathbf {u} _{j}}(\mathbf {v} _{k}),&\mathbf {e} _{k}&={\frac {\mathbf {u} _{k}}{\|\mathbf {u} _{k}\|}}.
+\end{aligned}}}">
 
+<br>
+<br>
 
 <img src="images/gram_schmidt3.png">
 <br>
@@ -152,9 +169,6 @@ The Gram–Schmidt process has the followings steps:
 
 
 
-<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{3}&=\mathbf%20{v}%20_{3}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{3})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{3}),&\mathbf%20{e}%20_{3}&={\frac%20{\mathbf%20{u}%20_{3}}{\|\mathbf%20{u}%20_{3}\|}}%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} 
-\\\mathbf {u} _{3}&=\mathbf {v} _{3}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{3})-\mathrm {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{3}),&\mathbf {e} _{3}&={\frac {\mathbf {u} _{3}}{\|\mathbf {u} _{3}\|}}
- \end{aligned}}}">
 
 
 Due to rounding errors, the vectors <img src="https://latex.codecogs.com/svg.latex?\mathbf%20{u}_{k}" alt="https://latex.codecogs.com/svg.latex?\mathbf {u}_{k}"/> are often not quite orthogonal, therefore, it is said that the (classical) Gram–Schmidt process is numerically unstable. This can be stabilized by a small modification, where 
@@ -180,29 +194,13 @@ Instead of computing the vector <img src="https://latex.codecogs.com/svg.latex?\
 <img src="images/gram_schmidt7.png" />
 <br>
 <br>
-<img src="images/gram_schmidt8.png" />
-<br>
-<br>
 
 
 
-
-
-
-
-
-
-
-
-<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{4}&=\mathbf%20{v}%20_{4}-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{1}}(\mathbf%20{v}%20_{4})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{2}}(\mathbf%20{v}%20_{4})-\mathrm%20{proj}%20_{\mathbf%20{u}%20_{3}}(\mathbf%20{v}%20_{4}),&\mathbf%20{e}%20_{4}&={\mathbf%20{u}%20_{4}%20\over%20\|\mathbf%20{u}%20_{4}\|}\\&{}\%20\%20\vdots%20&&{}\%20\%20\vdots%20\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}
-\\\mathbf {u} _{4}&=\mathbf {v} _{4}-\mathrm {proj} _{\mathbf {u} _{1}}(\mathbf {v} _{4})-\mathrm {proj} _{\mathbf {u} _{2}}(\mathbf {v} _{4})-\mathrm {proj} _{\mathbf {u} _{3}}(\mathbf {v} _{4}),&\mathbf {e} _{4}&={\mathbf {u} _{4} \over \|\mathbf {u} _{4}\|}\\&{}\ \ \vdots &&{}\ \ \vdots
- \end{aligned}}}">
 
  
 
-<img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}%20\\\mathbf%20{u}%20_{k}&=\mathbf%20{v}%20_{k}-\sum%20_{j=1}^{k-1}\mathrm%20{proj}%20_{\mathbf%20{u}%20_{j}}(\mathbf%20{v}%20_{k}),&\mathbf%20{e}%20_{k}&={\frac%20{\mathbf%20{u}%20_{k}}{\|\mathbf%20{u}%20_{k}\|}}.%20\end{aligned}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned} 
-\\\mathbf {u} _{k}&=\mathbf {v} _{k}-\sum _{j=1}^{k-1}\mathrm {proj} _{\mathbf {u} _{j}}(\mathbf {v} _{k}),&\mathbf {e} _{k}&={\frac {\mathbf {u} _{k}}{\|\mathbf {u} _{k}\|}}.
-\end{aligned}}}">
+
 
 
 
