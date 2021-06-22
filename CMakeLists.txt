@@ -101,6 +101,11 @@ target_link_libraries (matrix_condition ${EIGEN3_LIBRARIES}  )
 add_executable(singular_value_decomposition src/singular_value_decomposition.cpp)
 target_link_libraries (singular_value_decomposition ${EIGEN3_LIBRARIES}  )
 
+add_executable(sparse_matrices src/sparse_matrices.cpp)
+target_link_libraries (sparse_matrices ${EIGEN3_LIBRARIES}  )
+
+
+
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 #	ADD_SUBDIRECTORY(src/sandbox)
 #ENDIF()
