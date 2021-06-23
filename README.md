@@ -11,6 +11,7 @@
   * [Row Major Access](#row-major-access)
   * [Accessing a block of data](#accessing-a-block-of-data)
 - [Reshaping, Resizing, Slicing](#reshaping--resizing)
+- Matrix Broadcasting
 - [Tensor Module](#tensor-module)
 
 [Matrix Operations](Matrix_Operations.md)
@@ -19,6 +20,11 @@
   * [Scalar Multiplication/ Division](#scalar-multiplication--division)
   * [Transposition and Conjugation](#transposition-and-conjugation)
   * [Multiplication, Dot And Cross Product](#multiplication--dot-and-cross-product)
+
+
+
+
+
 - [Coefficient-Wise Operations](#coefficient-wise-operations)
   * [Minimum/ Maximum Element In The Matrix](#minimum--maximum-element-in-the-matrix)
   * [Minimum/ Maximum Element Row-wise/Col-wise in the Matrix](#minimum--maximum-element-row-wise-col-wise-in-the-matrix)
@@ -33,17 +39,19 @@
   * [Checking If Any Elements Is Positive](#checking-if-any-elements-is-positive)
   * [Counting Elements](#counting-elements)
   * [Adding/ Subtracting A Constant](#adding--subtracting-a-constant)
+  * Check Matrix Similarity
+  * Matrix Rank
+  * Matrix NullSpace
+  * Matrix Condition
   * [Masking Elements](#masking-elements)
 
 
 [Advanced Matrix Operations](Advanced_Matrix_Operations.md)
-- [Matrix Broadcasting](#matrix-broadcasting)
-- [Matrix Condition](#matrix-condition)
-- [Check Matrix Similarity](#check-matrix-similarity)
-- [Matrix Rank](#matrix-rank)
 - [Memory Mapping](#memory-mapping)
+- Align
 - [Unary Expression](#unary-expression)
 - [Eigen Functor](#eigen-functor)
+
 
 [Dense Linear Problems And Decompositions](Dense_Linear_Problems_And_Decompositions.md)
 - [Cholesky Decomposition](#cholesky-decomposition)
