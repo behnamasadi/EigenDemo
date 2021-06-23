@@ -1,3 +1,25 @@
+- [Introduction to Linear Equation](#introduction-to-linear-equation)
+  * [Solution set](#solution-set)
+  * [Underdetermined System](#underdetermined-system)
+  * [Overdetermined System](#overdetermined-system)
+  * [Determined](#determined)
+  * [Homogeneous vs Non-homogeneous](#homogeneous-vs-non-homogeneous)
+- [Matrices Decompositions](#matrices-decompositions)
+  * [QR Decomposition](#qr-decomposition)
+    + [Square Matrix](#square-matrix)
+    + [Rectangular Matrix](#rectangular-matrix)
+    + [Computing the QR Decomposition](#computing-the-qr-decomposition)
+      - [Gram Schmidt Orthogonalization](#gram-schmidt-orthogonalization)
+      - [Householder Transformations](#householder-transformations)
+  * [QL, RQ and LQ Decompositions](#ql--rq-and-lq-decompositions)
+  * [Cholesky Decomposition](#cholesky-decomposition)
+  * [LDU Decomposition](#ldu-decomposition)
+  * [SVD Decomposition](#svd-decomposition)
+  * [Eigen Value Eigen Vector](#eigen-value-eigen-vector)
+- [Solving Linear Equation](#solving-linear-equation)
+
+
+
 # Introduction to Linear Equation
 
 In many applications we have a system of equations
@@ -67,12 +89,12 @@ A system of linear equations is homogeneous if all of the constant terms are zer
 
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}a_{11}x_{1}+a_{12}x_{2}+\cdots%20+a_{1n}x_{n}&=0\\a_{21}x_{1}+a_{22}x_{2}+\cdots%20+a_{2n}x_{n}&=0\\&\%20\%20\vdots%20\\a_{m1}x_{1}+a_{m2}x_{2}+\cdots%20+a_{mn}x_{n}&=0\end{aligned}}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}a_{11}x_{1}+a_{12}x_{2}+\cdots +a_{1n}x_{n}&=0\\a_{21}x_{1}+a_{22}x_{2}+\cdots +a_{2n}x_{n}&=0\\&\ \ \vdots \\a_{m1}x_{1}+a_{m2}x_{2}+\cdots +a_{mn}x_{n}&=0\end{aligned}}}" /> 
 
-# Solving Linear Equation
 
+# Matrices Decompositions
 Depending on what your matrices looks like, you can choose between various decompositions, and depending on whether you favor speed or accuracy.
 
-# 1) QR Decomposition
-## 1-1) Square Matrix
+##  QR Decomposition
+###  Square Matrix
 If <img src="https://latex.codecogs.com/svg.latex?A" />  is a real square matrix, then it may be decomposed as:
 
 <img src="https://latex.codecogs.com/svg.latex?A=QR" /> 
@@ -91,7 +113,7 @@ Furthermore, if <img src="https://latex.codecogs.com/svg.latex?A" /> is invertib
 For complex square matrices, <img src="https://latex.codecogs.com/svg.latex?Q" />  is a unitary matrix, meaning 
 <img src="https://latex.codecogs.com/svg.latex?Q^{*}=Q^{-1}" />
 
-## 1-2) Rectangular Matrix
+### Rectangular Matrix
 If <img src="https://latex.codecogs.com/svg.latex?A_{m\times%20n}" alt="https://latex.codecogs.com/svg.latex?A_{m\times n}" /> where <img src="https://latex.codecogs.com/svg.latex?%20m%20\geq%20%20n" alt="https://latex.codecogs.com/svg.latex? m \geq  n" /> we can factor it into <img src="https://latex.codecogs.com/svg.latex?m\times%20m" alt="https://latex.codecogs.com/svg.latex?m\times m" /> unitary matrix <img src="https://latex.codecogs.com/svg.latex?Q" /> and  an <img src="https://latex.codecogs.com/svg.latex?m\times%20n" alt="https://latex.codecogs.com/svg.latex?m\times n" /> upper triangular matrix <img src="https://latex.codecogs.com/svg.latex?R" />. Since after <img src="https://latex.codecogs.com/svg.latex?\left%20(m-n%20\right%20)_{th}" alt="https://latex.codecogs.com/svg.latex?\left (m-n \right )_{th}" /> row, in <img src="https://latex.codecogs.com/svg.latex?R" /> all elements are entirely zeroes, we can rewrite our equation in the following form:
 
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20A_{m\times%20n}=Q%20_{m\times%20m}%20%20R_{m\times%20n}%20=Q{\begin{bmatrix}R_{1}\\0\end{bmatrix}}={\begin{bmatrix}Q_{1}&Q_{2}\end{bmatrix}}{\begin{bmatrix}R_{1}\\0\end{bmatrix}}=Q_{1}R_{1},}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle A_{m\times n}=Q _{m\times m}  R_{m\times n} =Q{\begin{bmatrix}R_{1}\\0\end{bmatrix}}={\begin{bmatrix}Q_{1}&Q_{2}\end{bmatrix}}{\begin{bmatrix}R_{1}\\0\end{bmatrix}}=Q_{1}R_{1},}" />
@@ -101,11 +123,9 @@ where
 <img src="https://latex.codecogs.com/svg.latex?R_1" /> is an <img src="https://latex.codecogs.com/svg.latex?n\times%20n" alt="https://latex.codecogs.com/svg.latex?n\times n" /> upper triangular matrix and <img src="https://latex.codecogs.com/svg.latex?Q_1" /> is <img src="https://latex.codecogs.com/svg.latex?%20m%20\times%20n" alt="https://latex.codecogs.com/svg.latex? m \times n" />  with orthogonal columns
 
 
-## 1-3) QL, RQ and LQ Decompositions
-We can define <img src="https://latex.codecogs.com/svg.latex?QL" />, <img src="https://latex.codecogs.com/svg.latex?RQ" />, and <img src="https://latex.codecogs.com/svg.latex?LQ" /> decompositions, with <img src="https://latex.codecogs.com/svg.latex?L" /> being a lower triangular matrix.
 
-## 1-4) Computing the QR Decomposition
-### 1-4-1) Gram Schmidt Orthogonalization 
+### Computing the QR Decomposition
+#### Gram Schmidt Orthogonalization 
 Gram–Schmidt process is a method for orthonormalizing a set of vectors. In this process you make every column perpendicular to it's previous columns. Lets first define the **projection operator** by
 
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\mathrm%20{proj}%20_{\mathbf%20{u}%20}(\mathbf%20{v}%20)={\frac%20{\langle%20\mathbf%20{u}%20,\mathbf%20{v}%20\rangle%20}{\langle%20\mathbf%20{u}%20,\mathbf%20{u}%20\rangle%20}}{\mathbf%20{u}%20}}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle \mathrm {proj} _{\mathbf {u} }(\mathbf {v} )={\frac {\langle \mathbf {u} ,\mathbf {v} \rangle }{\langle \mathbf {u} ,\mathbf {u} \rangle }}{\mathbf {u} }}" />
@@ -250,12 +270,17 @@ This can be written in matrix form:
 
 
 
-### 1-4-2) Householder Transformations
-# 2) Cholesky Decomposition
+#### Householder Transformations
+## QL, RQ and LQ Decompositions
+We can define <img src="https://latex.codecogs.com/svg.latex?QL" />, <img src="https://latex.codecogs.com/svg.latex?RQ" />, and <img src="https://latex.codecogs.com/svg.latex?LQ" /> decompositions, with <img src="https://latex.codecogs.com/svg.latex?L" /> being a lower triangular matrix.
+
+## Cholesky Decomposition
 
 Cholesky decomposition is a decomposition of a Hermitian, positive-definite matrix into the product of a lower triangular matrix and its conjugate transpose
 
 
-# 3) LDU Decomposition
-# 4) SVD Decomposition
+## LDU Decomposition
+## SVD Decomposition
+## Eigen Value Eigen Vector
+# Solving Linear Equation
 

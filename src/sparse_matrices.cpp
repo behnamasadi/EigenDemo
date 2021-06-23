@@ -92,8 +92,8 @@ int main1()
 typedef Eigen::SparseMatrix<double> SpMat; // declares a column-major sparse matrix type of double
 typedef Eigen::Triplet<double> T;//structure to hold a non zero as a triplet (i,j,value).
 
-void buildProblem(std::vector<T>& coefficients, Eigen::VectorXd& b, int n);
-void saveAsBitmap(const Eigen::VectorXd& x, int n, const char* filename);
+void buildProblem(std::vector<T>& coefficients, Eigen::VectorXd& b, int n){}
+void saveAsBitmap(const Eigen::VectorXd& x, int n, const char* filename){}
 
 int main(int argc, char** argv)
 {

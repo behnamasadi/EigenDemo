@@ -1,5 +1,5 @@
 - [Matrix Class](#matrix-class)
-- [Vactor  Class](#vactor--class)
+- [Vector Class](#vector-class)
 - [Array Class](#array-class)
   * [Converting Array to Matrix](#converting-array-to-matrix)
   * [Converting Matrix to Array](#converting-matrix-to-array)
@@ -9,7 +9,7 @@
   * [Accessing via pointer to data](#accessing-via-pointer-to-data)
   * [Row Major Access](#row-major-access)
   * [Accessing a block of data](#accessing-a-block-of-data)
-- [Reshaping/ Resizing](#reshaping--resizing)
+- [Reshaping, Resizing, Slicing](#reshaping--resizing)
 - [Tensor Module](#tensor-module)
 
 # Matrix Class
@@ -75,7 +75,7 @@ Eigen::MatrixXf A(10, 15);
 
 
 
-# Vactor  Class
+# Vector Class
 Vectors are single row/ single column matrices. For instance:
 ```
 // Vector3f is a fixed column vector of 3 floats:
@@ -210,7 +210,7 @@ matrix.block(starting_row,starting_column,number_rows_in_block,number_cols_in_bl
 ```
 
 
-# Reshaping/ Resizing
+# Reshaping, Resizing, Slicing
 The current size of a matrix can be retrieved by `rows()`, `cols()` and `size()` method. Resizing a dynamic-size matrix is done by the resize() method, which is a no-operation if the actual matrix size doesn't change, i.e. chaning from `3x4` to `6x2`
 
 ```
