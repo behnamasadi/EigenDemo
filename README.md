@@ -10,7 +10,7 @@
   * [Accessing via pointer to data](#accessing-via-pointer-to-data)
   * [Row Major Access](#row-major-access)
   * [Accessing a block of data](#accessing-a-block-of-data)
-- [Reshaping/ Resizing](#reshaping--resizing)
+- [Reshaping, Resizing, Slicing](#reshaping--resizing)
 - [Tensor Module](#tensor-module)
 
 [Matrix Operations](Matrix_Operations.md)
