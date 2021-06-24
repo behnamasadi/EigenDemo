@@ -9,7 +9,7 @@
   * [Accessing via pointer to data](#accessing-via-pointer-to-data)
   * [Row Major Access](#row-major-access)
   * [Accessing a block of data](#accessing-a-block-of-data)
-- [Reshaping, Resizing, Slicing](#reshaping--resizing)
+- [Reshaping, Resizing, Slicing](#reshaping--resizing--slicing)
 - [Tensor Module](#tensor-module)
 
 # Matrix Class

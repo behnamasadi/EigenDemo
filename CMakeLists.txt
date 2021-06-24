@@ -28,7 +28,6 @@ MESSAGE("EIGEN3_INCLUDE_DIR: " ${EIGEN3_INCLUDE_DIR})
 MESSAGE("EIGEN3_VERSION: " ${EIGEN3_VERSION})
 MESSAGE("EIGEN3_VERSION_STRING: " ${EIGEN3_VERSION_STRING})
 
-
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
@@ -43,9 +42,11 @@ IF(${orocos_kdl_FOUND})
     include_directories(${orocos_kdl_INCLUDE_DIRS})
 ENDIF()
 
-add_executable(main src/main.cpp)
-target_link_libraries (main   )
+#add_executable(main src/main.cpp)
+#target_link_libraries (main   )
 
+add_executable (main src/main.cpp)
+target_link_libraries (main Eigen3::Eigen)
 
 add_executable(non_linear_regression src/non_linear_regression.cpp)
 target_link_libraries (non_linear_regression   )

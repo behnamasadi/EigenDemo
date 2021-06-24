@@ -1,5 +1,17 @@
-# Alignment
-## Passing Eigen objects by value to functions
+- [Memory Alignment](#memory-alignment)
+- [Passing Eigen objects by value to functions](#passing-eigen-objects-by-value-to-functions)
+- [Aliasing](#aliasing)
+- [Check Matrix Similarity](#check-matrix-similarity)
+- [Memory Mapping](#memory-mapping)
+- [Unary Expression](#unary-expression)
+- [Eigen Functor](#eigen-functor)
+
+
+# Memory Alignment
+# Passing Eigen objects by value to functions
+
+Refs: [1](https://eigen.tuxfamily.org/dox/TopicFunctionTakingEigenTypes.html)
+
 # Aliasing
 # Check Matrix Similarity 
 # Memory Mapping
