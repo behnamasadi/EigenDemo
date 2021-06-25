@@ -43,52 +43,52 @@ IF(${orocos_kdl_FOUND})
 ENDIF()
 
 #add_executable(main src/main.cpp)
-#target_link_libraries (main   )
+#target_link_libraries (main)
 
 add_executable (main src/main.cpp)
 target_link_libraries (main Eigen3::Eigen)
 
 add_executable(non_linear_regression src/non_linear_regression.cpp)
-target_link_libraries (non_linear_regression   )
+target_link_libraries (non_linear_regression)
 
 add_executable(non_linear_least_squares src/non_linear_least_squares.cpp)
-target_link_libraries (non_linear_least_squares   )
+target_link_libraries (non_linear_least_squares)
 
 add_executable(numerical_diff src/numerical_diff.cpp)
-target_link_libraries (numerical_diff   )
+target_link_libraries (numerical_diff)
 
 add_executable(levenberg_marquardt src/levenberg_marquardt.cpp)
-target_link_libraries (levenberg_marquardt   )
+target_link_libraries (levenberg_marquardt)
 
 add_executable(eigen_functor src/eigen_functor.cpp)
-target_link_libraries (eigen_functor   )
+target_link_libraries (eigen_functor)
 
 add_executable(auto_diff src/auto_diff.cpp)
-target_link_libraries (auto_diff   )
+target_link_libraries (auto_diff)
 
 
 add_executable(matrix_array_vector src/matrix_array_vector.cpp)
-target_link_libraries (matrix_array_vector   )
+target_link_libraries (matrix_array_vector)
 
 
 add_executable(unaryExpr src/unaryExpr.cpp)
-target_link_libraries (unaryExpr   )
+target_link_libraries (unaryExpr)
 
 add_executable(memory_mapping src/memory_mapping.cpp)
-target_link_libraries (memory_mapping   )
+target_link_libraries (memory_mapping)
 
 add_executable(matrix_broadcasting src/matrix_broadcasting.cpp)
-target_link_libraries (matrix_broadcasting   )
+target_link_libraries (matrix_broadcasting)
 
 add_executable(matrix_decomposition src/matrix_decomposition.cpp)
-target_link_libraries (matrix_decomposition   )
+target_link_libraries (matrix_decomposition)
 
 add_executable(gram_schmidt_orthogonalization src/gram_schmidt_orthogonalization.cpp)
-target_link_libraries (gram_schmidt_orthogonalization   )
+target_link_libraries (gram_schmidt_orthogonalization)
 
 
 add_executable(check_matrixsimilarity src/check_matrixsimilarity.cpp)
-target_link_libraries (check_matrixsimilarity   )
+target_link_libraries (check_matrixsimilarity)
 
 add_executable(geometry_transformation src/geometry_transformation.cpp)
 target_link_libraries (geometry_transformation   ${orocos_kdl_LIBRARIES})
@@ -96,25 +96,31 @@ target_compile_definitions(geometry_transformation PRIVATE KDL_FOUND=${orocos_kd
 
 
 add_executable(eigen_value_eigen_vector src/eigen_value_eigen_vector.cpp)
-target_link_libraries (eigen_value_eigen_vector   )
+target_link_libraries (eigen_value_eigen_vector)
 
 
 add_executable(matrix_rank src/matrix_rank.cpp)
-target_link_libraries (matrix_rank   )
+target_link_libraries (matrix_rank)
 
-add_executable(matrix_condition src/matrix_condition.cpp)
-target_link_libraries (matrix_condition   )
+add_executable(matrix_condition_numerical_stability src/matrix_condition_numerical_stability.cpp)
+target_link_libraries (matrix_condition_numerical_stability)
 
 
 add_executable(singular_value_decomposition src/singular_value_decomposition.cpp)
-target_link_libraries (singular_value_decomposition   )
+target_link_libraries (singular_value_decomposition)
 
 add_executable(sparse_matrices src/sparse_matrices.cpp)
-target_link_libraries (sparse_matrices   )
+target_link_libraries (sparse_matrices)
 
 
 add_executable(3_link_planner_robot src/3_link_planner_robot.cpp)
 target_link_libraries (3_link_planner_robot)
+
+add_executable(null_space_kernel src/null_space_kernel.cpp)
+target_link_libraries (null_space_kernel)
+
+add_executable(solving_system_of_linear_equations src/solving_system_of_linear_equations.cpp)
+target_link_libraries (solving_system_of_linear_equations)
 
 
 

@@ -117,7 +117,7 @@ while( (distanceError(goal,forward_kinematics(q)).squaredNorm()>epsilon)  && (i<
 Full source code [here](src/3_link_planner_robot.cpp)
 
 
-
+# Quasi-Newton Method
 
 # Curve Fitting
 You have a function with unknown parameters and a set of sample data (possibly contaminated with noise) from 

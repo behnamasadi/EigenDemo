@@ -94,7 +94,7 @@ typedef Eigen::Triplet<double> T;//structure to hold a non zero as a triplet (i,
 
 void buildProblem(std::vector<T>& coefficients, Eigen::VectorXd& b, int n){}
 void saveAsBitmap(const Eigen::VectorXd& x, int n, const char* filename){}
-
+//https://eigen.tuxfamily.org/dox/classEigen_1_1Triplet.html
 int main(int argc, char** argv)
 {
   if(argc!=2) {

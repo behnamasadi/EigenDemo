@@ -84,6 +84,7 @@ This repository contains my tutorials on how to master Matrix operation and nume
   * [LDU Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#ldu-decomposition)
   * [SVD Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#svd-decomposition)
   * [Eigen Value Eigen Vector](5_Dense_Linear_Problems_And_Decompositions.md#eigen-value-eigen-vector)
+  * [Basis of Nullspace and Kernel](5_Dense_Linear_Problems_And_Decompositions.md#basis-of-nullspace-and-kernel)
 - [Solving Linear Equation](5_Dense_Linear_Problems_And_Decompositions.md#solving-linear-equation)
 
 

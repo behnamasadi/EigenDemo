@@ -12,6 +12,9 @@
 /*
 
 https://en.wikipedia.org/wiki/Gauss%E2%80%93Newton_algorithm
+https://en.wikipedia.org/wiki/Non-linear_least_squares
+https://lingojam.com/SuperscriptGenerator
+https://lingojam.com/SubscriptGenerator
 
 consider m data points:
 (x₁,y₁),(x₂,y₂),...(xₘ,yₘ)

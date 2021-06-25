@@ -27,7 +27,7 @@
   * [Checking If All Elements Are Positive](#checking-if-all-elements-are-positive)
   * [Checking If Any Elements Is Positive](#checking-if-any-elements-is-positive)
   * [Counting Elements](#counting-elements)
-  * [Matrix Condition Number](#matrix-condition-number)
+  * [Matrix Condition Number and Numerical Stability](#matrix-condition-number)
   * [Matrix Rank](#matrix-rank)
 - [Broadcasting](#broadcasting)
 
@@ -175,7 +175,7 @@ matrix.lpNorm<Eigen::Infinity>()
 ```
 (matrix.array()>1).count();
 ```
-## Matrix Condition Number
+## Matrix Condition Number and Numerical Stability
 
 ## Matrix Rank
 

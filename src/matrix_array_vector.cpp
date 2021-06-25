@@ -176,6 +176,11 @@ void matrixReshaping()
     //https://eigen.tuxfamily.org/dox/group__TutorialBlockOperations.html
 }
 
+//https://eigen.tuxfamily.org/dox/group__TutorialReshapeSlicing.html
+void matrixSlicing()
+{
+
+}
 void matrixResizing()
 {
     std::cout <<"//////////////////Matrix Resizing////////////////////"<< std::endl;

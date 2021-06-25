@@ -11,14 +11,7 @@ Suppose <img  src="https://latex.codecogs.com/svg.latex?f%20:%20R_{n}%20\rightar
 
 <img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\mathbf%20{J}%20={\begin{bmatrix}{\dfrac%20{\partial%20\mathbf%20{f}%20}{\partial%20x_{1}}}&\cdots%20&{\dfrac%20{\partial%20\mathbf%20{f}%20}{\partial%20x_{n}}}\end{bmatrix}}={\begin{bmatrix}\nabla%20^{\mathrm%20{T}%20}f_{1}\\\vdots%20\\\nabla%20^{\mathrm%20{T}%20}f_{m}\end{bmatrix}}={\begin{bmatrix}{\dfrac%20{\partial%20f_{1}}{\partial%20x_{1}}}&\cdots%20&{\dfrac%20{\partial%20f_{1}}{\partial%20x_{n}}}\\\vdots%20&\ddots%20&\vdots%20\\{\dfrac%20{\partial%20f_{m}}{\partial%20x_{1}}}&\cdots%20&{\dfrac%20{\partial%20f_{m}}{\partial%20x_{n}}}\end{bmatrix}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \mathbf {J} ={\begin{bmatrix}{\dfrac {\partial \mathbf {f} }{\partial x_{1}}}&\cdots &{\dfrac {\partial \mathbf {f} }{\partial x_{n}}}\end{bmatrix}}={\begin{bmatrix}\nabla ^{\mathrm {T} }f_{1}\\\vdots \\\nabla ^{\mathrm {T} }f_{m}\end{bmatrix}}={\begin{bmatrix}{\dfrac {\partial f_{1}}{\partial x_{1}}}&\cdots &{\dfrac {\partial f_{1}}{\partial x_{n}}}\\\vdots &\ddots &\vdots \\{\dfrac {\partial f_{m}}{\partial x_{1}}}&\cdots &{\dfrac {\partial f_{m}}{\partial x_{n}}}\end{bmatrix}}}" />
 
-Example: suppose you have the following function:
 
-<img  src="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}%20y_0%20=%2010\times(x_0+3)^2%20+%20(x_1-5)^2%20\\%20y_1%20=%20(x_0+1)\times%20x_1\\%20y_2%20=%20sin(x_0)\times%20x_1%20\end{matrix}\right."  alt="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}
-y_0 = 10\times(x_0+3)^2 + (x_1-5)^2 \\ 
-y_1 = (x_0+1)\times x_1\\ 
-y_2 = sin(x_0)\times x_1
-\end{matrix}\right.
-" />
 
 
 # Hessian Matrix
@@ -30,6 +23,15 @@ The Hessian matrix
 
 We can approximation Hessian Matrix by 
 <img  src="https://latex.codecogs.com/svg.latex?H\approx%20J^TJ"  alt="https://latex.codecogs.com/svg.latex?H\approx J^TJ" />
+
+Example: suppose you have the following function:
+
+<img  src="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}%20y_0%20=%2010\times(x_0+3)^2%20+%20(x_1-5)^2%20\\%20y_1%20=%20(x_0+1)\times%20x_1\\%20y_2%20=%20sin(x_0)\times%20x_1%20\end{matrix}\right."  alt="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}
+y_0 = 10\times(x_0+3)^2 + (x_1-5)^2 \\ 
+y_1 = (x_0+1)\times x_1\\ 
+y_2 = sin(x_0)\times x_1
+\end{matrix}\right.
+" />
 
 In the next you will see how can we compute the Jacobian matrix with `Automatic Differentiation` and `Numerical Differentiation` 
 
