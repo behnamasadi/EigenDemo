@@ -8,7 +8,8 @@
   * [Absolute](#absolute)
   * [Power, Root](#power--root)
   * [Log, Exponential](#log--exponential)
-  * [Min, Mix](#min--mix)
+  * [Min, Mix of Two Matrices](#min--mix-of-two-matrices)
+  * [Check Matrices Similarity](#check-matrices-similarity)
   * [Finite, Inf, NaN](#finite--inf--nan)
   * [Sinusoidal](#sinusoidal)
   * [Floor, Ceil, Round](#floor--ceil--round)
@@ -68,11 +69,13 @@ array1.log()                  log(array1)
 array1.log10()                log10(array1)
 array1.exp()                  exp(array1)
 
-## Min, Mix
+## Min, Mix of Two Matrices
  .min(.) 
  max
  
  If you have two arrays of the same size, you can call .min(.) to construct the array whose coefficients are the minimum of the corresponding coefficients of the two given arrays. 
+ 
+## Check Matrices Similarity 
 
 ## Finite, Inf, NaN
 

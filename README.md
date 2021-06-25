@@ -30,7 +30,8 @@ This repository contains my tutorials on how to master Matrix operation and nume
   * [Absolute](3_Matrix_Operations.md#absolute)
   * [Power, Root](3_Matrix_Operations.md#power--root)
   * [Log, Exponential](3_Matrix_Operations.md#log--exponential)
-  * [Min, Mix](3_Matrix_Operations.md#min--mix)
+  * [Min, Mix of Two Matrices](3_Matrix_Operations.md#min--mix-of-two-matrices)
+  * [Check Matrices Similarity](3_Matrix_Operations.md#check-matrices-similarity)
   * [Finite, Inf, NaN](3_Matrix_Operations.md#finite--inf--nan)
   * [Sinusoidal](3_Matrix_Operations.md#sinusoidal)
   * [Floor, Ceil, Round](3_Matrix_Operations.md#floor--ceil--round)
@@ -97,7 +98,8 @@ This repository contains my tutorials on how to master Matrix operation and nume
 
 # [Chapter 8](8_Differentiation.md)
 - [Jacobian](8_Differentiation.md#jacobian)
-- [Auto Differentiation](8_Differentiation.md#auto-differentiation)
+- [Hessian Matrix](8_Differentiation.md#hessian-matrix)
+- [Automatic Differentiation](8_Differentiation.md#automatic-differentiation)
 - [Numerical Differentiation](8_Differentiation.md#numerical-differentiation)
 
 # [Chapter 9](9_Numerical_Optimization.md)

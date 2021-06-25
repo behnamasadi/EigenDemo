@@ -1,7 +1,6 @@
 - [Memory Alignment](#memory-alignment)
 - [Passing Eigen objects by value to functions](#passing-eigen-objects-by-value-to-functions)
 - [Aliasing](#aliasing)
-- [Check Matrix Similarity](#check-matrix-similarity)
 - [Memory Mapping](#memory-mapping)
 - [Unary Expression](#unary-expression)
 - [Eigen Functor](#eigen-functor)
@@ -13,7 +12,7 @@
 Refs: [1](https://eigen.tuxfamily.org/dox/TopicFunctionTakingEigenTypes.html)
 
 # Aliasing
-# Check Matrix Similarity 
+
 # Memory Mapping
 In many applications, your data has been stored in different data structures and you need to perform some operations on the data. Suppose you have the following class for presenting your points and you have shape which is `std::vector` of such point and now you need to perform an affine matrix transformation on your shape. 
 ```

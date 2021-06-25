@@ -113,6 +113,11 @@ add_executable(sparse_matrices src/sparse_matrices.cpp)
 target_link_libraries (sparse_matrices   )
 
 
+add_executable(3_link_planner_robot src/3_link_planner_robot.cpp)
+target_link_libraries (3_link_planner_robot)
+
+
+
 
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 #	ADD_SUBDIRECTORY(src/sandbox)
