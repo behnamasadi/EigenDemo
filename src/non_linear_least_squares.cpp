@@ -141,7 +141,7 @@ x     y
 2.500,0.2665;
 3.740,0.3317;
 
-the last column in the matrix shold be "y"
+the last column in the matrix should be "y"
 
 */
 
