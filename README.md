@@ -103,8 +103,13 @@ This repository contains my tutorials on how to master Matrix operation and nume
 - [Numerical Differentiation](8_Differentiation.md#numerical-differentiation)
 
 # [Chapter 9](9_Numerical_Optimization.md)
+- [Newton's Method In Optimization](9_Numerical_Optimization.md#newton-s-method-in-optimization)
+- [Gauss-Newton Algorithm](9_Numerical_Optimization.md#gauss-newton-algorithm)
+    + [Example of Gauss-Newton, Inverse Kinematic Problem](9_Numerical_Optimization.md#example-of-gauss-newton--inverse-kinematic-problem)
+- [Curve Fitting](9_Numerical_Optimization.md#curve-fitting)
 - [Non Linear Least Squares](9_Numerical_Optimization.md#non-linear-least-squares)
 - [Non Linear Regression](9_Numerical_Optimization.md#non-linear-regression)
 - [Levenberg Marquardt](9_Numerical_Optimization.md#levenberg-marquardt)
+
 
 

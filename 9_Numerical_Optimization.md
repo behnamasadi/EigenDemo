@@ -1,10 +1,14 @@
+- [Newton's Method In Optimization](#newton-s-method-in-optimization)
+- [Gauss-Newton Algorithm](#gauss-newton-algorithm)
+    + [Example of Gauss-Newton, Inverse Kinematic Problem](#example-of-gauss-newton--inverse-kinematic-problem)
+- [Curve Fitting](#curve-fitting)
 - [Non Linear Least Squares](#non-linear-least-squares)
 - [Non Linear Regression](#non-linear-regression)
 - [Levenberg Marquardt](#levenberg-marquardt)
 
-
+<!--
 <img  src=""  alt="https://latex.codecogs.com/svg.latex?" />
-
+-->
 
 
 
