@@ -98,10 +98,6 @@ target_compile_definitions(geometry_transformation PRIVATE KDL_FOUND=${orocos_kd
 add_executable(eigen_value_eigen_vector src/eigen_value_eigen_vector.cpp)
 target_link_libraries (eigen_value_eigen_vector)
 
-
-add_executable(matrix_rank src/matrix_rank.cpp)
-target_link_libraries (matrix_rank)
-
 add_executable(matrix_condition_numerical_stability src/matrix_condition_numerical_stability.cpp)
 target_link_libraries (matrix_condition_numerical_stability)
 
@@ -116,8 +112,8 @@ target_link_libraries (sparse_matrices)
 add_executable(3_link_planner_robot src/3_link_planner_robot.cpp)
 target_link_libraries (3_link_planner_robot)
 
-add_executable(null_space_kernel src/null_space_kernel.cpp)
-target_link_libraries (null_space_kernel)
+add_executable(null_space_kernel_rank src/null_space_kernel_rank.cpp)
+target_link_libraries (null_space_kernel_rank)
 
 add_executable(solving_system_of_linear_equations src/solving_system_of_linear_equations.cpp)
 target_link_libraries (solving_system_of_linear_equations)

@@ -178,5 +178,24 @@ matrix.lpNorm<Eigen::Infinity>()
 ## Matrix Condition Number and Numerical Stability
 
 ## Matrix Rank
+The column rank of a matrix is maximal number of linearly independent columns of that matrix. The column rank of a matrix is in the dimension of the column space, while the row rank of A is the dimension of the row space. It can be proven that <img  src="https://latex.codecogs.com/svg.latex? \text{column rank} =\text{row rank}"  alt="https://latex.codecogs.com/svg.latex? \text{column rank} =\text{row rank}" />
 
+ 
+
+
+Full rank: if its rank equals the largest possible for a matrix of the same dimensions, which is the lesser of the number of rows and columns
+ 
+ A matrix is said to be rank-deficient if it does not have full rank. The rank deficiency of a matrix is the difference between the lesser between the number of rows and columns, and the rank.
+
+
+Decomposing the matrix is the most common way to get the rank
+
+Gaussian Elimination (row reduction):
+
+This method can also be used to compute the rank of a matrix
+the determinant of a square matrix
+ inverse of an invertible matrix
+
+Row echelon form: means that Gaussian elimination has operated on the rows
+Column echelon form
 # Broadcasting

@@ -16,9 +16,19 @@
   * [LDU Decomposition](#ldu-decomposition)
   * [SVD Decomposition](#svd-decomposition)
   * [Eigen Value Eigen Vector](#eigen-value-eigen-vector)
-  * [Basis of Nullspace and Kernel](#basis-of-nullspace-and-kernel)
+  * [Basis of Null space and Kernel](#basis-of-null-space-and-kernel)
+      - [Linear Map](#linear-map)
+    + [Vector space](#vector-space)
+    + [Null Space](#null-space)
 - [Solving Linear Equation](#solving-linear-equation)
-
+  * [Gaussian Elimination](#gaussian-elimination)
+    + [Row echelon form](#row-echelon-form)
+    + [Trapezoidal Matrix](#trapezoidal-matrix)
+    + [Example of The Gaussian Elimination Algorithm](#example-of-the-gaussian-elimination-algorithm)
+    + [The Determinant of The Matrix](#the-determinant-of-the-matrix)
+    + [Finding The Inverse of The Matrix](#finding-the-inverse-of-the-matrix)
+    + [Computing Ranks and Bases](#computing-ranks-and-bases)
+  * [Conclusion on Computing Rank](#conclusion-on-computing-rank)
 
 # Introduction to Linear Equation
 
@@ -282,6 +292,214 @@ Cholesky decomposition is a decomposition of a Hermitian, positive-definite matr
 ## LDU Decomposition
 ## SVD Decomposition
 ## Eigen Value Eigen Vector
-## Basis of Nullspace and Kernel
+## Basis of Null space and Kernel
+
+
+First let review some definitions:
+#### Linear Map
+Let  <img  src="https://latex.codecogs.com/svg.latex?V"  alt="https://latex.codecogs.com/svg.latex?V" /> and  <img  src="https://latex.codecogs.com/svg.latex?W"  alt="https://latex.codecogs.com/svg.latex?W" /> be vector spaces over the same field  <img  src="https://latex.codecogs.com/svg.latex?K"  alt="https://latex.codecogs.com/svg.latex?K" />. A function <img  src="https://latex.codecogs.com/svg.latex?f:V\to%20W"  alt="https://latex.codecogs.com/svg.latex?f:V\to W" />  is said to be a linear map if for any two vectors
+ <img  src="https://latex.codecogs.com/svg.latex?{\textstyle%20\mathbf%20{u}%20,\mathbf%20{v}%20\in%20V}"  alt="https://latex.codecogs.com/svg.latex?{\textstyle \mathbf {u} ,\mathbf {v} \in V}" />  and any scalar 
+  <img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20c\in%20K}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle c\in K}" />  the following two conditions are satisfied:
+
+- 1. Additivity
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20f(\mathbf%20{u}%20+\mathbf%20{v}%20)=f(\mathbf%20{u}%20)+f(\mathbf%20{v}%20)}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle f(\mathbf {u} +\mathbf {v} )=f(\mathbf {u} )+f(\mathbf {v} )}" />
+
+
+- 2. Operation of scalar multiplication
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20f(c\mathbf%20{u}%20)=cf(\mathbf%20{u}%20)}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle f(c\mathbf {u} )=cf(\mathbf {u} )}" />
+
+### Vector space
+
+### Null Space 
+
+The kernel (null space or nullspace) of a linear map, is the linear subspace of the domain of the map which is mapped to the zero vector. Lets assume <img  src="https://latex.codecogs.com/svg.latex?L"  alt="https://latex.codecogs.com/svg.latex?L" /> is a linear map between two vector spaces <img  src="https://latex.codecogs.com/svg.latex?V"  alt="https://latex.codecogs.com/svg.latex?V" />  and  <img  src="https://latex.codecogs.com/svg.latex?W"  alt="https://latex.codecogs.com/svg.latex?W" /> 
+<br/>
+
+
+ <img  src="https://latex.codecogs.com/svg.latex?L%20:%20V%20\to%20W"  alt="https://latex.codecogs.com/svg.latex?L : V \to W" /> 
+<br/> 
+ 
+The kernel of L is the vector space of all elements v of V such that 
+<img  src="https://latex.codecogs.com/svg.latex?L(v)%20=%200"  alt="https://latex.codecogs.com/svg.latex?L(v) = 0" /> , where 0 denotes the zero vector in W.
+
+
+We can represent the linear map as matrix multiplication <img  src="https://latex.codecogs.com/svg.latex?A_{m\times%20n}"  alt="https://latex.codecogs.com/svg.latex?A_{m\times n}" /> . The kernel of the linear map L is the set of solutions   <img  src="https://latex.codecogs.com/svg.latex?A\mathbf%20x=\mathbf%200"  alt="https://latex.codecogs.com/svg.latex?A\mathbf x=\mathbf 0" />. 
+
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20A\mathbf%20{x}%20=\mathbf%20{0}%20\;\;\Leftrightarrow%20\;\;{\begin{alignedat}{}a_{11}x_{1}&&\;+\;&&a_{12}x_{2}&&\;+\;\cdots%20\;+\;&&a_{1n}x_{n}&&\;=\;&&&0\\a_{21}x_{1}&&\;+\;&&a_{22}x_{2}&&\;+\;\cdots%20\;+\;&&a_{2n}x_{n}&&\;=\;&&&0\\&&&&&&&&&&\vdots%20\%20\;&&&\\a_{m1}x_{1}&&\;+\;&&a_{m2}x_{2}&&\;+\;\cdots%20\;+\;&&a_{mn}x_{n}&&\;=\;&&&0{\text{.}}\\\end{alignedat}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle A\mathbf {x} =\mathbf {0} \;\;\Leftrightarrow \;\;{\begin{alignedat}{}a_{11}x_{1}&&\;+\;&&a_{12}x_{2}&&\;+\;\cdots \;+\;&&a_{1n}x_{n}&&\;=\;&&&0\\a_{21}x_{1}&&\;+\;&&a_{22}x_{2}&&\;+\;\cdots \;+\;&&a_{2n}x_{n}&&\;=\;&&&0\\&&&&&&&&&&\vdots \ \;&&&\\a_{m1}x_{1}&&\;+\;&&a_{m2}x_{2}&&\;+\;\cdots \;+\;&&a_{mn}x_{n}&&\;=\;&&&0{\text{.}}\\\end{alignedat}}}" />
+
+This means to find the kernel of A is we need to solve the above homogeneous equations.
+
+
+Writing  <img  src="https://latex.codecogs.com/svg.latex?h(v)%20=%20A%20\cdot%20v"  alt="https://latex.codecogs.com/svg.latex?h(v) = A \cdot v" /> , then the null-space is the set of all vectors that are sent to the zero (lose their identity) as <img  src="https://latex.codecogs.com/svg.latex?h"  alt="https://latex.codecogs.com/svg.latex?h" /> is applied to them.
+
+
+
+then the null-space is again the set of all vectors that are sent to the zero vector by ℎ. Think of this as the set of vectors that lose their identity as ℎ is applied to them.
+
+
+### Nullity
+The dimension of the kernel of A is called the **nullity** of A
+
+
+### Rank-nullity Theorem
+
+Let <img  src="https://latex.codecogs.com/svg.latex?T\colon%20V\to%20W"  alt="https://latex.codecogs.com/svg.latex?T\colon V\to W" />  be a linear transformation. Then
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\operatorname%20{Rank}%20(T)+\operatorname%20{Nullity}%20(T)=\dim%20V,}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \operatorname {Rank} (T)+\operatorname {Nullity} (T)=\dim V,}" />
+Nullity is the complement to the rank of a matrix. 
+
+
+
 # Solving Linear Equation
+## Gaussian Elimination
+Gaussian Elimination (row reduction) can be used to solve the systems of linear equations. 
+It consists of a sequence of elementary row operations to modify the matrix until the lower left-hand corner of the matrix is filled with zeros and turn into row echelon form . 
+
+
+There are three types of elementary row operations:
+
+1. Swapping two rows,
+2. Multiplying a row by a nonzero number,
+3. Adding a multiple of one row to another row.
+
+
+This method can also be used to compute 
+- The rank of a matrix.
+- The determinant of a square matrix.
+- Inverse of an invertible matrix.
+
+
+### Row echelon form
+A matrix is in row echelon form if:
+
+- All rows consisting of only zeroes are at the bottom.
+- 2 The leading coefficient (also called the pivot) of a nonzero row is always strictly to the right of the leading coefficient of the row above it.
+
+This matrix is in reduced row echelon form, which shows that the left part of the matrix is not always an identity matrix:
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{ccccc}1&0&a_{1}&0&b_{1}\\0&1&a_{2}&0&b_{2}\\0&0&0&1&b_{3}\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{ccccc}1&0&a_{1}&0&b_{1}\\0&1&a_{2}&0&b_{2}\\0&0&0&1&b_{3}\end{array}}\right]}" />
+
+
+
+
+
+
+The matrix:
+
+<img  src="https://latex.codecogs.com/svg.latex?\begin{pmatrix}1&4&7\\0&2&3\end{pmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{pmatrix}1&2&3\\0&4&5\end{pmatrix}" />
+
+is echelon, but not triangular (because not square). 
+
+The matrix:
+
+<img  src="https://latex.codecogs.com/svg.latex?\begin{pmatrix}1&4&7\\0&0&2\\0&0&4\end{pmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{pmatrix}1&2&3\\0&0&4\\0&0&5\end{pmatrix}" />
+
+is triangular, but not echelon (because the leading entry 4 is not to the right of the leading entry 2).
+For non-singular square matrices, "row echelon" and "upper triangular" are equivalent.
+
+### Trapezoidal Matrix  
+A non-square  matrix with zeros above (below) the diagonal is called a lower (upper) trapezoidal matrix.
+
+### Example of The Gaussian Elimination Algorithm
+
+Suppose the following system of linear equations:
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{alignedat}2x&{}+{}&y&{}-{}&z&{}={}&8&\qquad%20(L_{1})\\-3x&{}-{}&y&{}+{}&2z&{}={}&-11&\qquad%20(L_{2})\\-2x&{}+{}&y&{}+{}&2z&{}={}&-3&\qquad%20(L_{3})\end{alignedat}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{alignedat}2x&{}+{}&y&{}-{}&z&{}={}&8&\qquad (L_{1})\\-3x&{}-{}&y&{}+{}&2z&{}={}&-11&\qquad (L_{2})\\-2x&{}+{}&y&{}+{}&2z&{}={}&-3&\qquad (L_{3})\end{alignedat}}}" />
+
+Augmented matrix:
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}2&1&-1&8\\-3&-1&2&-11\\-2&1&2&-3\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}2&1&-1&8\\-3&-1&2&-11\\-2&1&2&-3\end{array}}\right]}" />
+
+
+<br/>
+<br/>
+
+
+
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}L_{2}+{\tfrac%20{3}{2}}L_{1}&\to%20L_{2}\\L_{3}+L_{1}&\to%20L_{3}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}L_{2}+{\tfrac {3}{2}}L_{1}&\to L_{2}\\L_{3}+L_{1}&\to L_{3}\end{aligned}}}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}2&1&-1&8\\0&{\frac%20{1}{2}}&{\frac%20{1}{2}}&1\\0&2&1&5\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}2&1&-1&8\\0&{\frac {1}{2}}&{\frac {1}{2}}&1\\0&2&1&5\end{array}}\right]}" />
+
+<br/>
+<br/>
+
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20L_{3}+-4L_{2}\to%20L_{3}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle L_{3}+-4L_{2}\to L_{3}}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}2&1&-1&8\\0&{\frac%20{1}{2}}&{\frac%20{1}{2}}&1\\0&0&-1&1\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}2&1&-1&8\\0&{\frac {1}{2}}&{\frac {1}{2}}&1\\0&0&-1&1\end{array}}\right]}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}L_{2}+{\tfrac%20{1}{2}}L_{3}&\to%20L_{2}\\L_{1}-L_{3}&\to%20L_{1}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}L_{2}+{\tfrac {1}{2}}L_{3}&\to L_{2}\\L_{1}-L_{3}&\to L_{1}\end{aligned}}}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}2&1&0&7\\0&{\frac%20{1}{2}}&0&{\frac%20{3}{2}}\\0&0&-1&1\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}2&1&0&7\\0&{\frac {1}{2}}&0&{\frac {3}{2}}\\0&0&-1&1\end{array}}\right]}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}2L_{2}&\to%20L_{2}\\-L_{3}&\to%20L_{3}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}2L_{2}&\to L_{2}\\-L_{3}&\to L_{3}\end{aligned}}}" />
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}2&1&0&7\\0&1&0&3\\0&0&1&-1\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}2&1&0&7\\0&1&0&3\\0&0&1&-1\end{array}}\right]}" />
+
+<br/>
+<br/>
+
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}L_{1}-L_{2}&\to%20L_{1}\\{\tfrac%20{1}{2}}L_{1}&\to%20L_{1}\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}L_{1}-L_{2}&\to L_{1}\\{\tfrac {1}{2}}L_{1}&\to L_{1}\end{aligned}}}" />
+
+
+<br/>
+<br/>
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\left[{\begin{array}{rrr|r}1&0&0&2\\0&1&0&3\\0&0&1&-1\end{array}}\right]}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \left[{\begin{array}{rrr|r}1&0&0&2\\0&1&0&3\\0&0&1&-1\end{array}}\right]}" />
+<br/>
+<br/>
+
+### The Determinant of The Matrix
+Then the determinant of A is the product of the elements of the diagonal of B:
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20\det(A)={\frac%20{\prod%20\operatorname%20{diag}%20(B)}{d}}.}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle \det(A)={\frac {\prod \operatorname {diag} (B)}{d}}.}" />
+
+### Finding The Inverse of The Matrix
+First, add the n × n identity matrix is augmented to the right of A such that we get the following
+
+<img  src="https://latex.codecogs.com/svg.latex?[A%20|%20I]_{n\times%202n}"  alt="https://latex.codecogs.com/svg.latex?[A | I]_{n\times 2n}" /> Now during the elementary row operations, apply the same operations on the identity matrix on the right hand side. At the end teh matrix n the right hand side is the inverse of A.
+
+
+### Computing Ranks and Bases
+A common approach to find the rank of a matrix is to reduce it row echelon form, and count the number of non-zero elements in main diagonal.
+
+For example, the matrix A given by
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20A={\begin{bmatrix}1&2&1\\-2&-3&1\\3&5&0\end{bmatrix}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle A={\begin{bmatrix}1&2&1\\-2&-3&1\\3&5&0\end{bmatrix}}}" />
+
+
+following elementary row operations:
+
+<img  src="https://latex.codecogs.com/svg.latex?{\displaystyle%20{\begin{aligned}{\begin{bmatrix}1&2&1\\-2&-3&1\\3&5&0\end{bmatrix}}&\xrightarrow%20{2R_{1}+R_{2}\to%20R_{2}}%20{\begin{bmatrix}1&2&1\\0&1&3\\3&5&0\end{bmatrix}}\xrightarrow%20{-3R_{1}+R_{3}\to%20R_{3}}%20{\begin{bmatrix}1&2&1\\0&1&3\\0&-1&-3\end{bmatrix}}\\&\xrightarrow%20{R_{2}+R_{3}\to%20R_{3}}%20\,\,{\begin{bmatrix}1&2&1\\0&1&3\\0&0&0\end{bmatrix}}\xrightarrow%20{-2R_{2}+R_{1}\to%20R_{1}}%20{\begin{bmatrix}1&0&-5\\0&1&3\\0&0&0\end{bmatrix}}~.\end{aligned}}}"  alt="https://latex.codecogs.com/svg.latex?{\displaystyle {\begin{aligned}{\begin{bmatrix}1&2&1\\-2&-3&1\\3&5&0\end{bmatrix}}&\xrightarrow {2R_{1}+R_{2}\to R_{2}} {\begin{bmatrix}1&2&1\\0&1&3\\3&5&0\end{bmatrix}}\xrightarrow {-3R_{1}+R_{3}\to R_{3}} {\begin{bmatrix}1&2&1\\0&1&3\\0&-1&-3\end{bmatrix}}\\&\xrightarrow {R_{2}+R_{3}\to R_{3}} \,\,{\begin{bmatrix}1&2&1\\0&1&3\\0&0&0\end{bmatrix}}\xrightarrow {-2R_{2}+R_{1}\to R_{1}} {\begin{bmatrix}1&0&-5\\0&1&3\\0&0&0\end{bmatrix}}~.\end{aligned}}}" />
+
+
+There are two non-zero rows in the final matrix and therefore the rank of matrix is 2.
+
+## Conclusion on Computing Rank
+In practice, due to floating point error on computers,  Gaussian elimination (LU decomposition) can be unreliable, therefore rank-revealing decomposition such as RRQR factorization (rank-revealing QR which is QR decomposition with pivoting) should be used. The singular value decomposition (SVD) can be used, but it is not an efficient method to do so.
+
+
 
