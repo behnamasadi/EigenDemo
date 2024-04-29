@@ -1,3 +1,4 @@
+# Chapter 8 Differentiation
 - [Jacobian](#jacobian)
 - [Hessian Matrix](#hessian-matrix)
 - [Automatic Differentiation](#automatic-differentiation)
@@ -157,6 +158,7 @@ std::cout << "jacobian of matrix at "<< x(0)<<","<<x(1)  <<" is:\n " << fjac << 
 
 Full source code: [here](src/numerical_diff.cpp)
     
-    
 
 
+
+[<< Previous ](7_Geometry_Transformation.md)  [Home](README.md)  [ Next >>](9_Numerical_Optimization.md)

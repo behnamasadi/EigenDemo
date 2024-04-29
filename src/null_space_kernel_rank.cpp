@@ -3,6 +3,7 @@ https://stackoverflow.com/questions/34662940/how-to-compute-basis-of-nullspace-w
 */
 #include <Eigen/Dense>
 #include <iostream>
+using namespace Eigen;
 
 void fullPivLU()
 {
@@ -37,26 +38,9 @@ void fullPivLU()
 
 }
 
-void completeOrthogonalDecompositionNullSpace()
-{
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> mat37(3,7);
-    mat37 = Eigen::MatrixXd::Random(3, 7);
 
-    Eigen::CompleteOrthogonalDecomposition<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> > cod;
-    cod.compute(mat37);
-    std::cout << "rank : " << cod.rank() << "\n";
-    // Find URV^T
-    Eigen::MatrixXd V = cod.matrixZ().transpose();
-    Eigen::MatrixXd Null_space = V.block(0, cod.rank(),V.rows(), V.cols() - cod.rank());
-    Eigen::MatrixXd P = cod.colsPermutation();
-    Null_space = P * Null_space; // Unpermute the columns
-    // The Null space:
-    std::cout << "The null space: \n" << Null_space << "\n" ;
-    // Check that it is the null-space:
-    std::cout << "mat37 * Null_space = \n" << mat37 * Null_space  << '\n';
-}
 
 int main()
 {
-    completeOrthogonalDecompositionNullSpace();
+    //completeOrthogonalDecompositionNullSpace();
 }

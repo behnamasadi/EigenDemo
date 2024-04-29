@@ -1,3 +1,4 @@
+#  Chapter 3 Matrix Operations
 - [Matrix Arithmetic](#matrix-arithmetic)
   * [Addition/Subtraction Matrices/ Scalar](#addition-subtraction-matrices--scalar)
   * [Scalar Multiplication/ Division](#scalar-multiplication--division)
@@ -178,14 +179,11 @@ matrix.lpNorm<Eigen::Infinity>()
 ## Matrix Condition Number and Numerical Stability
 
 ## Matrix Rank
-The column rank of a matrix is maximal number of linearly independent columns of that matrix. The column rank of a matrix is in the dimension of the column space, while the row rank of A is the dimension of the row space. It can be proven that <img  src="https://latex.codecogs.com/svg.latex? \text{column rank} =\text{row rank}"  alt="https://latex.codecogs.com/svg.latex? \text{column rank} =\text{row rank}" />
-
- 
-
+The column rank of a matrix is the maximal number of linearly independent columns of that matrix. The column rank of a matrix is in the dimension of the column space, while the row rank of A is the dimension of the row space. It can be proven that <img  src=" https://latex.codecogs.com/svg.latex?%20\text{column%20rank}%20=\text{row%20rank}"  alt="https://latex.codecogs.com/svg.latex? \text{column rank} =\text{row rank}" />
 
 Full rank: if its rank equals the largest possible for a matrix of the same dimensions, which is the lesser of the number of rows and columns
  
- A matrix is said to be rank-deficient if it does not have full rank. The rank deficiency of a matrix is the difference between the lesser between the number of rows and columns, and the rank.
+ A matrix is said to be rank-deficient if it does not have full rank. The rank deficiency of a matrix is the difference between the lesser the number of rows and columns, and the rank.
 
 
 Decomposing the matrix is the most common way to get the rank
@@ -194,8 +192,12 @@ Gaussian Elimination (row reduction):
 
 This method can also be used to compute the rank of a matrix
 the determinant of a square matrix
- inverse of an invertible matrix
+ the inverse of an invertible matrix
 
 Row echelon form: means that Gaussian elimination has operated on the rows
 Column echelon form
 # Broadcasting
+
+
+[<< Previous ](2_Matrix_Array_Vector_Class.md)  [Home](README.md)  [ Next >>](4_Advanced_Eigen_Operations.md)
+

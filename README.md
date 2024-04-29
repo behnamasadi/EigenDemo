@@ -1,28 +1,22 @@
-## **This repository is outdated, Please check out my updated repository [Mastering_Eigen](https://github.com/behnamasadi/Mastering_Eigen)**
+# Linear Algebra With Eigen and C++
+This repository contains my tutorials on how to master Matrix operation and numerical optimisation with Eigen and C++. The following will be the outline of this repository:
 
+# [Chapter 1 Introduction and Installation](1_Intro_Installation.md)
+- [About Eigen](1_Intro_Installation.md#about-eigen)
+- [Instillation](1_Intro_Installation.md#instillation)
+- [Adding Eigen to Your Project](1_Intro_Installation.md#adding-eigen-to-your-project)
 
-<br/>
-<br/>
-<br/>
-# [Chapter 1](1_Installation.md)
-- [Eigen Introduction and Installation](1_Installation.md)
-
-# [Chapter 2](2_Matrix_Array_Vector_Class.md)
+# [Chapter 2 Matrix, Array and Vector Class](2_Matrix_Array_Vector_Class.md)
 - [Matrix Class](2_Matrix_Array_Vector_Class.md#matrix-class)
 - [Vector Class](2_Matrix_Array_Vector_Class.md#vector-class)
 - [Array Class](2_Matrix_Array_Vector_Class.md#array-class)
-  * [Converting Array to Matrix](2_Matrix_Array_Vector_Class.md#converting-array-to-matrix)
-  * [Converting Matrix to Array](2_Matrix_Array_Vector_Class.md#converting-matrix-to-array)
-- [Initialization](2_Matrix_Array_Vector_Class.md#initialization)
+ - [Initialization](2_Matrix_Array_Vector_Class.md#initialization)
 - [Accessing Elements (Coefficient)](2_Matrix_Array_Vector_Class.md#accessing-elements--coefficient-)
-  * [Accessing via parenthesis](2_Matrix_Array_Vector_Class.md#accessing-via-parenthesis)
-  * [Accessing via pointer to data](2_Matrix_Array_Vector_Class.md#accessing-via-pointer-to-data)
-  * [Row Major Access](2_Matrix_Array_Vector_Class.md#row-major-access)
-  * [Accessing a block of data](2_Matrix_Array_Vector_Class.md#accessing-a-block-of-data)
 - [Reshaping, Resizing, Slicing](2_Matrix_Array_Vector_Class.md#reshaping--resizing--slicing)
 - [Tensor Module](2_Matrix_Array_Vector_Class.md#tensor-module)
 
-# [Chapter 3](3_Matrix_Operations.md)
+
+# [Chapter 3 Matrix Operations](3_Matrix_Operations.md)
 
 - [Matrix Arithmetic](3_Matrix_Operations.md#matrix-arithmetic)
   * [Addition/Subtraction Matrices/ Scalar](3_Matrix_Operations.md#addition-subtraction-matrices--scalar)
@@ -58,56 +52,66 @@
 - [Broadcasting](3_Matrix_Operations.md#broadcasting)
 
 
-# [Chapter 4](4_Advanced_Eigen_Operations.md)
+# [Chapter 4 Advanced Eigen Operations](4_Advanced_Eigen_Operations.md)
 
 - [Memory Alignment](4_Advanced_Eigen_Operations.md#memory-alignment)
 - [Passing Eigen objects by value to functions](4_Advanced_Eigen_Operations.md#passing-eigen-objects-by-value-to-functions)
 - [Aliasing](4_Advanced_Eigen_Operations.md#aliasing)
-- [Check Matrix Similarity](4_Advanced_Eigen_Operations.md#check-matrix-similarity)
 - [Memory Mapping](4_Advanced_Eigen_Operations.md#memory-mapping)
 - [Unary Expression](4_Advanced_Eigen_Operations.md#unary-expression)
 - [Eigen Functor](4_Advanced_Eigen_Operations.md#eigen-functor)
 
-# [Chapter 5](5_Dense_Linear_Problems_And_Decompositions.md)
+# [Chapter 5 Dense Linear Problems And Decompositions](5_Dense_Linear_Problems_And_Decompositions.md)
 
 - [Introduction to Linear Equation](5_Dense_Linear_Problems_And_Decompositions.md#introduction-to-linear-equation)
-  * [Solution set](5_Dense_Linear_Problems_And_Decompositions.md#solution-set)
-  * [Underdetermined System](5_Dense_Linear_Problems_And_Decompositions.md#underdetermined-system)
-  * [Overdetermined System](5_Dense_Linear_Problems_And_Decompositions.md#overdetermined-system)
-  * [Determined](5_Dense_Linear_Problems_And_Decompositions.md#determined)
-  * [Homogeneous vs Non-homogeneous](5_Dense_Linear_Problems_And_Decompositions.md#homogeneous-vs-non-homogeneous)
-- [Matrices Decompositions](5_Dense_Linear_Problems_And_Decompositions.md#matrices-decompositions)
-  * [QR Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#qr-decomposition)
-    + [Square Matrix](5_Dense_Linear_Problems_And_Decompositions.md#square-matrix)
-    + [Rectangular Matrix](5_Dense_Linear_Problems_And_Decompositions.md#rectangular-matrix)
-    + [Computing the QR Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#computing-the-qr-decomposition)
-      - [Gram Schmidt Orthogonalization](5_Dense_Linear_Problems_And_Decompositions.md#gram-schmidt-orthogonalization)
-      - [Householder Transformations](5_Dense_Linear_Problems_And_Decompositions.md#householder-transformations)
-  * [QL, RQ and LQ Decompositions](5_Dense_Linear_Problems_And_Decompositions.md#ql--rq-and-lq-decompositions)
-  * [Cholesky Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#cholesky-decomposition)
-  * [LDU Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#ldu-decomposition)
-  * [SVD Decomposition](5_Dense_Linear_Problems_And_Decompositions.md#svd-decomposition)
-  * [Eigen Value Eigen Vector](5_Dense_Linear_Problems_And_Decompositions.md#eigen-value-eigen-vector)
-  * [Basis of Nullspace and Kernel](5_Dense_Linear_Problems_And_Decompositions.md#basis-of-nullspace-and-kernel)
-- [Solving Linear Equation](5_Dense_Linear_Problems_And_Decompositions.md#solving-linear-equation)
+  *  [Vector space](5_Dense_Linear_Problems_And_Decompositions.md#vector-space)
+  *  [Introduction to Linear Equation](5_Dense_Linear_Problems_And_Decompositions.md#introduction-to-linear-equation)
+  *  [Solving Linear Equation](5_Dense_Linear_Problems_And_Decompositions.md#solving-linear-equation)
+  *  [Row echelon form](5_Dense_Linear_Problems_And_Decompositions.md#row-echelon-form)
+  *  [Reduced row echelon form](5_Dense_Linear_Problems_And_Decompositions.md#reduced-row-echelon-form)
+  *  [Trapezoidal Matrix](5_Dense_Linear_Problems_And_Decompositions.md#trapezoidal-matrix)
+  *  [Matrices Decompositions](5_Dense_Linear_Problems_And_Decompositions.md#matrices-decompositions)
+  *  [Linear Map](5_Dense_Linear_Problems_And_Decompositions.md#linear-map)
+  *  [Span](5_Dense_Linear_Problems_And_Decompositions.md#span)
+  *  [Subspace](5_Dense_Linear_Problems_And_Decompositions.md#subspace)
+  *  [Row Spaces and Column Spaces](5_Dense_Linear_Problems_And_Decompositions.md#row-spaces-and-column-spaces)
+  *  [Range of a Matrix](5_Dense_Linear_Problems_And_Decompositions.md#range-of-a-matrix)
+  *  [Basis](5_Dense_Linear_Problems_And_Decompositions.md#basis)
+  *  [Rank of Matrix](5_Dense_Linear_Problems_And_Decompositions.md#rank-of-matrix)
+  *  [Dimension of the Column Space](5_Dense_Linear_Problems_And_Decompositions.md#dimension-of-the-column-space)
+  *  [Null Space (Kernel)](5_Dense_Linear_Problems_And_Decompositions.md#null-space--kernel-)
+  *  [Nullity](5_Dense_Linear_Problems_And_Decompositions.md#nullity)
+  *  [Rank-nullity Theorem](5_Dense_Linear_Problems_And_Decompositions.md#rank-nullity-theorem)
+  *  [The Determinant of The Matrix](5_Dense_Linear_Problems_And_Decompositions.md#the-determinant-of-the-matrix)
+  *  [Finding The Inverse of The Matrix](5_Dense_Linear_Problems_And_Decompositions.md#finding-the-inverse-of-the-matrix)
+  *  [The Fundamental Theorem of Linear Algebra](5_Dense_Linear_Problems_And_Decompositions.md#the-fundamental-theorem-of-linear-algebra)
+  *  [Permutation Matrix](5_Dense_Linear_Problems_And_Decompositions.md#permutation-matrix)
+  *  [Augmented Matrix](5_Dense_Linear_Problems_And_Decompositions.md#augmented-matrix)
 
-
-# [Chapter 6](6_Sparse_Matrices.md)
+# [Chapter 6 Sparse Matrices](6_Sparse_Matrices.md)
 
 - [Sparse Matrix Manipulations](6_Sparse_Matrices.md#sparse-matrix-manipulations)
+  * [Compressed Sparse Row](6_Sparse_Matrices.md#compressed-sparse-row)
 - [Solving Sparse Linear Systems](6_Sparse_Matrices.md#solving-sparse-linear-systems)
 - [Matrix Free Solvers](6_Sparse_Matrices.md#matrix-free-solvers)
 
 
-# [Chapter 7](7_Geometry_Transformation.md)
+# [Chapter 7 Geometry Transformation](7_Geometry_Transformation.md)
+- [Homogeneous Transformations](7_Geometry_Transformation.md#homogeneous-transformations)
+- [Translation, Scaling, and Rotations Matrices](7_Geometry_Transformation.md#translation--scaling--and-rotations-matrices)
+- [Euler Angles](7_Geometry_Transformation.md#euler-angles)
+- [Quaternions](7_Geometry_Transformation.md#quaternions)
+- [Orthogonal Vector Generation](7_Geometry_Transformation.md#orthogonal-vector-generation)
+- [Parametrized Lines And Hyperplanes](7_Geometry_Transformation.md#parametrized-lines-and-hyperplanes)
+- [Least Square Transformation Fitting](7_Geometry_Transformation.md#least-square-transformation-fitting)
 
-# [Chapter 8](8_Differentiation.md)
+# [Chapter 8 Differentiation](8_Differentiation.md)
 - [Jacobian](8_Differentiation.md#jacobian)
 - [Hessian Matrix](8_Differentiation.md#hessian-matrix)
 - [Automatic Differentiation](8_Differentiation.md#automatic-differentiation)
 - [Numerical Differentiation](8_Differentiation.md#numerical-differentiation)
 
-# [Chapter 9](9_Numerical_Optimization.md)
+# [Chapter 9 Numerical Optimization](9_Numerical_Optimization.md)
 - [Newton's Method In Optimization](9_Numerical_Optimization.md#newton-s-method-in-optimization)
 - [Gauss-Newton Algorithm](9_Numerical_Optimization.md#gauss-newton-algorithm)
     + [Example of Gauss-Newton, Inverse Kinematic Problem](9_Numerical_Optimization.md#example-of-gauss-newton--inverse-kinematic-problem)

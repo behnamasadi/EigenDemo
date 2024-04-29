@@ -1,3 +1,4 @@
+# Chapter 2 Matrix, Array and Vector Class
 - [Matrix Class](#matrix-class)
 - [Vector Class](#vector-class)
 - [Array Class](#array-class)
@@ -233,10 +234,7 @@ dynamicMatrix.col(dynamicMatrix.cols()-1) = Eigen::Vector2d(1, 4);
 
 # Tensor Module
 
-
-
-
-
+[<< Previous ](1_Intro_Installation.md)  [Home](README.md) [ Next >>](3_Matrix_Operations.md)
 
 
 

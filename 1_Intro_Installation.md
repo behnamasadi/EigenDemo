@@ -1,3 +1,14 @@
+# Chapter 1 Introduction and Installation
+- [About Eigen](#about-eigen)
+- [Instillation](#instillation)
+- [Adding Eigen to Your Project](#adding-eigen-to-your-project)
+
+
+# About Eigen
+Eigen is a pure header library meaning everything is in the `.hpp` files. Eigen is implemented using the expression templates technique, which builds structures at compile time, where expressions are evaluated only as needed. This means it builds expression trees at compile time and generates custom code to evaluate them
+This technique enables the programmer to bypass the normal order of expression evaluation in the C++ and achieve optimizations such as loop fusion and loop unrolling.
+
+# Instillation
 Installation is fairly straightforward, on debian based OS:
 ```
 sudo apt-get install libeigen3-dev
@@ -21,7 +32,11 @@ please note that I have set:
 -DCMAKE_INSTALL_PREFIX:PATH=~/usr
 ```
 This way the Eigen will be installed `in home/<user-name>/usr` and not in the `/usr` so no root privilege is needed.
-Now in your cmake file you have to set the `Eigen3_DIR`:
+
+
+# Adding Eigen to Your Project
+
+Now in your CMake file you have to set the `Eigen3_DIR`:
 
 
 ```
@@ -37,6 +52,8 @@ MESSAGE("EIGEN3_VERSION_STRING: " ${EIGEN3_VERSION_STRING})
 
 add_executable (example example.cpp)
 target_link_libraries (example Eigen3::Eigen)
-
 ```
+
+[Home](README.md) [Next >>](2_Matrix_Array_Vector_Class.md)
+
 

@@ -1,19 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
-project(EigenDemo)
+project(Mastering_Eigen)
 
-# Check for c++11 support
-INCLUDE(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-IF(COMPILER_SUPPORTS_CXX11)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-ELSEIF(COMPILER_SUPPORTS_CXX0X)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-ELSE()
-  MESSAGE(ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-ENDIF()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -30,20 +21,27 @@ MESSAGE("EIGEN3_VERSION_STRING: " ${EIGEN3_VERSION_STRING})
 
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
-MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
-include_directories(${orocos_kdl_INCLUDE_DIRS})
+
 
 find_package(orocos_kdl)
-IF(${orocos_kdl_FOUND})
+if(${orocos_kdl_FOUND})
+    MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
+    MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
+    include_directories(${orocos_kdl_INCLUDE_DIRS})
     MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
     MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
     MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
     include_directories(${orocos_kdl_INCLUDE_DIRS})
-ENDIF()
+endif()
 
-#add_executable(main src/main.cpp)
-#target_link_libraries (main)
+find_package(glm)
+if(${glm_FOUND})
+    MESSAGE("glm_FOUND: " ${glm_FOUND})
+    MESSAGE("GLM_LIBRARIES: " ${GLM_LIBRARIES})
+    MESSAGE("GLM_INCLUDE_DIRS: " ${GLM_INCLUDE_DIRS})
+    add_executable (glm src/glm.cpp)
+    target_link_libraries (glm glm::glm)
+endif()
 
 add_executable (main src/main.cpp)
 target_link_libraries (main Eigen3::Eigen)
@@ -86,14 +84,21 @@ target_link_libraries (matrix_decomposition)
 add_executable(gram_schmidt_orthogonalization src/gram_schmidt_orthogonalization.cpp)
 target_link_libraries (gram_schmidt_orthogonalization)
 
-
 add_executable(check_matrixsimilarity src/check_matrixsimilarity.cpp)
 target_link_libraries (check_matrixsimilarity)
 
-add_executable(geometry_transformation src/geometry_transformation.cpp)
-target_link_libraries (geometry_transformation   ${orocos_kdl_LIBRARIES})
-target_compile_definitions(geometry_transformation PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
+add_executable(quaternion src/quaternion.cpp)
+target_link_libraries (quaternion)
 
+add_executable(rotation_matrices src/rotation_matrices.cpp)
+target_link_libraries (rotation_matrices   ${orocos_kdl_LIBRARIES})
+target_compile_definitions(rotation_matrices PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
+
+add_executable(angle_axis_rodrigues src/angle_axis_rodrigues.cpp)
+target_link_libraries (angle_axis_rodrigues)
+
+add_executable(euler_angle.cpp src/euler_angle.cpp)
+target_link_libraries (euler_angle.cpp)
 
 add_executable(eigen_value_eigen_vector src/eigen_value_eigen_vector.cpp)
 target_link_libraries (eigen_value_eigen_vector)
@@ -101,16 +106,11 @@ target_link_libraries (eigen_value_eigen_vector)
 add_executable(matrix_condition_numerical_stability src/matrix_condition_numerical_stability.cpp)
 target_link_libraries (matrix_condition_numerical_stability)
 
-
 add_executable(singular_value_decomposition src/singular_value_decomposition.cpp)
 target_link_libraries (singular_value_decomposition)
 
 add_executable(sparse_matrices src/sparse_matrices.cpp)
 target_link_libraries (sparse_matrices)
-
-
-add_executable(3_link_planner_robot src/3_link_planner_robot.cpp)
-target_link_libraries (3_link_planner_robot)
 
 add_executable(null_space_kernel_rank src/null_space_kernel_rank.cpp)
 target_link_libraries (null_space_kernel_rank)
@@ -118,8 +118,17 @@ target_link_libraries (null_space_kernel_rank)
 add_executable(solving_system_of_linear_equations src/solving_system_of_linear_equations.cpp)
 target_link_libraries (solving_system_of_linear_equations)
 
+add_executable(numerical_methods src/numerical_methods.cpp)
+target_link_libraries (numerical_methods)
 
+add_executable(calculate_range_of_matrix_column_space src/calculate_range_of_matrix_column_space.cpp)
+target_link_libraries (calculate_range_of_matrix_column_space)
 
+add_executable(compute_basis_of_nullspace src/compute_basis_of_nullspace.cpp)
+target_link_libraries (compute_basis_of_nullspace)
+
+#add_executable(random_number_generation src/random_number_generation.cpp)
+#target_link_libraries (random_number_generation)
 
 #IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
 #	ADD_SUBDIRECTORY(src/sandbox)

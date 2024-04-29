@@ -1,3 +1,4 @@
+#  Chapter 9 Numerical Optimization
 - [Newton's Method In Optimization](#newton-s-method-in-optimization)
 - [Gauss-Newton Algorithm](#gauss-newton-algorithm)
     + [Example of Gauss-Newton, Inverse Kinematic Problem](#example-of-gauss-newton--inverse-kinematic-problem)
@@ -260,3 +261,8 @@ And the main loop:
 # Levenberg Marquardt
  The Levenberg-Marquardt algorithm aka the damped least-squares (DLS) method, is used to solve non-linear least squares problems. The LMA is used in many mainly for solving curve-fitting problems. 
 The LMA finds only a local minimum  (which may not be the global minimum). The LMA interpolates between the Gauss-Newton algorithm and the method of gradient descent. The LMA is more robust than the GNA, which means that in many cases it finds a solution even if it starts very far off the final minimum. For well-behaved functions and reasonable starting parameters, the LMA tends to be slower than the GNA. LMA can also be viewed as Gauss–Newton using a trust region approach.
+
+
+
+[<< Previous ](8_Differentiation.md)   [Home](README.md)  
+

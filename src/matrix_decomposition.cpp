@@ -165,6 +165,11 @@ void lUDecomposition()
     L: lower triangular matrix L
     U: upper triangular matrix U
     A=LU
+
+
+    https://www.youtube.com/watch?v=aFbjNVZNYYk&ab_channel=TobyDriscoll
+    https://www.youtube.com/watch?v=mmoliBMaaQs&ab_channel=TobyDriscoll
+
 */
 }
 
@@ -186,8 +191,36 @@ end
 
 void householderTransformation()
 {
+/*
+https://www.statlect.com/matrix-algebra/Householder-matrix
+https://www.youtube.com/watch?v=b8RRyHI95V0&ab_channel=Poujh
+
+*/
+    Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic> matrix;
+    matrix.resize(3,3);
+    matrix<<1,2,1,
+            2,3,2,
+            1,2,3;
 
 }
+//http://eigen.tuxfamily.org/dox/group__DenseDecompositionBenchmark.html
+
+
+void denseDecompositions()
+{
+    //LLT
+    //LDLT
+    //PartialPivLU
+    //FullPivLU
+    //HouseholderQR
+    //ColPivHouseholderQR
+    //CompleteOrthogonalDecomposition
+    //FullPivHouseholderQR
+    //JacobiSVD
+    //BDCSVD
+}
+
+
 
 int main()
 {
