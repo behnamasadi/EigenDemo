@@ -22,6 +22,23 @@ struct point {
 };
 ```
 One costly approach would be to iterate over your container and copy your data to some Eigen matrix. But there is a better approach. Eigen enables you to map the memory (of your existing data) into your matrices without copying.
+
+
+## Eigen matrix from std::vector
+
+```cpp
+ std::vector<float> data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+```
+
+The default alignment is column major:
+
+```cpp
+    auto einMatColMajor = Eigen::Map<Eigen::Matrix<float, 3, 3>>(data.data());
+    auto einMatRowMajor =  Eigen::Map<Eigen::Matrix<float, 3, 3, Eigen::RowMajor>>(data.data());
+```
+
+
+
 # Unary Expression
 # Eigen Functor
 
