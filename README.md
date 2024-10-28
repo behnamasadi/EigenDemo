@@ -1,9 +1,9 @@
 # Linear Algebra With Eigen and C++
-This repository contains my tutorials on how to master Matrix operation and numerical optimisation with Eigen and C++. The following will be the outline of this repository:
+This repository contains my tutorials on mastering Matrix operation and numerical optimization with Eigen and C++. The following will be the outline of this repository:
 
 # [Chapter 1 Introduction and Installation](1_Intro_Installation.md)
 - [About Eigen](1_Intro_Installation.md#about-eigen)
-- [Instillation](1_Intro_Installation.md#instillation)
+- [Installation](1_Intro_Installation.md#instillation)
 - [Adding Eigen to Your Project](1_Intro_Installation.md#adding-eigen-to-your-project)
 
 # [Chapter 2 Matrix, Array and Vector Class](2_Matrix_Array_Vector_Class.md)
