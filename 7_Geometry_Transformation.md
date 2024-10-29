@@ -1221,4 +1221,9 @@ Where <img src="https://latex.codecogs.com/svg.latex?%28Q%5E%7BA%7D_%7BB%7D%29%5
 
 Full list of conversion [here](http://www.euclideanspace.com/maths/geometry/rotations/conversions/eulerToQuaternion/index.htm) 
 
+
+## Conversion of Quaternions to Other Rotation Representations
+
+Refs: [1](https://github.com/gaoxiang12/slambook-en/blob/master/chapters/rigidBody.tex)
+
 [<< Previous ](6_Sparse_Matrices.md)  [Home](README.md)   [Next >>](8_Differentiation.md)

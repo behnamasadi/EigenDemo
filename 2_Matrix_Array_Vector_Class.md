@@ -212,6 +212,19 @@ matrix.block(starting_row,starting_column,number_rows_in_block,number_cols_in_bl
 ```
 
 
+## Casing Matrices
+
+```cpp
+Eigen::Matrix<float, 2, 3> matrix_23;
+// Eigen::Matrix<float, 3, 1> vd_3d;
+Eigen::Vector3d v_3d;
+
+// wrong Eigen::Matrix<double, 2, 1> result_wrong_type = matrix_23 ∗ v_3d;
+
+Eigen::Matrix<double, 2, 1> result = matrix_23.cast<double>() * v_3d;
+```
+
+
 # Reshaping, Resizing, Slicing
 The current size of a matrix can be retrieved by `rows()`, `cols()` and `size()` method. Resizing a dynamic-size matrix is done by the resize() method, which is a no-operation if the actual matrix size doesn't change, i.e. chaning from `3x4` to `6x2`
 

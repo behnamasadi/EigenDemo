@@ -289,7 +289,14 @@ void scalarMultiplicationDivision() {}
 void multiplicationDotCrossProduct() {}
 
 void casingMatrices() {
-  // wrong Matrix<double, 2, 1> result_wrong_type = matrix_23 ∗ v_3d;
+
+  Eigen::Matrix<float, 2, 3> matrix_23;
+  // Eigen::Matrix<float, 3, 1> vd_3d;
+  Eigen::Vector3d v_3d;
+
+  // wrong Eigen::Matrix<double, 2, 1> result_wrong_type = matrix_23 ∗ v_3d;
+
+  Eigen::Matrix<double, 2, 1> result = matrix_23.cast<double>() * v_3d;
 }
 int main() {
   // buildMatrixFromVector();

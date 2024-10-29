@@ -894,6 +894,22 @@ Singular value decomposition (SVD) is a factorization of a real or (complex matr
 
 
 
+### SelfAdjointEigenSolver
+Computes eigenvalues and eigenvectors of selfadjoint matrices.
+
+```cpp
+  // Real symmetric matrix can guarantee successful diagonalization
+
+  Eigen::Matrix3d matrix_33 = Eigen::Matrix3d::Random(); // Random Number Matrix
+
+  Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> eigen_solver(
+      matrix_33.transpose() * matrix_33);
+  std::cout << "Eigen values = \n" << eigen_solver.eigenvalues() << std::endl;
+  std::cout << "Eigen vectors = \n" << eigen_solver.eigenvectors() << std::endl;
+```
+
+
+
 ###  4.15.1 Applications of the SVD
 #### 4.15.1.1 Pseudoinverse
 
