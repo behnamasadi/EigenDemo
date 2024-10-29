@@ -53,7 +53,7 @@ typedef Matrix<float, 4, 4> Matrix4f;
 or 
 ```
 typedef Matrix<double, Dynamic, Dynamic> MatrixXd;
-``` 
+```
  
  
 Here are more examples:
@@ -189,7 +189,8 @@ If you need to access the underlying data directly, you can use `matrix.data()` 
     {
           std::cout << *(matrix.data() + i) << "  ";
     }
-```    
+```
+
 ## Row Major Access
 
 By default the, Eigen matrices are column major, to change it just pass the template parameter:
@@ -233,6 +234,7 @@ dynamicMatrix.col(dynamicMatrix.cols()-1) = Eigen::Vector2d(1, 4);
 
 
 # Tensor Module
+
 
 [<< Previous ](1_Intro_Installation.md)  [Home](README.md) [ Next >>](3_Matrix_Operations.md)
 
