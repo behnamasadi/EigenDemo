@@ -572,10 +572,61 @@ Refs: [1](https://fzheng.me/2017/11/12/quaternion_conventions_en/)
 
 ## 4.2. Inverse of Quaternions
 
+
+### Conjugate
+The conjugate of a quaternion is to take the imaginary part as the opposite: 
+
+<img src="https://latex.codecogs.com/svg.image?\begin{equation}\mathbf{q}_a^*=s_a-x_ai-y_aj-z_ak=[s_a,-\mathbf{v}_a]^T.\end{equation}" alt="https://latex.codecogs.com/svg.image?\begin{equation}
+    \mathbf{q}_a ^ * = s_a - x_ai - y_aj - z_ak = [s_a, - \mathbf{v}_a] ^T.
+    \end{equation}" />
+
+
+
+We get a real quaternion if the quaternion is multiplied by its conjugate. The real part is the square of its length:
+
+
+
+<img src="https://latex.codecogs.com/svg.image?\begin{equation}\mathbf{q}^*\mathbf{q}=\mathbf{q}\mathbf{q}^*=[s^2&plus;\mathbf{v}^T\mathbf{v},\mathbf{0}]^T.\end{equation}" alt="https://latex.codecogs.com/svg.image?\begin{equation}     \mathbf{q}^* \mathbf{q} = \mathbf{q} \mathbf{q}^* = [s^2+\mathbf{v}^T \mathbf{v}, \mathbf{0} ]^T.     \end{equation}" />
+
+
+
 <br/>
 <br/>
 
+### length
+The length of a quaternion is defined as
+
+<img src="https://latex.codecogs.com/svg.image?\begin{equation}\|\mathbf{q}_a\|=\sqrt{s_a^2&plus;x_a^2&plus;y_a^2&plus;z_a^2}.\end{equation}"  alt="https://latex.codecogs.com/svg.image?\begin{equation}     \| \mathbf{q}_a \| = \sqrt{ s_a^2 + x_a^2 + y_a^2 + z_a^2 }.\end{equation}" />
+
+
+It can be verified that the length of the product is the product of the lengths.
+
+
+<img src="https://latex.codecogs.com/svg.image?\begin{equation}\|\mathbf{q}_a\mathbf{q}_b\|=\|\mathbf{q}_a\|\|\mathbf{q}_b\|.\end{equation}
+" alt="https://latex.codecogs.com/svg.image?\begin{equation}     \| \mathbf{q}_a \mathbf{q}_b \| = \|\mathbf{q}_a \| \| \mathbf{q}_b \|.     \end{equation}" />
+
+
+<br/>
+<br/>
+
+
+The inverse of a quaternion is:
+
+
+<img src="https://latex.codecogs.com/svg.image?\begin{equation}\label{eq:quaternionInverse}\mathbf{q}^{-1}=\mathbf{q}^*/\|\mathbf{q}\|^2.\end{equation}
+" alt="https://latex.codecogs.com/svg.image?\begin{equation}     \label{eq:quaternionInverse}     \mathbf{q} ^ { - 1 } = \mathbf{q} ^ * / \| \mathbf{q} \| ^ 2.    \end{equation}"/>
+
+
+
+
+
 <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space;(a&plus;b\,\mathbf&space;{i}&space;&plus;c\,\mathbf&space;{j}&space;&plus;d\,\mathbf&space;{k}&space;)^{-1}={\frac&space;{1}{a^{2}&plus;b^{2}&plus;c^{2}&plus;d^{2}}}\,(a-b\,\mathbf&space;{i}&space;-c\,\mathbf&space;{j}&space;-d\,\mathbf&space;{k}&space;).}" title="https://latex.codecogs.com/svg.image?{\displaystyle (a+b\,\mathbf {i} +c\,\mathbf {j} +d\,\mathbf {k} )^{-1}={\frac {1}{a^{2}+b^{2}+c^{2}+d^{2}}}\,(a-b\,\mathbf {i} -c\,\mathbf {j} -d\,\mathbf {k} ).}" />
+
+
+
+
+
+
 
 
 ## 4.3. Quaternions Multiplication (Hamilton product)

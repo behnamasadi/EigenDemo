@@ -299,6 +299,42 @@ Eigen::VectorXf b = Eigen::VectorXf::Random(3);
 std::cout << "The solution using normal equations is:\n" << (A.transpose() * A).ldlt().solve(A.transpose() * b) << std::endl;
 ```
 
+## Comparison of Solvers:
+
+```cpp
+
+#define MATRIX_SIZE 100
+  using namespace Eigen;
+  using namespace std;
+  // Solving equations
+  // We solve the equation of matrix_NN ∗ x = v_Nd
+
+  Matrix<double, MATRIX_SIZE, MATRIX_SIZE> matrix_NN =
+      MatrixXd::Random(MATRIX_SIZE, MATRIX_SIZE);
+  matrix_NN =
+      matrix_NN * matrix_NN.transpose(); // Guarantee semi−positive definite
+  Matrix<double, MATRIX_SIZE, 1> v_Nd = MatrixXd::Random(MATRIX_SIZE, 1);
+
+  clock_t time_stt = clock(); // timing
+  // Direct inversion
+  Matrix<double, MATRIX_SIZE, 1> x = matrix_NN.inverse() * v_Nd;
+  cout << "=======================  time of normal inverse is: "
+
+       << 1000 * (clock() - time_stt) / (double)CLOCKS_PER_SEC
+       << "ms ======================= " << endl;
+  // cout << "x = " << x.transpose() << endl;
+
+  // Usually solved by matrix decomposition, such as QR decomposition, the speed
+  // will be much faster
+  time_stt = clock();
+  x = matrix_NN.colPivHouseholderQr().solve(v_Nd);
+  cout << "======================= time of Qr decomposition is: "
+
+       << 1000 * (clock() - time_stt) / (double)CLOCKS_PER_SEC
+       << "ms ======================= " << endl;
+```
+
+
 Refs: [1](https://eigen.tuxfamily.org/dox-devel/group__LeastSquares.html)
 
 ## 3.5. Gaussian Elimination (row reduction)
