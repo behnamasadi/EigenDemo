@@ -155,6 +155,13 @@ Note that this method assumes <img src="https://latex.codecogs.com/svg.image?r_{
 
 
 
+<img src="images/3D_rotation_converter.png" />
+
+
+
+Click here for [interactive](https://www.andre-gaschler.com/rotationconverter/) demo
+
+
 
 ## 1.9. Oder of Rotation and Translation in Transformation
 
@@ -289,6 +296,7 @@ In summary, the non-sequential nature of quaternions, combined with their abilit
 
 
 Click here for [interactive](https://quaternions.online/) demo
+
 
 
 
