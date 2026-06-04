@@ -122,6 +122,15 @@ Full source code [here](src/3_link_planner_robot.cpp)
 
 # Quasi-Newton Method
 
+Newton's method needs the Hessian (the second derivatives), which is often
+expensive or unavailable. **Quasi-Newton** methods instead build up an
+approximation to the Hessian — or directly to its inverse — from successive
+gradient evaluations, so only first derivatives are required. The most widely
+used variant is **BFGS** (and its limited-memory form **L-BFGS** for
+high-dimensional problems). This is the same idea that Gauss-Newton exploits for
+least-squares problems, where the Hessian is approximated by
+<img  src="https://latex.codecogs.com/svg.latex?J^TJ"  alt="https://latex.codecogs.com/svg.latex?J^TJ" />.
+
 # Curve Fitting
 You have a function <img  src="https://latex.codecogs.com/svg.latex?y%20=%20f(x,%20\boldsymbol%20\beta)"  alt="https://latex.codecogs.com/svg.latex?y = f(x, \boldsymbol \beta)" /> with <img  src="https://latex.codecogs.com/svg.latex?n"  alt="https://latex.codecogs.com/svg.latex?n" /> unknown parameters, <img  src="https://latex.codecogs.com/svg.latex?\boldsymbol%20\beta=(\beta_1,\beta_2,...\beta_n)"  alt="https://latex.codecogs.com/svg.latex?\boldsymbol \beta=(\beta_1,\beta_2,...\beta_n)" />  and a set of sample data (possibly contaminated with noise) from 
 that function and you are interested to find the unknown parameters such that the residual (difference between output of your function and sample data) <img  src="https://latex.codecogs.com/svg.latex?\boldsymbol%20r=(r_1,r_2,...r_m)"  alt="https://latex.codecogs.com/svg.latex?\boldsymbol r=(r_1,r_2,...r_m)" />
@@ -148,7 +157,7 @@ Then we proceeds by the iterations:
 
 
 
-## Example of Substrate Concentration Cuver Fitting
+## Example of Substrate Concentration Curve Fitting
 
 Lets say we have the following dataset:
 
@@ -163,7 +172,7 @@ And we have the folliwng function to fit the data:
 <img  src="https://latex.codecogs.com/svg.latex?y=\frac{\beta_1%20\times%20x}{\beta_2+x}"  alt="https://latex.codecogs.com/svg.latex?y=\frac{\beta_1 \times x}{\beta_2+x}" />
 
 
-So our <img  src="https://latex.codecogs.com/svg.latex?\mathbf%20r_{2\times7}"  alt="https://latex.codecogs.com/svg.latex?\mathbf r_{2\times7}" /> is:
+So our <img  src="https://latex.codecogs.com/svg.latex?\mathbf%20r_{7\times1}"  alt="https://latex.codecogs.com/svg.latex?\mathbf r_{7\times1}" /> is:
 
 
 <img  src="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}%20r_1=y_1%20-%20\frac{\beta_1%20\times%20x_1}{\beta_2+x_1}\\%20r_2=y_2%20-%20\frac{\beta_1%20\times%20x_2}{\beta_2+x_2}\\%20r_3=y_3%20-%20\frac{\beta_1%20\times%20x_3}{\beta_2+x_3}\\%20r_4=y_4%20-%20\frac{\beta_1%20\times%20x_4}{\beta_2+x_4}\\%20r_5=y_5%20-%20\frac{\beta_1%20\times%20x_5}{\beta_2+x_5}\\%20r_6=y_6%20-%20\frac{\beta_1%20\times%20x_6}{\beta_2+x_6}\\%20r_7=y_7%20-%20\frac{\beta_1%20\times%20x_7}{\beta_2+x_7}\\%20\end{matrix}\right."  alt="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}
@@ -180,10 +189,10 @@ r_7=y_7 - \frac{\beta_1 \times x_7}{\beta_2+x_7}\\
 and the jacobian is <img  src="https://latex.codecogs.com/svg.latex?\mathbf%20J_{7\times2}"  alt="https://latex.codecogs.com/svg.latex?\mathbf J_{7\times2}" />:
 
 
-<img  src="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}%20\frac{\sigma%20r_i}{\sigma%20%20\beta_1}=%20\frac{-x_i}{\beta_2+x_i}%20\\%20\frac{\sigma%20r_i}{\sigma%20\beta_2}%20=%20\frac{\beta_1*x_i}{(\beta_2%20\times%20x_i)^2}%20\end{matrix}\right."  alt="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}
-\frac{\sigma r_i}{\sigma  \beta_1}= \frac{-x_i}{\beta_2+x_i}  
+<img  src="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}%20\frac{\partial%20r_i}{\partial%20%20\beta_1}=%20\frac{-x_i}{\beta_2+x_i}%20\\%20\frac{\partial%20r_i}{\partial%20\beta_2}%20=%20\frac{\beta_1*x_i}{(\beta_2%20+%20x_i)^2}%20\end{matrix}\right."  alt="https://latex.codecogs.com/svg.latex?\left\{\begin{matrix}
+\frac{\partial r_i}{\partial  \beta_1}= \frac{-x_i}{\beta_2+x_i}  
 \\ 
-\frac{\sigma r_i}{\sigma \beta_2} = \frac{\beta_1*x_i}{(\beta_2 \times x_i)^2}  
+\frac{\partial r_i}{\partial \beta_2} = \frac{\beta_1*x_i}{(\beta_2 + x_i)^2}  
 \end{matrix}\right." />:
 
 
@@ -218,7 +227,7 @@ struct SubstrateConcentrationFunctor : Functor<double>
 };
 ```
 
-Now we have to set teh data:
+Now we have to set the data:
 ```
 //the last column in the matrix should be "y"
 Eigen::MatrixXd points(7,2);
@@ -255,12 +264,35 @@ And the main loop:
     std::cout<<"beta: \n" << beta<<std::endl;
 ```
 
+Full source code [here](src/non_linear_least_squares.cpp).
 
 # Non Linear Least Squares
+
+Non-linear least squares is the general problem of finding the parameters
+<img  src="https://latex.codecogs.com/svg.latex?\boldsymbol%20\beta"  alt="https://latex.codecogs.com/svg.latex?\boldsymbol \beta" />
+that minimize the sum of squared residuals
+<img  src="https://latex.codecogs.com/svg.latex?S(\boldsymbol%20\beta)=\sum_i%20r_i(\boldsymbol%20\beta)^2"  alt="S = sum r_i^2" />
+when the model is **non-linear** in the parameters (so, unlike linear least
+squares, there is no closed-form solution and we iterate). The curve-fitting
+example above is a non-linear least squares problem solved with Gauss-Newton;
+the more robust solver of choice is Levenberg-Marquardt (below).
+
 # Non Linear Regression
+
+Non-linear regression is the statistical framing of the same problem: fitting a
+non-linear model <img  src="https://latex.codecogs.com/svg.latex?y=f(x,\boldsymbol%20\beta)"  alt="y = f(x, beta)" />
+to observed data by minimizing the residuals. It uses exactly the same numerical
+machinery (Gauss-Newton / Levenberg-Marquardt); the difference is one of
+interpretation (estimating model parameters from noisy observations) rather than
+of algorithm.
+
 # Levenberg Marquardt
- The Levenberg-Marquardt algorithm aka the damped least-squares (DLS) method, is used to solve non-linear least squares problems. The LMA is used in many mainly for solving curve-fitting problems. 
-The LMA finds only a local minimum  (which may not be the global minimum). The LMA interpolates between the Gauss-Newton algorithm and the method of gradient descent. The LMA is more robust than the GNA, which means that in many cases it finds a solution even if it starts very far off the final minimum. For well-behaved functions and reasonable starting parameters, the LMA tends to be slower than the GNA. LMA can also be viewed as Gauss–Newton using a trust region approach.
+ The Levenberg-Marquardt algorithm (LMA), aka the damped least-squares (DLS) method, is used to solve non-linear least squares problems. The LMA is used mainly for solving curve-fitting problems.
+The LMA finds only a local minimum  (which may not be the global minimum). The LMA interpolates between the Gauss-Newton algorithm (GNA) and the method of gradient descent. The LMA is more robust than the GNA, which means that in many cases it finds a solution even if it starts very far off the final minimum. For well-behaved functions and reasonable starting parameters, the LMA tends to be slower than the GNA. LMA can also be viewed as Gauss–Newton using a trust region approach.
+
+Eigen provides Levenberg-Marquardt in its `unsupported` module
+(`<unsupported/Eigen/NonLinearOptimization>`). Full source code
+[here](src/levenberg_marquardt.cpp).
 
 
 

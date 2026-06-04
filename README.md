@@ -104,6 +104,7 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 - [Newton's Method In Optimization](9_Numerical_Optimization.md#newton-s-method-in-optimization)
 - [Gauss-Newton Algorithm](9_Numerical_Optimization.md#gauss-newton-algorithm)
     + [Example of Gauss-Newton, Inverse Kinematic Problem](9_Numerical_Optimization.md#example-of-gauss-newton--inverse-kinematic-problem)
+- [Quasi-Newton Method](9_Numerical_Optimization.md#quasi-newton-method)
 - [Curve Fitting](9_Numerical_Optimization.md#curve-fitting)
 - [Non Linear Least Squares](9_Numerical_Optimization.md#non-linear-least-squares)
 - [Non Linear Regression](9_Numerical_Optimization.md#non-linear-regression)

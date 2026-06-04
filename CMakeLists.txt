@@ -99,6 +99,7 @@ set(EIGEN_EXAMPLES
     non_linear_least_squares
     non_linear_regression
     levenberg_marquardt
+    3_link_planner_robot
 )
 
 foreach(example IN LISTS EIGEN_EXAMPLES)
