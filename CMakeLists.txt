@@ -73,6 +73,7 @@ set(EIGEN_EXAMPLES
     hello_eigen
     main
     matrix_array_vector
+    matrix_operations
     matrix_broadcasting
     matrix_decomposition
     matrix_condition_numerical_stability
