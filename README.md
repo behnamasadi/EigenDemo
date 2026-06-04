@@ -88,13 +88,11 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 
 
 # [Chapter 7 Geometry Transformation](7_Geometry_Transformation.md)
-- [Homogeneous Transformations](7_Geometry_Transformation.md#homogeneous-transformations)
-- [Translation, Scaling, and Rotations Matrices](7_Geometry_Transformation.md#translation--scaling--and-rotations-matrices)
-- [Euler Angles](7_Geometry_Transformation.md#euler-angles)
-- [Quaternions](7_Geometry_Transformation.md#quaternions)
-- [Orthogonal Vector Generation](7_Geometry_Transformation.md#orthogonal-vector-generation)
-- [Parametrized Lines And Hyperplanes](7_Geometry_Transformation.md#parametrized-lines-and-hyperplanes)
-- [Least Square Transformation Fitting](7_Geometry_Transformation.md#least-square-transformation-fitting)
+- [1. Euler Angles](7_Geometry_Transformation.md#1-euler-angles)
+- [2. Global References and Local Tangent Plane Coordinates](7_Geometry_Transformation.md#2-global-references-and-local-tangent-plane-coordinates)
+- [3. Axis-angle Representation](7_Geometry_Transformation.md#3-axis-angle-representation)
+- [4. Quaternions](7_Geometry_Transformation.md#4-quaternions)
+- [5. Conversion between different representations](7_Geometry_Transformation.md#5-conversion-between-different-representations)
 
 # [Chapter 8 Differentiation](8_Differentiation.md)
 - [Jacobian](8_Differentiation.md#jacobian)

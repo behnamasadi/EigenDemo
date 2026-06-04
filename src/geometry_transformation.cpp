@@ -56,36 +56,39 @@ Ref: https://www.graphicsmill.com/docs/gm5/Transformations.htm
 }
 
 
-Eigen::Matrix4f createAffinematrix(float a, float b, float c, Eigen::Vector3f trans)
-{
-    {
-        Eigen::Transform<float, 3, Eigen::Affine> t;
-        t = Eigen::Translation<float, 3>(trans);
-        t.rotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
-        t.rotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
-        t.rotate(Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ()));
-        return t.matrix();
-    }
-
-
-    {
-    /*
-    The difference between the first implementation and the second is like the difference between "Fix Angle" and "Euler Angle", you can
-    https://www.youtube.com/watch?v=09xVHo1JudY
-    */
-        Eigen::Transform<float, 3, Eigen::Affine> t;
-        t = Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ());
-        t.prerotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
-        t.prerotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
-        t.pretranslate(trans);
-        return t.matrix();
-    }
+// Build an affine matrix by post-multiplying (rotate after translate). This
+// applies the rotations in the local/rotating frame ("Euler angle" style).
+Eigen::Matrix4f createAffinematrix(float a, float b, float c,
+                                   Eigen::Vector3f trans) {
+  Eigen::Transform<float, 3, Eigen::Affine> t;
+  t = Eigen::Translation<float, 3>(trans);
+  t.rotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
+  t.rotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
+  t.rotate(Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ()));
+  return t.matrix();
 }
 
+// The same rotations applied by pre-multiplying instead. The difference between
+// the two is like the difference between "fixed angle" and "Euler angle"
+// conventions. See https://www.youtube.com/watch?v=09xVHo1JudY
+Eigen::Matrix4f createAffinematrixPrerotate(float a, float b, float c,
+                                            Eigen::Vector3f trans) {
+  Eigen::Transform<float, 3, Eigen::Affine> t;
+  t = Eigen::AngleAxis<float>(c, Eigen::Vector3f::UnitZ());
+  t.prerotate(Eigen::AngleAxis<float>(b, Eigen::Vector3f::UnitY()));
+  t.prerotate(Eigen::AngleAxis<float>(a, Eigen::Vector3f::UnitX()));
+  t.pretranslate(trans);
+  return t.matrix();
+}
 
+int main() {
+  std::cout << "Transforming the 8 cube vertices (scale, rotate, translate):\n";
+  transformExample();
 
-
-int main()
-{
-
+  Eigen::Vector3f trans(1.5f, 10.2f, -5.1f);
+  std::cout << "\ncreateAffinematrix (post-rotate):\n"
+            << createAffinematrix(0.1f, 0.2f, 0.3f, trans) << "\n";
+  std::cout << "\ncreateAffinematrixPrerotate (pre-rotate):\n"
+            << createAffinematrixPrerotate(0.1f, 0.2f, 0.3f, trans) << "\n";
+  return 0;
 }

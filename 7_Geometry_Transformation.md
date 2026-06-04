@@ -115,7 +115,7 @@ can calculate this for us:
 
 - <img src="https://latex.codecogs.com/svg.image?\beta=atan2(-r_{31},&space;\sqrt{&space;r_{32}^2&plus;&space;r_{33}^2})" title="https://latex.codecogs.com/svg.image?\beta=atan2(-r_{31}, \sqrt{ r_{32}^2+ r_{33}^2})" />
 
-- <img src="https://latex.codecogs.com/svg.image?\gamma=atan2(-r_{32},r_{33})" title="https://latex.codecogs.com/svg.image?\gamma=atan2(-r_{32},r_{33})" />
+- <img src="https://latex.codecogs.com/svg.image?\gamma=atan2(r_{32},r_{33})" title="https://latex.codecogs.com/svg.image?\gamma=atan2(r_{32},r_{33})" />
 
 Note that this method assumes <img src="https://latex.codecogs.com/svg.image?r_{11}\neq&space;0" title="https://latex.codecogs.com/svg.image?r_{11}\neq 0" /> and <img src="https://latex.codecogs.com/svg.image?r_{33}\neq&space;0" title="https://latex.codecogs.com/svg.image?r_{33}\neq 0" />.
 
@@ -163,7 +163,7 @@ Click here for [interactive](https://www.andre-gaschler.com/rotationconverter/) 
 
 
 
-## 1.9. Oder of Rotation and Translation in Transformation
+## 1.9. Order of Rotation and Translation in Transformation
 
 to apply a transformation, first we apply the rotation around the axis of the frame the we pre-multiplied and then we translate again on the axis of the frame that we pre-multiplied
 
@@ -190,7 +190,7 @@ to apply a transformation, first we apply the rotation around the axis of the fr
 
 
 
-# 1.10. Gimbal Lock 
+## 1.10. Gimbal Lock
 The angles <img src="https://latex.codecogs.com/svg.image?\alpha,&space;\beta,&space;\text{&space;and&space;}&space;\gamma" title="https://latex.codecogs.com/svg.image?\alpha, \beta, \text{ and } \gamma" /> are uniquely determined except for the singular case. If <img src="https://latex.codecogs.com/svg.image?cos(\beta)=0&space;\text{&space;or&space;}&space;\beta=\pm&space;\pi/2" title="https://latex.codecogs.com/svg.image?cos(\beta)=0 \text{ or } \beta=\pm \pi/2" />
 
 1. <img src="https://latex.codecogs.com/svg.image?\beta=\pi/2" title="https://latex.codecogs.com/svg.image?\beta=\pi/2" />
@@ -300,7 +300,7 @@ Click here for [interactive](https://quaternions.online/) demo
 
 
 
-## 1.10. Uniqueness of 3D Rotation Matrix
+## 1.11. Uniqueness of 3D Rotation Matrix
 
 Refs: [1](https://math.stackexchange.com/questions/105264/3d-rotation-matrix-uniqueness/105380#105380)
 
@@ -548,7 +548,7 @@ a quaternion <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space
 The quaternion <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space;b\,\mathbf&space;{i}&space;&plus;c\,\mathbf&space;{j}&space;&plus;d\,\mathbf&space;{k}&space;}" title="https://latex.codecogs.com/svg.image?{\displaystyle b\,\mathbf {i} +c\,\mathbf {j} +d\,\mathbf {k} }" />  is called the vector part (sometimes imaginary part) of q, and <img src="https://latex.codecogs.com/svg.image?a" title="https://latex.codecogs.com/svg.image?a" /> is the scalar part (sometimes real part) of q.
 
 ## 4.1. Basis
-The set of quaternions is made a 4-dimensional vector space over the real numbers, with <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space;\left\{1,\mathbf&space;{i}&space;,\mathbf&space;{j}&space;,\mathbf&space;{k}&space;\right\}}" title="https://latex.codecogs.com/svg.image?{\displaystyle \left\{1,\mathbf {i} ,\mathbf {j} ,\mathbf {k} \right\}}" /> as a basis, by the componentwise addition
+The set of quaternions is made a 4-dimensional vector space over the real numbers, with <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space;\left\{1,\mathbf&space;{i}&space;,\mathbf&space;{j}&space;,\mathbf&space;{k}&space;\right\}}" title="https://latex.codecogs.com/svg.image?{\displaystyle \left\{1,\mathbf {i} ,\mathbf {j} ,\mathbf {k} \right\}}" /> as a basis, and is made an algebra by the quaternion multiplication rules below (componentwise addition gives the vector-space structure)
 
 
 <img src="https://latex.codecogs.com/svg.image?{\displaystyle&space;{\begin{aligned}\mathbf&space;{j\,k}&space;&=\mathbf&space;{i}&space;\,,\quad&space;&\mathbf&space;{k\,j}&space;&=-\mathbf&space;{i}&space;\,,\\\mathbf&space;{k\,i}&space;&=\mathbf&space;{j}&space;\,,\quad&space;&\mathbf&space;{i\,k}&space;&=-\mathbf&space;{j}&space;\,,\\\mathbf&space;{i\,j\,k}&space;&=-1\,,\quad&space;&\mathbf&space;{k}&space;^{2}&=-1\,\\\end{aligned}}}" title="https://latex.codecogs.com/svg.image?{\displaystyle {\begin{aligned}\mathbf {j\,k} &=\mathbf {i} \,,\quad &\mathbf {k\,j} &=-\mathbf {i} \,,\\\mathbf {k\,i} &=\mathbf {j} \,,\quad &\mathbf {i\,k} &=-\mathbf {j} \,,\\\mathbf {i\,j\,k} &=-1\,,\quad &\mathbf {k} ^{2}&=-1\,\\\end{aligned}}}" />
@@ -853,7 +853,7 @@ Refs: [1](https://stackoverflow.com/questions/1171849/finding-quaternion-represe
 Quaternions can encode axis-angle representation in four numbers and can be used to apply the corresponding rotation to a position vector <img src="https://latex.codecogs.com/svg.image?(x,y,z)" alt="https://latex.codecogs.com/svg.image?(x,y,z)" />, representing a point relative to the origin in <img src="https://latex.codecogs.com/svg.image?\mathbb{R}^3" alt="https://latex.codecogs.com/svg.image?\mathbb{R}^3"/>.
 
 
-Euclidean vectors such as <img src="https://latex.codecogs.com/svg.image?(2,3,4)" alt="https://latex.codecogs.com/svg.image?(2,3,4)" /> or <img src="https://latex.codecogs.com/svg.image?(a_x,a_y,a_z)" alt="https://latex.codecogs.com/svg.image?(a_x,a_y,a_z)" /> can be rewritten as <img src="https://latex.codecogs.com/svg.image?2i+3j+4k" alt="https://latex.codecogs.com/svg.image?2i+3j+4k" /> or  <img src="https://latex.codecogs.com/svg.image?(a_xi,a_yj,a_zk)"  alt="https://latex.codecogs.com/svg.image?(a_xi,a_yj,a_zk)" /> , where i, j, k are unit vectors representing the three Cartesian axes (traditionally x, y, z), and also obey the multiplication rules of the fundamental quaternion units.
+Euclidean vectors such as <img src="https://latex.codecogs.com/svg.image?(2,3,4)" alt="https://latex.codecogs.com/svg.image?(2,3,4)" /> or <img src="https://latex.codecogs.com/svg.image?(a_x,a_y,a_z)" alt="https://latex.codecogs.com/svg.image?(a_x,a_y,a_z)" /> can be rewritten as <img src="https://latex.codecogs.com/svg.image?2i+3j+4k" alt="https://latex.codecogs.com/svg.image?2i+3j+4k" /> or  <img src="https://latex.codecogs.com/svg.image?a_xi+a_yj+a_zk"  alt="https://latex.codecogs.com/svg.image?a_xi+a_yj+a_zk" /> , where i, j, k are unit vectors representing the three Cartesian axes (traditionally x, y, z), and also obey the multiplication rules of the fundamental quaternion units.
 
 
 Therefore, a rotation of angle <img src="https://latex.codecogs.com/svg.image?\theta" alt="https://latex.codecogs.com/svg.image?\theta" />  around the axis defined by the unit vector <img src="https://latex.codecogs.com/svg.image?{\vec%20{u}}=(u_{x},u_{y},u_{z})=u_{x}\mathbf%20{i}%20+u_{y}\mathbf%20{j}%20+u_{z}\mathbf%20{k}" alt="https://latex.codecogs.com/svg.image?{\vec {u}}=(u_{x},u_{y},u_{z})=u_{x}\mathbf {i} +u_{y}\mathbf {j} +u_{z}\mathbf {k}" />

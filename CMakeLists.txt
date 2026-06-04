@@ -89,6 +89,7 @@ set(EIGEN_EXAMPLES
     calculate_range_of_matrix_column_space
     compute_basis_of_nullspace
     sparse_matrices
+    geometry_transformation
     quaternion
     angle_axis_rodrigues
     euler_angle
