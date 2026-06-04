@@ -533,6 +533,16 @@ and if <img src="https://latex.codecogs.com/svg.image?\rVert&space;S_\omega&spac
 
 <img src="https://latex.codecogs.com/svg.image?e^{[S]\theta}&space;=\begin{bmatrix}e^{[S_\omega]\theta}&space;&&space;(I\theta&plus;&space;(1-cos\theta)[S_\omega]&space;&plus;(\theta-sin\theta)[S_\omega]^2)S_v&space;\\0&space;&&space;&space;&space;1\end{bmatrix}" title="https://latex.codecogs.com/svg.image?e^{[S]\theta} =\begin{bmatrix}e^{[S_\omega]\theta} & (I\theta+ (1-cos\theta)[S_\omega] +(\theta-sin\theta)[S_\omega]^2)S_v \\0 & 1\end{bmatrix}" />
 
+> These exponential / logarithm maps are the bridge to the **Lie group / Lie
+> algebra** view of rotations and rigid-body motions (`SO(3)`, `SE(3)`), which is
+> the modern foundation for state estimation and on-manifold optimization. For a
+> full treatment — the `hat`/`vee` operators, `Exp`/`Log` maps, the adjoint, and
+> on-manifold Gauss-Newton with the [manif](https://github.com/artivis/manif)
+> library — see the companion notes:
+> [robotic_notes — Lie group & Lie algebra](https://github.com/behnamasadi/robotic_notes/blob/master/docs/lie_group_lie_algebra.ipynb),
+> [SE(2) Lie groups](https://github.com/behnamasadi/robotic_notes/blob/master/docs/lie_groups_se2.ipynb),
+> and the [manif SE(3) examples](https://github.com/behnamasadi/robotic_notes/tree/master/src/manif_examples).
+
 
 # 4. Quaternions
 
@@ -1272,8 +1282,36 @@ Where <img src="https://latex.codecogs.com/svg.latex?%28Q%5E%7BA%7D_%7BB%7D%29%5
 
 ## 4.13. Quaternions Interpolation Slerp
 
+**Spherical linear interpolation (SLERP)** interpolates between two orientations
+by moving along the shortest great-circle arc between the two unit quaternions,
+at **constant angular velocity**. This is the standard way to blend rotations
+smoothly (animation, trajectory generation); interpolating Euler angles or the
+entries of rotation matrices instead produces non-uniform speed and can leave
+the rotation manifold.
 
+Eigen implements it directly as `Quaterniond::slerp(t, other)` with `t` in
+`[0, 1]`:
 
+```cpp
+Eigen::Quaterniond q0(Eigen::AngleAxisd(0.0, Eigen::Vector3d::UnitZ()));
+Eigen::Quaterniond q1(Eigen::AngleAxisd(M_PI / 2, Eigen::Vector3d::UnitZ()));
+
+for (double t = 0.0; t <= 1.0001; t += 0.25)
+  Eigen::Quaterniond q = q0.slerp(t, q1);
+```
+
+Equal steps in `t` give equal steps in angle — the rotation about Z advances
+`0 → 22.5 → 45 → 67.5 → 90` degrees:
+
+```
+t=0     rotation about Z = 0 deg
+t=0.25  rotation about Z = 22.5 deg
+t=0.5   rotation about Z = 45 deg
+t=0.75  rotation about Z = 67.5 deg
+t=1     rotation about Z = 90 deg
+```
+
+Full source: [`src/quaternion_slerp.cpp`](src/quaternion_slerp.cpp).
 
 
 # 5. Conversion between different representations

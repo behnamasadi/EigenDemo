@@ -91,6 +91,7 @@ set(EIGEN_EXAMPLES
     sparse_matrices
     geometry_transformation
     quaternion
+    quaternion_slerp
     angle_axis_rodrigues
     euler_angle
     numerical_diff
@@ -102,6 +103,8 @@ set(EIGEN_EXAMPLES
     3_link_planner_robot
     camera_calibration_dlt
     slam_pose_graph
+    point_cloud_registration
+    pca_plane_fit
 )
 
 foreach(example IN LISTS EIGEN_EXAMPLES)

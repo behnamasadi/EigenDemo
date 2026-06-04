@@ -115,6 +115,9 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 - [Inverse Kinematics — the pseudo-inverse (SVD)](10_Linear_Algebra_in_Robotics.md#inverse-kinematics--the-pseudo-inverse-svd)
 - [Camera Calibration — DLT (SVD), projection decomposition (QR), Zhang (Cholesky)](10_Linear_Algebra_in_Robotics.md#camera-calibration--dlt-svd-projection-decomposition-qr-zhang-cholesky)
 - [SLAM — least squares, QR vs Cholesky, and sparsity](10_Linear_Algebra_in_Robotics.md#slam--least-squares-qr-vs-cholesky-and-sparsity)
+- [Point-Cloud Registration — Kabsch / Umeyama (SVD)](10_Linear_Algebra_in_Robotics.md#point-cloud-registration--kabsch--umeyama-svd)
+- [PCA & Plane Fitting — eigendecomposition](10_Linear_Algebra_in_Robotics.md#pca--plane-fitting--eigendecomposition)
+- [Further reading & related projects](10_Linear_Algebra_in_Robotics.md#further-reading--related-projects)
 
 
 

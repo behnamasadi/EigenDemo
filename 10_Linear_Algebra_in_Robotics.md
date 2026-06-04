@@ -1,17 +1,22 @@
 # Chapter 10 Linear Algebra in Robotics
 
-This chapter ties the previous chapters together with three concrete robotics
+This chapter ties the previous chapters together with concrete robotics
 problems and shows **which matrix decomposition each one relies on**:
 
 - [Why decompositions matter](#why-decompositions-matter)
 - [Inverse Kinematics — the pseudo-inverse (SVD)](#inverse-kinematics--the-pseudo-inverse-svd)
 - [Camera Calibration — DLT (SVD), projection decomposition (QR), Zhang (Cholesky)](#camera-calibration--dlt-svd-projection-decomposition-qr-zhang-cholesky)
 - [SLAM — least squares, QR vs Cholesky, and sparsity](#slam--least-squares-qr-vs-cholesky-and-sparsity)
+- [Point-Cloud Registration — Kabsch / Umeyama (SVD)](#point-cloud-registration--kabsch--umeyama-svd)
+- [PCA & Plane Fitting — eigendecomposition](#pca--plane-fitting--eigendecomposition)
+- [Further reading & related projects](#further-reading--related-projects)
 
 The runnable code is in
 [`src/3_link_planner_robot.cpp`](src/3_link_planner_robot.cpp),
-[`src/camera_calibration_dlt.cpp`](src/camera_calibration_dlt.cpp) and
-[`src/slam_pose_graph.cpp`](src/slam_pose_graph.cpp).
+[`src/camera_calibration_dlt.cpp`](src/camera_calibration_dlt.cpp),
+[`src/slam_pose_graph.cpp`](src/slam_pose_graph.cpp),
+[`src/point_cloud_registration.cpp`](src/point_cloud_registration.cpp) and
+[`src/pca_plane_fit.cpp`](src/pca_plane_fit.cpp).
 
 # Why decompositions matter
 
@@ -206,5 +211,90 @@ numerical stability is needed, and whether the step involves marginalization:
 *Decision tree credit: Hyungtae Lim, "Matrix Decompositions for SLAM"
 ([LinkedIn post](https://www.linkedin.com/posts/hyungtae-lim_slam-robotics-gtsam-activity-7457696218987741185-mv0n/)).
 The SLAM section of this chapter is based on that lecture material.*
+
+# Point-Cloud Registration — Kabsch / Umeyama (SVD)
+
+Given two sets of corresponding 3D points — for example a scan and a map, or two
+overlapping LiDAR sweeps — registration finds the rigid transform `(R, t)` that
+best aligns them in the least-squares sense:
+
+<img src="https://latex.codecogs.com/svg.latex?\min_{R\in%20SO(3),\,t}\sum_i\|(R\,p_i+t)-q_i\|^2" alt="min sum ||R p_i + t - q_i||^2" />
+
+The closed-form solution (the **Kabsch** algorithm, generalized by **Umeyama**)
+is one of the most elegant uses of the **SVD**: subtract the centroids, form the
+`3×3` cross-covariance `H = Σ (pᵢ − p̄)(qᵢ − q̄)ᵀ`, take its SVD `H = UΣVᵀ`, and
+
+<img src="https://latex.codecogs.com/svg.latex?R=V\,\mathrm{diag}(1,1,\det(VU^T))\,U^{T},\qquad%20t=\bar{q}-R\,\bar{p}" alt="R = V diag(1,1,det(VU^T)) U^T, t = qbar - R pbar" />
+
+The middle `diag(1, 1, det(VUᵀ))` guards against the SVD returning a reflection
+instead of a proper rotation. This is the core step inside **ICP** (iterated
+closest point) scan-matching.
+
+```cpp
+Eigen::Matrix3d H = Pc * Qc.transpose();   // centred cross-covariance
+Eigen::JacobiSVD<Eigen::Matrix3d> svd(H, Eigen::ComputeFullU | Eigen::ComputeFullV);
+Eigen::Matrix3d D = Eigen::Matrix3d::Identity();
+D(2, 2) = (svd.matrixV() * svd.matrixU().transpose()).determinant();
+Eigen::Matrix3d R = svd.matrixV() * D * svd.matrixU().transpose();
+Eigen::Vector3d t = cQ - R * cP;
+```
+
+Eigen also provides this in one call as `Eigen::umeyama(P, Q, with_scaling)`. The
+example [`src/point_cloud_registration.cpp`](src/point_cloud_registration.cpp)
+recovers a known transform from corresponding points to within `~1e-14`:
+
+```
+----- Kabsch (manual SVD) -----
+rotation error (deg): 2.1e-14
+translation error:    1.3e-15
+```
+
+# PCA & Plane Fitting — eigendecomposition
+
+Principal Component Analysis finds the directions of greatest variance in a set
+of points as the **eigenvectors of their covariance matrix**. Because the
+covariance `C = Σ (xᵢ − x̄)(xᵢ − x̄)ᵀ` is **symmetric positive-semidefinite**, it
+has an orthonormal eigenbasis (the `S = QΛQᵀ` branch of the Matrix World map),
+computed efficiently with `SelfAdjointEigenSolver`.
+
+A common robotics use is estimating a **surface normal**: the best-fit plane
+through a point cloud passes through the centroid, and its normal is the
+direction of *least* variance — the eigenvector of the **smallest** eigenvalue.
+
+```cpp
+Eigen::Matrix3d cov = centered * centered.transpose();   // symmetric PSD
+Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> es(cov);   // eigenvalues ascending
+Eigen::Vector3d normal = es.eigenvectors().col(0);        // smallest eigenvalue
+```
+
+For points scattered around the plane `z = 0`, the example
+[`src/pca_plane_fit.cpp`](src/pca_plane_fit.cpp) recovers a normal of essentially
+`(0, 0, 1)`, with the smallest eigenvalue (the off-plane variance) close to zero:
+
+```
+eigenvalues (ascending): 0.00212  7.90  13.82
+plane normal:            0.0051  -0.0049  0.99998
+```
+
+# Further reading & related projects
+
+This chapter only scratches the surface of linear algebra in robotics. The
+following companion repositories develop the neighbouring topics in depth:
+
+- **Lie groups & Lie algebra (`SO(3)`, `SE(3)`)** — the manifold view of
+  rotations/poses, `Exp`/`Log`, the adjoint, and on-manifold optimization:
+  [robotic_notes — lie_group_lie_algebra.ipynb](https://github.com/behnamasadi/robotic_notes/blob/master/docs/lie_group_lie_algebra.ipynb),
+  [lie_groups_se2.ipynb](https://github.com/behnamasadi/robotic_notes/blob/master/docs/lie_groups_se2.ipynb),
+  and the [manif SE(3) examples](https://github.com/behnamasadi/robotic_notes/tree/master/src/manif_examples).
+- **State estimation — Kalman & Extended Kalman Filter** (covariance
+  propagation, the Kalman gain):
+  [kalman_filter.ipynb](https://github.com/behnamasadi/robotic_notes/blob/master/docs/kalman_filter.ipynb),
+  [extended_kalman_filter.ipynb](https://github.com/behnamasadi/robotic_notes/blob/master/docs/extended_kalman_filter.ipynb).
+- **Camera models, projection & multi-view geometry** (the full derivations
+  behind the calibration section, plus triangulation and epipolar geometry):
+  [OpenCVProjects](https://github.com/behnamasadi/OpenCVProjects).
+- **Inverse kinematics** — a fuller treatment with damping, step clamping, and
+  null-space/redundancy resolution:
+  [planar_3_link_robot](https://github.com/behnamasadi/planar_3_link_robot).
 
 [<< Previous ](9_Numerical_Optimization.md)  [Home](README.md)
