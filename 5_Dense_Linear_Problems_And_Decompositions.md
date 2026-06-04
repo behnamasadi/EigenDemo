@@ -1491,12 +1491,40 @@ Refs: [1](https://www.youtube.com/watch?v=Ip3X9LOh2dk)
 # 16. Finding The Inverse of The Matrix
 First, add the n × n identity matrix is augmented to the right of A such that we get the following
 
-<img  src="https://latex.codecogs.com/svg.latex?[A%20|%20I]_{n\times%202n}"  alt="https://latex.codecogs.com/svg.latex?[A | I]_{n\times 2n}" /> Now during the elementary row operations, apply the same operations on the identity matrix on the right hand side. At the end teh matrix n the right hand side is the inverse of A.
+<img  src="https://latex.codecogs.com/svg.latex?[A%20|%20I]_{n\times%202n}"  alt="https://latex.codecogs.com/svg.latex?[A | I]_{n\times 2n}" /> Now during the elementary row operations, apply the same operations on the identity matrix on the right hand side. At the end the matrix on the right hand side is the inverse of A.
 
 
 # 17. The Fundamental Theorem of Linear Algebra
 
+The fundamental theorem of linear algebra describes the **four fundamental
+subspaces** associated with any <img src="https://latex.codecogs.com/svg.latex?m\times%20n" alt="m x n" />
+matrix <img src="https://latex.codecogs.com/svg.latex?A" alt="A" /> of rank
+<img src="https://latex.codecogs.com/svg.latex?r" alt="r" />, and how they fit
+together:
 
+| Subspace | Notation | Lives in | Dimension |
+| --- | --- | --- | --- |
+| Column space (range) | <img src="https://latex.codecogs.com/svg.latex?C(A)" alt="C(A)" /> | <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^m" alt="R^m" /> | <img src="https://latex.codecogs.com/svg.latex?r" alt="r" /> |
+| Row space | <img src="https://latex.codecogs.com/svg.latex?C(A^T)" alt="C(A^T)" /> | <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^n" alt="R^n" /> | <img src="https://latex.codecogs.com/svg.latex?r" alt="r" /> |
+| Null space (kernel) | <img src="https://latex.codecogs.com/svg.latex?N(A)" alt="N(A)" /> | <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^n" alt="R^n" /> | <img src="https://latex.codecogs.com/svg.latex?n-r" alt="n-r" /> |
+| Left null space | <img src="https://latex.codecogs.com/svg.latex?N(A^T)" alt="N(A^T)" /> | <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^m" alt="R^m" /> | <img src="https://latex.codecogs.com/svg.latex?m-r" alt="m-r" /> |
+
+The theorem has two parts:
+
+1. **Dimensions.** The row space and column space have the *same* dimension
+   `r` (the rank). Together with the null spaces this gives the rank-nullity
+   theorem of [§14](#14-rank-nullity-theorem):
+   `dim C(Aᵀ) + dim N(A) = r + (n - r) = n`.
+
+2. **Orthogonality.** Within each space, the pair is **orthogonal complements**:
+   - In <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^n" alt="R^n" />: the row space is orthogonal to the null space (every solution of `Ax = 0` is perpendicular to every row of `A`).
+   - In <img src="https://latex.codecogs.com/svg.latex?\mathbb{R}^m" alt="R^m" />: the column space is orthogonal to the left null space.
+
+The **SVD** (<img src="https://latex.codecogs.com/svg.latex?A=U\Sigma%20V^T" alt="A = U Sigma V^T" />,
+see [§4.15](#415-singular-value-decomposition)) makes all four explicit: the
+first `r` columns of `V` are an orthonormal basis for the row space and the
+remaining `n − r` columns span the null space; the first `r` columns of `U` span
+the column space and the rest span the left null space.
 
 # 18. Permutation Matrix
 
@@ -1505,7 +1533,46 @@ A permutation matrix is a square binary matrix that has exactly one entry of `1`
 <img src="https://latex.codecogs.com/svg.image?{\begin{bmatrix}1&0&0&0&0\\0&0&0&1&0\\0&1&0&0&0\\0&0&0&0&1\\0&0&1&0&0\end{bmatrix}}." 
 alt="{\begin{bmatrix}1&0&0&0&0\\0&0&0&1&0\\0&1&0&0&0\\0&0&0&0&1\\0&0&1&0&0\end{bmatrix}}" />
 
+It is exactly the identity matrix with its rows reordered, and it simply
+**reorders** the entries of whatever it multiplies:
+
+- Left-multiplying, `P A`, permutes the **rows** of `A`.
+- Right-multiplying, `A P`, permutes the **columns** of `A`.
+
+Key properties:
+
+- A permutation matrix is **orthogonal**, so its inverse is its transpose:
+  <img src="https://latex.codecogs.com/svg.latex?P^{-1}=P^{T}" alt="P^-1 = P^T" />.
+- Its determinant is <img src="https://latex.codecogs.com/svg.latex?\pm1" alt="+-1" />
+  (`+1` for an even permutation, `−1` for an odd one).
+- The product of two permutation matrices is again a permutation matrix.
+
+Permutation matrices appear whenever rows are swapped during elimination. For
+example, **LU decomposition with partial pivoting** factors a matrix as
+<img src="https://latex.codecogs.com/svg.latex?PA=LU" alt="PA = LU" />, where `P`
+records the row swaps needed for numerical stability. In Eigen they are
+represented compactly (as an index list, not a dense matrix) by
+`Eigen::PermutationMatrix`, and decompositions expose them via
+`.permutationP()` / `colsPermutation()`.
+
 # 19. Augmented Matrix
 
+An augmented matrix is formed by **appending** one matrix to another, written
+<img src="https://latex.codecogs.com/svg.latex?[A%20|%20b]" alt="[A | b]" />. It
+is a bookkeeping device for applying the same row operations to everything at
+once.
+
+The most common use is solving a linear system `Ax = b`: the system is written
+as the augmented matrix <img src="https://latex.codecogs.com/svg.latex?[A%20|%20b]" alt="[A | b]" />
+and reduced to row echelon form by Gaussian elimination, after which the
+solution is read off directly.
+
+The same idea computes an inverse, as in [§16](#16-finding-the-inverse-of-the-matrix):
+augment with the identity, <img src="https://latex.codecogs.com/svg.latex?[A%20|%20I]" alt="[A | I]" />,
+row-reduce until the left block becomes `I`, and the right block becomes
+<img src="https://latex.codecogs.com/svg.latex?A^{-1}" alt="A^-1" />:
+<img src="https://latex.codecogs.com/svg.latex?[A%20|%20I]\rightarrow[I%20|%20A^{-1}]" alt="[A | I] -> [I | A^-1]" />.
+In Eigen, matrices are augmented by initializing a larger matrix and assigning
+blocks (for example with the comma initializer or `.leftCols()` / `.rightCols()`).
 
 [<< Previous ](4_Advanced_Eigen_Operations.md)  [Home](README.md)  [ Next >>](6_Sparse_Matrices.md)
