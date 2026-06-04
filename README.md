@@ -53,6 +53,7 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 - [Passing Eigen objects by value to functions](4_Advanced_Eigen_Operations.md#passing-eigen-objects-by-value-to-functions)
 - [Aliasing](4_Advanced_Eigen_Operations.md#aliasing)
 - [Memory Mapping](4_Advanced_Eigen_Operations.md#memory-mapping)
+  * [Eigen matrix from std::vector](4_Advanced_Eigen_Operations.md#eigen-matrix-from-stdvector)
 - [Unary Expression](4_Advanced_Eigen_Operations.md#unary-expression)
 - [Eigen Functor](4_Advanced_Eigen_Operations.md#eigen-functor)
 

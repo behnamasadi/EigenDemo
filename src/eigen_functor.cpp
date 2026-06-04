@@ -1,9 +1,5 @@
-#include <unsupported/Eigen/NonLinearOptimization>
-#include <unsupported/Eigen/NumericalDiff>
-
-
 #include <iostream>
-#include <vector>
+#include <string>
 ////////////////////////////C++ Functor////////////////////////////
 /*** print the name of some types... ***/
 

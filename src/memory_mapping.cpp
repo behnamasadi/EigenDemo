@@ -5,15 +5,16 @@
 void matrixFromStdVector() {
   std::vector<float> data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-  auto einMatColMajor = Eigen::Map<Eigen::Matrix<float, 3, 3>>(data.data());
+  // Map does NOT copy: it reinterprets the vector's buffer as an Eigen matrix.
+  // The buffer must stay alive (do not clear/resize `data`) while the Map is in
+  // use. By default Eigen reads the buffer in column-major order...
+  Eigen::Map<Eigen::Matrix<float, 3, 3>> einMatColMajor(data.data());
+  // ...or in row-major order if requested:
+  Eigen::Map<Eigen::Matrix<float, 3, 3, Eigen::RowMajor>> einMatRowMajor(
+      data.data());
 
-  data.clear();
-  std::cout << einMatColMajor << std::endl;
-
-  auto einMatRowMajor =
-      Eigen::Map<Eigen::Matrix<float, 3, 3, Eigen::RowMajor>>(data.data());
-
-  std::cout << einMatRowMajor << std::endl;
+  std::cout << "column-major view:\n" << einMatColMajor << std::endl;
+  std::cout << "row-major view:\n" << einMatRowMajor << std::endl;
 }
 
 struct point {
@@ -103,5 +104,5 @@ void eigenMapExample() {
 
 int main() {
   matrixFromStdVector();
-  // eigenMapExample();
+  eigenMapExample();
 }
