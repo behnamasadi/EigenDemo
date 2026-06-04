@@ -110,20 +110,18 @@ int main(int argc, char *argv[]) {
   std::cout << std::numeric_limits<double>::epsilon() << std::endl;
   std::cout << 1.0 - std::numeric_limits<double>::epsilon() << std::endl;
   std::cout << 2.0 - std::numeric_limits<double>::epsilon() << std::endl;
-  std::cout << 4.0 - 2*std::numeric_limits<double>::epsilon() << std::endl;
-  std::cout << 8.0 - 2*std::numeric_limits<double>::epsilon() << std::endl;
+  std::cout << 4.0 - 2 * std::numeric_limits<double>::epsilon() << std::endl;
+  std::cout << 8.0 - 2 * std::numeric_limits<double>::epsilon() << std::endl;
   std::cout << 16.0 - std::numeric_limits<double>::epsilon() << std::endl;
   std::cout << 32.0 - std::numeric_limits<double>::epsilon() << std::endl;
   std::cout << 64.0 - std::numeric_limits<double>::epsilon() << std::endl;
 
   double from3 = std::nextafter(0.1, 0), to3 = 0.1;
-      std::cout << "The number 0.1 lies between two valid doubles:\n"
-                << std::setprecision(56) << "    " << from3
-                << std::hexfloat << " (" << from3 << ')' << std::defaultfloat
-                << "\nand " << to3 << std::hexfloat << "  (" << to3 << ")\n"
-                << std::defaultfloat << std::setprecision(20);
-
-
+  std::cout << "The number 0.1 lies between two valid doubles:\n"
+            << std::setprecision(56) << "    " << from3 << std::hexfloat << " ("
+            << from3 << ')' << std::defaultfloat << "\nand " << to3
+            << std::hexfloat << "  (" << to3 << ")\n"
+            << std::defaultfloat << std::setprecision(20);
 
   return 0;
 }

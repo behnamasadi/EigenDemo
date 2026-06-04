@@ -11,8 +11,7 @@ int main() {
 
   // A 2x2 matrix, filled with the comma initializer.
   Eigen::Matrix2d a;
-  a << 1, 2,
-       3, 4;
+  a << 1, 2, 3, 4;
 
   // A 2D column vector.
   Eigen::Vector2d b(5, 6);

@@ -202,8 +202,8 @@ void getingRollPitchYawFromRotationMatrix() {
   // Rotation Matrix to Tait–Bryan angles
   Eigen::Vector3d euler_angles = rotationMatrix.eulerAngles(2, 1, 0);
 
-  std::cout << " Pi/"<<M_PI / euler_angles[0] << "," << " Pi/"<<M_PI / euler_angles[1] << ","
-            << " Pi/"<<M_PI / euler_angles[2] << std::endl;
-
+  std::cout << " Pi/" << M_PI / euler_angles[0] << "," << " Pi/"
+            << M_PI / euler_angles[1] << ","
+            << " Pi/" << M_PI / euler_angles[2] << std::endl;
 }
 int main() { getingRollPitchYawFromRotationMatrix(); }

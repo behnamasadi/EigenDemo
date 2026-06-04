@@ -138,13 +138,10 @@ Point QuaternionRotation(Quaternion q, Point p) {
   return rotate_d_p;
 }
 
-  
-//rotate a vector3d with a quaternion
-Eigen::Vector3d QuaternionRotation(Eigen::Quaterniond q, Eigen::Vector3d p)
-{
-    return   q *  p;    
-}  
-
+// rotate a vector3d with a quaternion
+Eigen::Vector3d QuaternionRotation(Eigen::Quaterniond q, Eigen::Vector3d p) {
+  return q * p;
+}
 
 void QuaternionRotation() {
 
@@ -154,10 +151,8 @@ void QuaternionRotation() {
   // P  = [0, p1, p2, p3]  <-- point vector
   // alpha = angle to rotate
   //[x, y, z] = axis to rotate around (unit vector)
-  // R = [cos(alpha/2), sin(alpha/2)*x, sin(alpha/2)*y, sin(alpha/2)*z] <-- rotation
-  // R' = [w, -x, -y, -z]
-  // P' = RPR'
-  // P' = H(H(R, P), R')
+  // R = [cos(alpha/2), sin(alpha/2)*x, sin(alpha/2)*y, sin(alpha/2)*z] <--
+  // rotation R' = [w, -x, -y, -z] P' = RPR' P' = H(H(R, P), R')
 
   Eigen::Vector3d p(1, 0, 0);
 
@@ -190,7 +185,6 @@ void QuaternionRotation() {
   */
   std::cout << P_prime.x << "," << P_prime.y << "," << P_prime.z << std::endl;
 }
-
 
 Quaternion rollPitchYawToQuaternion(double roll, double pitch,
                                     double yaw) // roll (x), pitch (Y), yaw (z)
@@ -228,7 +222,6 @@ void QuaternionRepresentingRotationFromOneVectortoAnother() {
   q.w = sqrt((pow(v1.norm(), 2)) * (pow(v1.norm(), 2))) + v1.dot(v2);
 }
 
-
 int main() {
 
   //  double roll, pitch, yaw;
@@ -262,6 +255,4 @@ int main() {
   //  Eigen::Vector3d p_s = R_s_b * p_b;
 
   //  std::cout << p_s << std::endl;
-
-
 }

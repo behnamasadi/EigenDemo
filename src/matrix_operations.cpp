@@ -8,11 +8,9 @@ void matrixArithmetic() {
   std::cout << "////////////////// Matrix Arithmetic //////////////////\n";
 
   Eigen::Matrix2d a;
-  a << 1, 2,
-       3, 4;
+  a << 1, 2, 3, 4;
   Eigen::Matrix2d b;
-  b << 5, 6,
-       7, 8;
+  b << 5, 6, 7, 8;
 
   std::cout << "a + b =\n" << a + b << "\n";
   std::cout << "a - b =\n" << a - b << "\n";
@@ -33,7 +31,7 @@ void matrixArithmetic() {
 
   Eigen::MatrixXcd c(2, 2);
   c << std::complex<double>(1, 1), std::complex<double>(2, -1),
-       std::complex<double>(0, 1), std::complex<double>(3, 2);
+      std::complex<double>(0, 1), std::complex<double>(3, 2);
   std::cout << "c.adjoint() (conjugate transpose) =\n" << c.adjoint() << "\n";
 }
 
@@ -52,8 +50,7 @@ void coefficientWiseOperations() {
 
   // Coefficient-wise math is done through the Array interface (.array()).
   Eigen::ArrayXXd m(2, 3);
-  m << 1, -2, 3,
-       -4, 5, -6;
+  m << 1, -2, 3, -4, 5, -6;
   std::cout << "m =\n" << m << "\n";
 
   std::cout << "abs(m) =\n" << m.abs() << "\n";
@@ -102,8 +99,7 @@ void maskingElements() {
 void reductions() {
   std::cout << "////////////////// Reductions //////////////////\n";
   Eigen::MatrixXd m(2, 3);
-  m << 1, 2, 3,
-       4, 5, 6;
+  m << 1, 2, 3, 4, 5, 6;
   std::cout << "m =\n" << m << "\n";
 
   Eigen::Index minRow, minCol, maxRow, maxCol;
@@ -129,9 +125,8 @@ void reductions() {
 
   // Rank via full-pivot LU decomposition.
   Eigen::MatrixXd rankDeficient(3, 3);
-  rankDeficient << 1, 2, 3,
-                   2, 4, 6,   // = 2 * row 0
-                   1, 0, 1;
+  rankDeficient << 1, 2, 3, 2, 4, 6, // = 2 * row 0
+      1, 0, 1;
   Eigen::FullPivLU<Eigen::MatrixXd> lu(rankDeficient);
   std::cout << "rank of a rank-deficient 3x3 matrix: " << lu.rank() << "\n";
 }

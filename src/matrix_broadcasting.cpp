@@ -7,8 +7,7 @@
 
 void broadcastingExample() {
   Eigen::MatrixXf mat(2, 4);
-  mat << 1, 2, 6, 9,
-         3, 1, 7, 2;
+  mat << 1, 2, 6, 9, 3, 1, 7, 2;
 
   // Add a column vector to every column.
   Eigen::VectorXf v(2);

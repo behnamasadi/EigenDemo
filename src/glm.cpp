@@ -17,29 +17,27 @@ glm::mat4 camera(float Translate, glm::vec2 const &Rotate) {
 }
 
 int main() {
-/*
-eigen to glm
-EigenToGlmMat
-https://stackoverflow.com/questions/63429179/eigen-and-glm-products-produce-different-results
+  /*
+  eigen to glm
+  EigenToGlmMat
+  https://stackoverflow.com/questions/63429179/eigen-and-glm-products-produce-different-results
 
-https://gist.github.com/podgorskiy/04a3cb36a27159e296599183215a71b0
-
-
-Quaternion to Matrix using glm
-https://stackoverflow.com/questions/38145042/quaternion-to-matrix-using-glm
+  https://gist.github.com/podgorskiy/04a3cb36a27159e296599183215a71b0
 
 
-glm::toQuat(
-glm::to_string(GLR).c_str()
-glm::toMat3
+  Quaternion to Matrix using glm
+  https://stackoverflow.com/questions/38145042/quaternion-to-matrix-using-glm
 
 
-*/
+  glm::toQuat(
+  glm::to_string(GLR).c_str()
+  glm::toMat3
 
 
+  */
 
-    float Translate=1.0;
-    glm::vec2  Rotate;
+  float Translate = 1.0;
+  glm::vec2 Rotate;
 
-    glm::mat4 v=camera( Translate, Rotate);
+  glm::mat4 v = camera(Translate, Rotate);
 }

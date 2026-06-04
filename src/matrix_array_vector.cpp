@@ -154,8 +154,7 @@ void matrixReshaping() {
   std::cout << "//////////////////Matrix Reshaping////////////////////"
             << std::endl;
   Eigen::MatrixXd m(2, 3);
-  m << 1, 2, 3,
-       4, 5, 6;
+  m << 1, 2, 3, 4, 5, 6;
   std::cout << "original 2x3 matrix:\n" << m << std::endl;
   std::cout << "reshaped to 3x2 (column-major order):\n"
             << m.reshaped(3, 2) << std::endl;
@@ -170,10 +169,7 @@ void matrixSlicing() {
   std::cout << "//////////////////Matrix Slicing////////////////////"
             << std::endl;
   Eigen::MatrixXd m(4, 4);
-  m << 1, 2, 3, 4,
-       5, 6, 7, 8,
-       9, 10, 11, 12,
-       13, 14, 15, 16;
+  m << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16;
 
   std::cout << "rows 1..2, all columns:\n"
             << m(Eigen::seq(1, 2), Eigen::all) << std::endl;

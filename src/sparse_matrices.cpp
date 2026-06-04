@@ -28,22 +28,16 @@ void compressedSparseRow() {
   Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
       dense_mat(rows, cols);
 
-  dense_mat << 0, 0, 0, 0, 0, 0, 0, 3, 0,
-               0, 0, 8, 0, 0, 1, 0, 0, 0,
-               0, 0, 0, 0, 0, 0, 0, 0, 0,
-               4, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 0, 2, 0, 0, 0, 0, 0, 0,
-               0, 0, 0, 6, 0, 0, 0, 0, 0,
-               0, 9, 0, 0, 5, 0, 0, 0, 0;
+  dense_mat << 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 8, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 9, 0, 0, 5, 0, 0, 0, 0;
 
   // sparseView() keeps only the non-zeros. A tolerance can be given via
   // dense_mat.sparseView(epsilon, reference).
   Eigen::SparseMatrix<double, Eigen::RowMajor> sparse_mat =
       dense_mat.sparseView();
 
-  std::cout << "rows: " << sparse_mat.rows()
-            << ", cols: " << sparse_mat.cols()
+  std::cout << "rows: " << sparse_mat.rows() << ", cols: " << sparse_mat.cols()
             << ", non-zeros: " << sparse_mat.nonZeros() << "\n";
 
   // The values array has one entry per non-zero.
@@ -80,9 +74,8 @@ void solveSparseSystem() {
 
   const int n = 3;
   std::vector<T> coefficients = {
-      T(0, 0, 4), T(0, 1, 1),
-      T(1, 0, 1), T(1, 1, 3), T(1, 2, 1),
-      T(2, 1, 1), T(2, 2, 2),
+      T(0, 0, 4), T(0, 1, 1), T(1, 0, 1), T(1, 1, 3),
+      T(1, 2, 1), T(2, 1, 1), T(2, 2, 2),
   };
 
   SpMat A(n, n);

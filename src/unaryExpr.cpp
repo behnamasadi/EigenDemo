@@ -11,15 +11,14 @@ void unaryExprExample() {
   std::cout << "x =\n" << x.transpose() << std::endl;
 
   // With a lambda: turn each coefficient into 0/1 depending on its sign.
-  Eigen::ArrayXd step = x.unaryExpr([](double elem) {
-    return elem < 0.0 ? 0.0 : 1.0;
-  });
+  Eigen::ArrayXd step =
+      x.unaryExpr([](double elem) { return elem < 0.0 ? 0.0 : 1.0; });
   std::cout << "step(x) =\n" << step.transpose() << std::endl;
 
   // With a function pointer (std::ptr_fun was removed in C++17; pass the
   // function directly instead).
-  std::cout << "ramp(x) =\n" << x.unaryExpr(std::ref(ramp)).transpose()
-            << std::endl;
+  std::cout << "ramp(x) =\n"
+            << x.unaryExpr(std::ref(ramp)).transpose() << std::endl;
 }
 
 int main() {

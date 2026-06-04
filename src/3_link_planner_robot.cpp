@@ -39,9 +39,8 @@ Eigen::Matrix3d numericalDifferentiationFK(const Eigen::Vector3d &q) {
 // Moore-Penrose pseudoinverse via SVD (robust near singular configurations).
 Eigen::MatrixXd pseudoInverse(const Eigen::MatrixXd &m) {
   Eigen::JacobiSVD<Eigen::MatrixXd> svd(m, Eigen::ComputeThinU |
-                                              Eigen::ComputeThinV);
-  double tol =
-      1e-9 * std::max(m.rows(), m.cols()) * svd.singularValues()(0);
+                                               Eigen::ComputeThinV);
+  double tol = 1e-9 * std::max(m.rows(), m.cols()) * svd.singularValues()(0);
   Eigen::VectorXd invSv = svd.singularValues();
   for (int i = 0; i < invSv.size(); ++i)
     invSv(i) = (invSv(i) > tol) ? 1.0 / invSv(i) : 0.0;
@@ -49,8 +48,8 @@ Eigen::MatrixXd pseudoInverse(const Eigen::MatrixXd &m) {
 }
 
 int main() {
-  Eigen::Vector3d q(0.1, 0.1, 0.1);             // initial guess
-  Eigen::Vector3d goal(1.0, 1.0, M_PI / 2.0);   // desired pose (x, y, phi)
+  Eigen::Vector3d q(0.1, 0.1, 0.1);           // initial guess
+  Eigen::Vector3d goal(1.0, 1.0, M_PI / 2.0); // desired pose (x, y, phi)
 
   const double epsilon = 1e-10;
   const int maxIters = 200;

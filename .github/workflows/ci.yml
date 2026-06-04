@@ -64,8 +64,12 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
       - name: Install clang-format
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends clang-format
+        # Pin the version so local and CI formatting agree exactly.
+        run: pip install "clang-format==22.1.5"
       - name: Check formatting
         run: |
           files=$(find src -name '*.cpp' -o -name '*.hpp')

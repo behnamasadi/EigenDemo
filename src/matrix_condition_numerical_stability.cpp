@@ -15,12 +15,10 @@ double conditionNumber(const Eigen::MatrixXd &m) {
 
 int main() {
   Eigen::Matrix2d wellConditioned;
-  wellConditioned << 1, 0,
-                     0, 1;
+  wellConditioned << 1, 0, 0, 1;
 
   Eigen::Matrix2d illConditioned;
-  illConditioned << 1, 1,
-                    1, 1.0001;
+  illConditioned << 1, 1, 1, 1.0001;
 
   std::cout << "condition number of the identity matrix: "
             << conditionNumber(wellConditioned) << "\n";
