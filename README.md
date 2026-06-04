@@ -15,6 +15,8 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 - [Accessing Elements (Coefficient)](2_Matrix_Array_Vector_Class.md#accessing-elements--coefficient-)
 - [Casting Matrices](2_Matrix_Array_Vector_Class.md#casting-matrices)
 - [Reshaping, Resizing, Slicing](2_Matrix_Array_Vector_Class.md#reshaping--resizing--slicing)
+  * [Reshaping](2_Matrix_Array_Vector_Class.md#reshaping)
+  * [Slicing](2_Matrix_Array_Vector_Class.md#slicing)
 - [Tensor Module](2_Matrix_Array_Vector_Class.md#tensor-module)
 
 

@@ -270,6 +270,33 @@ dynamicMatrix.conservativeResize(dynamicMatrix.rows(),
 dynamicMatrix.col(dynamicMatrix.cols() - 1) = Eigen::Vector2d(1, 4);
 ```
 
+## Reshaping
+Since Eigen 3.4, `reshaped()` returns a view of the same coefficients arranged
+with different dimensions (column-major order by default), without copying:
+```cpp
+Eigen::MatrixXd m(2, 3);
+m << 1, 2, 3,
+     4, 5, 6;
+
+m.reshaped(3, 2);          // a 3x2 view of the same data
+m.reshaped().transpose();  // flatten to a single row: 1 4 2 5 3 6
+```
+
+## Slicing
+Also since Eigen 3.4, you can index a matrix with `seq()`, `seqN()`, `all`, and
+`last` to extract sub-blocks, strided ranges, or whole rows/columns:
+```cpp
+Eigen::MatrixXd m(4, 4);
+m << 1,  2,  3,  4,
+     5,  6,  7,  8,
+     9,  10, 11, 12,
+     13, 14, 15, 16;
+
+m(Eigen::seq(1, 2), Eigen::all);            // rows 1..2, all columns
+m(Eigen::seq(0, Eigen::last, 2), Eigen::all); // every other row (stride 2)
+m(Eigen::all, Eigen::last);                 // the last column
+```
+
 # Tensor Module
 
 Eigen also ships an (unsupported) `Tensor` module for multi-dimensional arrays,

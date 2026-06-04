@@ -147,23 +147,40 @@ void elementAccess() {
   }
 }
 
+// Reshaping (Eigen 3.4+): .reshaped() returns a view of the same coefficients
+// with different dimensions. The view is column-major by default.
+// https://eigen.tuxfamily.org/dox/group__TutorialReshapeSlicing.html
 void matrixReshaping() {
-  // https://eigen.tuxfamily.org/dox/group__TutorialReshapeSlicing.html
-  /*
-  Eigen::MatrixXd m1(12,1);
-  m1<<0,1,2,3,4,5,6,7,8,9,10,11;
-  std::cout<<m1<<std::endl;
-
-  //Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor> m2(m1);
-  //Eigen::Map<Eigen::MatrixXd> m3(m2.data(),3,4);
-  Eigen::Map<Eigen::MatrixXd> m2(m1.data(),4,3);
-  std::cout<<m2.transpose()<<std::endl;
-  //solution*/
-  // https://eigen.tuxfamily.org/dox/group__TutorialBlockOperations.html
+  std::cout << "//////////////////Matrix Reshaping////////////////////"
+            << std::endl;
+  Eigen::MatrixXd m(2, 3);
+  m << 1, 2, 3,
+       4, 5, 6;
+  std::cout << "original 2x3 matrix:\n" << m << std::endl;
+  std::cout << "reshaped to 3x2 (column-major order):\n"
+            << m.reshaped(3, 2) << std::endl;
+  std::cout << "flattened to a single row:\n"
+            << m.reshaped().transpose() << std::endl;
 }
 
-// https://eigen.tuxfamily.org/dox/group__TutorialReshapeSlicing.html
-void matrixSlicing() {}
+// Slicing (Eigen 3.4+): index a matrix with seq()/seqN()/all/last to extract
+// arbitrary sub-blocks, strided ranges, or whole rows/columns.
+// https://eigen.tuxfamily.org/dox/group__TutorialSlicingIndexing.html
+void matrixSlicing() {
+  std::cout << "//////////////////Matrix Slicing////////////////////"
+            << std::endl;
+  Eigen::MatrixXd m(4, 4);
+  m << 1, 2, 3, 4,
+       5, 6, 7, 8,
+       9, 10, 11, 12,
+       13, 14, 15, 16;
+
+  std::cout << "rows 1..2, all columns:\n"
+            << m(Eigen::seq(1, 2), Eigen::all) << std::endl;
+  std::cout << "every other row, all columns:\n"
+            << m(Eigen::seq(0, Eigen::last, 2), Eigen::all) << std::endl;
+  std::cout << "the last column:\n" << m(Eigen::all, Eigen::last) << std::endl;
+}
 void matrixResizing() {
   std::cout << "//////////////////Matrix Resizing////////////////////"
             << std::endl;
@@ -326,4 +343,6 @@ int main() {
   convertingMatrixtoArray();
   castingMatrices();
   matrixResizing();
+  matrixReshaping();
+  matrixSlicing();
 }
