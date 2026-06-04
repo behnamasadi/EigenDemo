@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }} / ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        compiler: [gcc, clang]
+        build_type: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake ninja-build \
+            libeigen3-dev libglm-dev liborocos-kdl-dev
+
+      - name: Select compiler
+        run: |
+          if [ "${{ matrix.compiler }}" = "clang" ]; then
+            echo "CC=clang"   >> "$GITHUB_ENV"
+            echo "CXX=clang++" >> "$GITHUB_ENV"
+          else
+            echo "CC=gcc"      >> "$GITHUB_ENV"
+            echo "CXX=g++"     >> "$GITHUB_ENV"
+          fi
+
+      - name: Configure
+        run: cmake --preset ninja-multi
+
+      - name: Build
+        run: cmake --build --preset ninja-multi-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
+
+      - name: Smoke test (run a few examples)
+        run: |
+          BIN="build/bin"
+          for exe in main matrix_array_vector quaternion eigen_value_eigen_vector; do
+            echo "::group::$exe"
+            "$BIN/$exe"
+            echo "::endgroup::"
+          done
+
+  format:
+    name: clang-format (advisory)
+    runs-on: ubuntu-latest
+    # Advisory only: reports style drift without blocking merges.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends clang-format
+      - name: Check formatting
+        run: |
+          files=$(find src -name '*.cpp' -o -name '*.hpp')
+          if [ -n "$files" ]; then
+            clang-format --dry-run --Werror $files
+          fi

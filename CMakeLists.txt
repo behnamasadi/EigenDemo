@@ -1,135 +1,125 @@
-cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
-project(Mastering_Eigen)
+# ----------------------------------------------------------------------------
+# Mastering Eigen — tutorial examples
+#
+# The "VERSION min...max" range form tells CMake to enable all policies up to
+# the newest version it supports (here 3.31) while still configuring on 3.21+.
+# ----------------------------------------------------------------------------
+cmake_minimum_required(VERSION 3.21...3.31)
 
+project(Mastering_Eigen
+    VERSION 1.0.0
+    DESCRIPTION "Tutorials on linear algebra and numerical optimization with Eigen and C++"
+    HOMEPAGE_URL "https://github.com/behnamasadi/EigenDemo"
+    LANGUAGES CXX)
+
+# ----------------------------------------------------------------------------
+# Language standard (applied per target via target_compile_features below).
+# ----------------------------------------------------------------------------
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Generate compile_commands.json for clangd / editor tooling.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_BUILD_TYPE Debug)
+# Collect all binaries under build/bin instead of scattering them per target.
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
-
-
-#set(Eigen3_DIR "$ENV{HOME}/usr/share/eigen3/cmake")
-
-find_package (Eigen3 REQUIRED NO_MODULE)
-
-MESSAGE("EIGEN3_FOUND: " ${EIGEN3_FOUND})
-MESSAGE("EIGEN3_INCLUDE_DIR: " ${EIGEN3_INCLUDE_DIR})
-MESSAGE("EIGEN3_VERSION: " ${EIGEN3_VERSION})
-MESSAGE("EIGEN3_VERSION_STRING: " ${EIGEN3_VERSION_STRING})
-
-include_directories(${EIGEN3_INCLUDE_DIR})
-
-
-
-find_package(orocos_kdl)
-if(${orocos_kdl_FOUND})
-    MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
-    MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
-    include_directories(${orocos_kdl_INCLUDE_DIRS})
-    MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
-    MESSAGE("orocos_kdl_INCLUDE_DIRS: " ${orocos_kdl_INCLUDE_DIRS})
-    MESSAGE("orocos_kdl_LIBRARIES: " ${orocos_kdl_LIBRARIES})
-    include_directories(${orocos_kdl_INCLUDE_DIRS})
+# ----------------------------------------------------------------------------
+# Default build type for single-config generators (Make, Ninja).
+# Multi-config generators (Ninja Multi-Config, Visual Studio) ignore this.
+# ----------------------------------------------------------------------------
+get_property(_isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(NOT _isMultiConfig AND NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type" FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+        Debug Release RelWithDebInfo MinSizeRel)
 endif()
 
-find_package(glm)
-if(${glm_FOUND})
-    MESSAGE("glm_FOUND: " ${glm_FOUND})
-    MESSAGE("GLM_LIBRARIES: " ${GLM_LIBRARIES})
-    MESSAGE("GLM_INCLUDE_DIRS: " ${GLM_INCLUDE_DIRS})
-    add_executable (glm src/glm.cpp)
-    target_link_libraries (glm glm::glm)
+# ----------------------------------------------------------------------------
+# Dependencies
+# ----------------------------------------------------------------------------
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+message(STATUS "Found Eigen3 ${Eigen3_VERSION}: ${EIGEN3_INCLUDE_DIR}")
+
+# Optional dependencies — examples that need them are only built when present.
+find_package(glm QUIET)
+find_package(orocos_kdl QUIET)
+message(STATUS "glm found:         ${glm_FOUND}")
+message(STATUS "orocos_kdl found:  ${orocos_kdl_FOUND}")
+
+# ----------------------------------------------------------------------------
+# Common warning flags, exposed through an INTERFACE target so every example
+# opts in by linking it. Warnings only — never -Werror, so the tutorials build
+# cleanly everywhere.
+# ----------------------------------------------------------------------------
+add_library(project_warnings INTERFACE)
+if(MSVC)
+    target_compile_options(project_warnings INTERFACE /W3)
+else()
+    target_compile_options(project_warnings INTERFACE -Wall -Wextra)
 endif()
 
-add_executable (main src/main.cpp)
-target_link_libraries (main Eigen3::Eigen)
+# ----------------------------------------------------------------------------
+# Helper: register one self-contained example, src/<name>.cpp -> executable.
+# ----------------------------------------------------------------------------
+function(add_eigen_example name)
+    add_executable(${name} src/${name}.cpp)
+    target_link_libraries(${name} PRIVATE Eigen3::Eigen project_warnings)
+    target_compile_features(${name} PRIVATE cxx_std_17)
+endfunction()
 
-add_executable(non_linear_regression src/non_linear_regression.cpp)
-target_link_libraries (non_linear_regression)
+set(EIGEN_EXAMPLES
+    main
+    matrix_array_vector
+    matrix_broadcasting
+    matrix_decomposition
+    matrix_condition_numerical_stability
+    unaryExpr
+    eigen_functor
+    memory_mapping
+    check_matrixsimilarity
+    gram_schmidt_orthogonalization
+    eigen_value_eigen_vector
+    singular_value_decomposition
+    null_space_kernel_rank
+    solving_system_of_linear_equations
+    calculate_range_of_matrix_column_space
+    compute_basis_of_nullspace
+    sparse_matrices
+    quaternion
+    angle_axis_rodrigues
+    euler_angle
+    numerical_diff
+    numerical_methods
+    auto_diff
+    non_linear_least_squares
+    non_linear_regression
+    levenberg_marquardt
+)
 
-add_executable(non_linear_least_squares src/non_linear_least_squares.cpp)
-target_link_libraries (non_linear_least_squares)
+foreach(example IN LISTS EIGEN_EXAMPLES)
+    add_eigen_example(${example})
+endforeach()
 
-add_executable(numerical_diff src/numerical_diff.cpp)
-target_link_libraries (numerical_diff)
+# ----------------------------------------------------------------------------
+# rotation_matrices: optionally uses orocos_kdl. KDL_FOUND is always defined
+# (0 or 1) so the `#if KDL_FOUND == 1` guards compile either way.
+# ----------------------------------------------------------------------------
+add_eigen_example(rotation_matrices)
+if(orocos_kdl_FOUND)
+    target_link_libraries(rotation_matrices PRIVATE ${orocos_kdl_LIBRARIES})
+    target_include_directories(rotation_matrices PRIVATE ${orocos_kdl_INCLUDE_DIRS})
+    target_compile_definitions(rotation_matrices PRIVATE KDL_FOUND=1)
+else()
+    target_compile_definitions(rotation_matrices PRIVATE KDL_FOUND=0)
+endif()
 
-add_executable(levenberg_marquardt src/levenberg_marquardt.cpp)
-target_link_libraries (levenberg_marquardt)
-
-add_executable(eigen_functor src/eigen_functor.cpp)
-target_link_libraries (eigen_functor)
-
-add_executable(auto_diff src/auto_diff.cpp)
-target_link_libraries (auto_diff)
-
-
-add_executable(matrix_array_vector src/matrix_array_vector.cpp)
-target_link_libraries (matrix_array_vector)
-
-
-add_executable(unaryExpr src/unaryExpr.cpp)
-target_link_libraries (unaryExpr)
-
-add_executable(memory_mapping src/memory_mapping.cpp)
-target_link_libraries (memory_mapping)
-
-add_executable(matrix_broadcasting src/matrix_broadcasting.cpp)
-target_link_libraries (matrix_broadcasting)
-
-add_executable(matrix_decomposition src/matrix_decomposition.cpp)
-target_link_libraries (matrix_decomposition)
-
-add_executable(gram_schmidt_orthogonalization src/gram_schmidt_orthogonalization.cpp)
-target_link_libraries (gram_schmidt_orthogonalization)
-
-add_executable(check_matrixsimilarity src/check_matrixsimilarity.cpp)
-target_link_libraries (check_matrixsimilarity)
-
-add_executable(quaternion src/quaternion.cpp)
-target_link_libraries (quaternion)
-
-add_executable(rotation_matrices src/rotation_matrices.cpp)
-target_link_libraries (rotation_matrices   ${orocos_kdl_LIBRARIES})
-target_compile_definitions(rotation_matrices PRIVATE KDL_FOUND=${orocos_kdl_FOUND})
-
-add_executable(angle_axis_rodrigues src/angle_axis_rodrigues.cpp)
-target_link_libraries (angle_axis_rodrigues)
-
-add_executable(euler_angle.cpp src/euler_angle.cpp)
-target_link_libraries (euler_angle.cpp)
-
-add_executable(eigen_value_eigen_vector src/eigen_value_eigen_vector.cpp)
-target_link_libraries (eigen_value_eigen_vector)
-
-add_executable(matrix_condition_numerical_stability src/matrix_condition_numerical_stability.cpp)
-target_link_libraries (matrix_condition_numerical_stability)
-
-add_executable(singular_value_decomposition src/singular_value_decomposition.cpp)
-target_link_libraries (singular_value_decomposition)
-
-add_executable(sparse_matrices src/sparse_matrices.cpp)
-target_link_libraries (sparse_matrices)
-
-add_executable(null_space_kernel_rank src/null_space_kernel_rank.cpp)
-target_link_libraries (null_space_kernel_rank)
-
-add_executable(solving_system_of_linear_equations src/solving_system_of_linear_equations.cpp)
-target_link_libraries (solving_system_of_linear_equations)
-
-add_executable(numerical_methods src/numerical_methods.cpp)
-target_link_libraries (numerical_methods)
-
-add_executable(calculate_range_of_matrix_column_space src/calculate_range_of_matrix_column_space.cpp)
-target_link_libraries (calculate_range_of_matrix_column_space)
-
-add_executable(compute_basis_of_nullspace src/compute_basis_of_nullspace.cpp)
-target_link_libraries (compute_basis_of_nullspace)
-
-#add_executable(random_number_generation src/random_number_generation.cpp)
-#target_link_libraries (random_number_generation)
-
-#IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/sandbox")
-#	ADD_SUBDIRECTORY(src/sandbox)
-#ENDIF()
+# ----------------------------------------------------------------------------
+# glm example: only built when glm is available (does not use Eigen).
+# ----------------------------------------------------------------------------
+if(glm_FOUND)
+    add_executable(glm_example src/glm.cpp)
+    target_link_libraries(glm_example PRIVATE glm::glm project_warnings)
+    target_compile_features(glm_example PRIVATE cxx_std_17)
+endif()
