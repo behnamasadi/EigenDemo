@@ -3,8 +3,9 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 
 # [Chapter 1 Introduction and Installation](1_Intro_Installation.md)
 - [About Eigen](1_Intro_Installation.md#about-eigen)
-- [Installation](1_Intro_Installation.md#instillation)
+- [Installation](1_Intro_Installation.md#installation)
 - [Adding Eigen to Your Project](1_Intro_Installation.md#adding-eigen-to-your-project)
+- [Your First Eigen Program](1_Intro_Installation.md#your-first-eigen-program)
 
 # [Chapter 2 Matrix, Array and Vector Class](2_Matrix_Array_Vector_Class.md)
 - [Matrix Class](2_Matrix_Array_Vector_Class.md#matrix-class)

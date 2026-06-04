@@ -70,6 +70,7 @@ function(add_eigen_example name)
 endfunction()
 
 set(EIGEN_EXAMPLES
+    hello_eigen
     main
     matrix_array_vector
     matrix_broadcasting
