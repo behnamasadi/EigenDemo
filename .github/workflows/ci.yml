@@ -50,7 +50,8 @@ jobs:
 
       - name: Smoke test (run a few examples)
         run: |
-          BIN="build/bin"
+          # Ninja Multi-Config places binaries under build/bin/<Config>/.
+          BIN="build/bin/${{ matrix.build_type }}"
           for exe in main matrix_array_vector quaternion eigen_value_eigen_vector; do
             echo "::group::$exe"
             "$BIN/$exe"
