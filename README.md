@@ -110,5 +110,11 @@ This repository contains my tutorials on mastering Matrix operation and numerica
 - [Non Linear Regression](9_Numerical_Optimization.md#non-linear-regression)
 - [Levenberg Marquardt](9_Numerical_Optimization.md#levenberg-marquardt)
 
+# [Chapter 10 Linear Algebra in Robotics](10_Linear_Algebra_in_Robotics.md)
+- [Why decompositions matter](10_Linear_Algebra_in_Robotics.md#why-decompositions-matter)
+- [Inverse Kinematics — the pseudo-inverse (SVD)](10_Linear_Algebra_in_Robotics.md#inverse-kinematics--the-pseudo-inverse-svd)
+- [Camera Calibration — DLT (SVD), projection decomposition (QR), Zhang (Cholesky)](10_Linear_Algebra_in_Robotics.md#camera-calibration--dlt-svd-projection-decomposition-qr-zhang-cholesky)
+- [SLAM — least squares, QR vs Cholesky, and sparsity](10_Linear_Algebra_in_Robotics.md#slam--least-squares-qr-vs-cholesky-and-sparsity)
+
 
 

@@ -100,6 +100,8 @@ set(EIGEN_EXAMPLES
     non_linear_regression
     levenberg_marquardt
     3_link_planner_robot
+    camera_calibration_dlt
+    slam_pose_graph
 )
 
 foreach(example IN LISTS EIGEN_EXAMPLES)

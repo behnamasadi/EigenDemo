@@ -296,5 +296,5 @@ Eigen provides Levenberg-Marquardt in its `unsupported` module
 
 
 
-[<< Previous ](8_Differentiation.md)   [Home](README.md)  
+[<< Previous ](8_Differentiation.md)   [Home](README.md)  [ Next >>](10_Linear_Algebra_in_Robotics.md)
 
