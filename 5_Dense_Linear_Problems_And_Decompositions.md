@@ -85,7 +85,7 @@
 
 # 1. Vector Space
 
-A vector space is a set <img src="https://latex.codecogs.com/svg.image?V" /> vectors together with two binary operations (vector addition and scalar multiplication) that satisfy the **eight axioms** listed below. In this context, the , and the .
+A vector space is a set <img src="https://latex.codecogs.com/svg.image?V" /> of vectors together with two binary operations (vector addition and scalar multiplication) that satisfy the **eight axioms** listed below.
 
 
 1. Associativity of vector addition: <img src="https://latex.codecogs.com/svg.image?u+%20\left(%20v%20+%20w%20%20\right)%20%20%20=%20\left(%20u%20+%20%20v%20\right)%20+%20w" alt="https://latex.codecogs.com/svg.image?u+ \left( v + w  \right)   = \left( u +  v \right) + w " />
@@ -220,7 +220,7 @@ A linear system may behave in any one of three possible ways:
 The answer of a linear system is determined by the relationship between the number of equations and the number of unknowns.
 
 ## 2.3. Underdetermined System
-a system with fewer equations than unknowns has infinitely many solutions, but it may have no solution. Such a system is known as an underdetermined system.
+a system with fewer equations than unknowns typically has infinitely many solutions, although in some cases it may have none (it never has exactly one). Such a system is known as an underdetermined system.
 
 ## 2.4. Overdetermined System
 A system with more equations than unknowns is called as an overdetermined system.
@@ -274,7 +274,7 @@ This class performs a rank-revealing complete orthogonal decomposition of a matr
 
 ## 3.3. Using the QR
 The `solve()` method in QR decomposition classes also computes the least squares solution. There are three QR decomposition classes: 
-1. `HouseholderQR` (no pivoting, **fast** but **unstable** if your matrix is not rull rank), 
+1. `HouseholderQR` (no pivoting, **fast** but **unstable** if your matrix is not full rank), 
 2. `ColPivHouseholderQR` (column pivoting, thus a bit **slower** but **more stable**) 
 3. `FullPivHouseholderQR` (full pivoting, so **slowest** and slightly **more stable** than `ColPivHouseholderQR`).
 
@@ -474,13 +474,13 @@ The following matrix is in row echelon form, but not in reduced row echelon
 
 The matrix: 
 
-<img  src="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&2&3\end{bmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&2&3\\0&4&5\end{bpmatrix}" />
+<img  src="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&2&3\end{bmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&2&3\end{bmatrix}" />
 
 is echelon, but not triangular (because not square). 
 
 The matrix: 
 
-<img  src="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&0&2\\0&0&4\end{bmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&2&3\\0&0&4\\0&0&5\end{bmatrix}" />
+<img  src="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&0&2\\0&0&4\end{bmatrix}"  alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix}1&4&7\\0&0&2\\0&0&4\end{bmatrix}" />
 
 is triangular, but not echelon because the leading entry 4 is not to the right of the leading entry 2.
 For non-singular square matrices, "row echelon" and "upper triangular" are equivalent.
@@ -536,7 +536,7 @@ For complex square matrices, <img src="https://latex.codecogs.com/svg.latex?Q" /
 <img src="https://latex.codecogs.com/svg.latex?Q^{*}=Q^{-1}" />
 
 ### 4.1.2.  Rectangular Matrix QR Decomposition
-If <img src="https://latex.codecogs.com/svg.latex?A_{m\times%20n}" alt="https://latex.codecogs.com/svg.latex?A_{m\times n}" /> where <img src="https://latex.codecogs.com/svg.latex?%20m%20\geq%20%20n" alt="https://latex.codecogs.com/svg.latex? m \geq  n" /> we can factor it into <img src="https://latex.codecogs.com/svg.latex?m\times%20m" alt="https://latex.codecogs.com/svg.latex?m\times m" /> unitary matrix <img src="https://latex.codecogs.com/svg.latex?Q" /> and  an <img src="https://latex.codecogs.com/svg.latex?m\times%20n" alt="https://latex.codecogs.com/svg.latex?m\times n" /> upper triangular matrix <img src="https://latex.codecogs.com/svg.latex?R" />. Since after <img src="https://latex.codecogs.com/svg.latex?\left%20(m-n%20\right%20)_{th}" alt="https://latex.codecogs.com/svg.latex?\left (m-n \right )_{th}" /> row, in <img src="https://latex.codecogs.com/svg.latex?R" /> all elements are entirely zeroes, we can rewrite our equation in the following form:
+If <img src="https://latex.codecogs.com/svg.latex?A_{m\times%20n}" alt="https://latex.codecogs.com/svg.latex?A_{m\times n}" /> where <img src="https://latex.codecogs.com/svg.latex?%20m%20\geq%20%20n" alt="https://latex.codecogs.com/svg.latex? m \geq  n" /> we can factor it into <img src="https://latex.codecogs.com/svg.latex?m\times%20m" alt="https://latex.codecogs.com/svg.latex?m\times m" /> unitary matrix <img src="https://latex.codecogs.com/svg.latex?Q" /> and  an <img src="https://latex.codecogs.com/svg.latex?m\times%20n" alt="https://latex.codecogs.com/svg.latex?m\times n" /> upper triangular matrix <img src="https://latex.codecogs.com/svg.latex?R" />. Since after the <img src="https://latex.codecogs.com/svg.latex?n_{th}" alt="https://latex.codecogs.com/svg.latex?n_{th}" /> row, in <img src="https://latex.codecogs.com/svg.latex?R" /> all elements are entirely zeroes (the last <img src="https://latex.codecogs.com/svg.latex?m-n" alt="https://latex.codecogs.com/svg.latex?m-n" /> rows are zero), we can rewrite our equation in the following form:
 
 <img src="https://latex.codecogs.com/svg.latex?{\displaystyle%20A_{m\times%20n}=Q%20_{m\times%20m}%20%20R_{m\times%20n}%20=Q{\begin{bmatrix}R_{1}\\0\end{bmatrix}}={\begin{bmatrix}Q_{1}&Q_{2}\end{bmatrix}}{\begin{bmatrix}R_{1}\\0\end{bmatrix}}=Q_{1}R_{1},}" alt="https://latex.codecogs.com/svg.latex?{\displaystyle A_{m\times n}=Q _{m\times m}  R_{m\times n} =Q{\begin{bmatrix}R_{1}\\0\end{bmatrix}}={\begin{bmatrix}Q_{1}&Q_{2}\end{bmatrix}}{\begin{bmatrix}R_{1}\\0\end{bmatrix}}=Q_{1}R_{1},}" />
 
@@ -579,7 +579,7 @@ and the direction is in the direction <img src="https://latex.codecogs.com/svg.l
 so putting everything together:
 
 
-<img src="https://latex.codecogs.com/svg.latex?|\vec{\mathbf%20v}|cos(\theta)=%20|\vec%20{\mathbf%20{{v}\prime}}|"  alt="https://latex.codecogs.com/svg.latex?\vec{\mathbf v}.\vec{\mathbf u}= |\vec{\mathbf v}||\vec{\mathbf u}|cos(\theta)" />
+<img src="https://latex.codecogs.com/svg.latex?\vec{\mathbf%20v}.\vec{\mathbf%20u}=%20|\vec{\mathbf%20v}||\vec{\mathbf%20u}|cos(\theta)"  alt="https://latex.codecogs.com/svg.latex?\vec{\mathbf v}.\vec{\mathbf u}= |\vec{\mathbf v}||\vec{\mathbf u}|cos(\theta)" />
 
 <br/>
 <br/>
@@ -591,7 +591,7 @@ so putting everything together:
 <br/>
 <br/>
 
-<img src="https://latex.codecogs.com/svg.latex?\vec{\mathbf%20v}.\vec{\mathbf%20u}=%20|\vec{\mathbf%20v}||\vec{\mathbf%20u}|cos(\theta)" alt="https://latex.codecogs.com/svg.latex?\vec {\mathbf{v\prime}}=|\vec {\mathbf{v\prime}}|  \frac{\vec {\mathbf{u}}  }{|\vec {\mathbf{u}} | } ">
+<img src="https://latex.codecogs.com/svg.latex?\vec%20{\mathbf{v\prime}}=\frac{\vec{\mathbf%20v}.\vec{\mathbf%20u}}{\vec{\mathbf%20u}.\vec{\mathbf%20u}}\vec{\mathbf%20u}" alt="https://latex.codecogs.com/svg.latex?\vec {\mathbf{v\prime}}=\frac{\vec{\mathbf v}.\vec{\mathbf u}}{\vec{\mathbf u}.\vec{\mathbf u}}\vec{\mathbf u}">
 
 will give us:
 
@@ -891,10 +891,6 @@ where <img src="https://latex.codecogs.com/svg.image?\lambda" alt="https://latex
 
 Eigenvalues are −1, 2 and 8.
 
-<img src="" alt=""  />
-
-<img src="" alt=""  />
-
 ## 4.14. Eigendecomposition of Matrix
 
 ## 4.15. Singular Value Decomposition
@@ -913,7 +909,7 @@ Singular value decomposition (SVD) is a factorization of a real or (complex matr
 5. If `M`is real, then `U` and `V` can be guaranteed to be real orthogonal matrices.
 
 
-6. The columns of `U` <img src="https://latex.codecogs.com/svg.latex?u_1%2C%20...%2C%20u_n" alt="https://latex.codecogs.com/svg.latex?u_1, ..., u_n"  /> and the columns of `V` <img src="https://latex.codecogs.com/svg.latex?v_1%2C%20...%2C%20v_n" alt="https://latex.codecogs.com/svg.latex?v_1, ..., v_n"  /> are form two sets of orthonormal bases and the singular value decomposition can be written as:
+6. The columns of `U` <img src="https://latex.codecogs.com/svg.latex?u_1%2C%20...%2C%20u_m" alt="https://latex.codecogs.com/svg.latex?u_1, ..., u_m"  /> and the columns of `V` <img src="https://latex.codecogs.com/svg.latex?v_1%2C%20...%2C%20v_n" alt="https://latex.codecogs.com/svg.latex?v_1, ..., v_n"  /> form two sets of orthonormal bases and the singular value decomposition can be written as:
 
 <br/>
  <img src="https://latex.codecogs.com/svg.latex?%7B%5Cdisplaystyle%20%5C%20%5Cmathbf%20%7BM%7D%20%3D%5Csum%20_%7Bi%3D1%7D%5E%7Br%7D%5Csigma%20_%7Bi%7D%5Cmathbf%20%7Bu%7D%20_%7Bi%7D%5Cmathbf%20%7Bv%7D%20_%7Bi%7D%5E%7B*%7D%5C%20%2C%7D" alt="https://latex.codecogs.com/svg.latex?{\displaystyle \ \mathbf {M} =\sum _{i=1}^{r}\sigma _{i}\mathbf {u} _{i}\mathbf {v} _{i}^{*}\ ,}"  /> 
@@ -1067,7 +1063,7 @@ is:
 
 <img src="https://latex.codecogs.com/svg.image?v=c_1%20%20%20\begin{bmatrix}1\\-2%20\\0\end{bmatrix}%20+c_2%20\begin{bmatrix}3\\1%20\\0\end{bmatrix}" alt="v=c_1 \begin{bmatrix} 1\\ -2 \\ 0 \end{bmatrix} + c_2  \begin{bmatrix} 3\\ 1 \\ 0 \end{bmatrix}" />
 
-2. The real vector space <img src="https://latex.codecogs.com/svg.image?\mathbb%20{R}%20^{3}" alt="https://latex.codecogs.com/svg.image?\mathbb {R} ^{3}" />  has {(−1, 0, 0), (0, 1, 0), (0, 0, 1)} as a spanning set as a spanning set.
+2. The real vector space <img src="https://latex.codecogs.com/svg.image?\mathbb%20{R}%20^{3}" alt="https://latex.codecogs.com/svg.image?\mathbb {R} ^{3}" />  has {(−1, 0, 0), (0, 1, 0), (0, 0, 1)} as a spanning set.
 
 
 The set {(1, 0, 0), (0, 1, 0), (1, 1, 0)} is **not** a spanning set of 
@@ -1167,12 +1163,12 @@ Let say we have the following matrix:
 
 By writing it into row echelon form:
 
-<img src="https://latex.codecogs.com/svg.image?{\displaystyle%20{\begin{aligned}{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\1&5&4&5\end{aligned}}&\xrightarrow%20{1/2R_{1}%20+R_{3}%20\to%20R_{3}}%20{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\0&6&7&5\end{aligned}}\xrightarrow%20{-R_{2}+R_{3}\to%20R_{3}}%20{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\0&0&0&0\end{bmatrix}}\end{aligned}}}"  alt="{\displaystyle {\begin{aligned}{\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\1&5&4&5\end{aligned}}&\xrightarrow {1/2R_{1} +R_{3} \to R_{3}} {\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\0&6&7&5\end{aligned}}\xrightarrow {-R_{2}+R_{3}\to R_{3}} {\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\0&0&0&0\end{bmatrix}}\end{aligned}}}"  />
+<img src="https://latex.codecogs.com/svg.image?{\displaystyle%20{\begin{aligned}{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\1&5&4&5\end{bmatrix}}&\xrightarrow%20{1/2R_{1}%20+R_{3}%20\to%20R_{3}}%20{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\0&6&7&5\end{bmatrix}}\xrightarrow%20{-R_{2}+R_{3}\to%20R_{3}}%20{\begin{bmatrix}-2&2&6&0\\0&6&7&5%20%20\\0&0&0&0\end{bmatrix}}\end{aligned}}}"  alt="{\displaystyle {\begin{aligned}{\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\1&5&4&5\end{bmatrix}}&\xrightarrow {1/2R_{1} +R_{3} \to R_{3}} {\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\0&6&7&5\end{bmatrix}}\xrightarrow {-R_{2}+R_{3}\to R_{3}} {\begin{bmatrix}-2&2&6&0\\0&6&7&5  \\0&0&0&0\end{bmatrix}}\end{aligned}}}"  />
 
 Now we pick the non-zero rows, so the basis for row space of our matrix is:
 
 
-<img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}-2%20\\%202\\4%20\\0\end{bmatrix},\begin{bmatrix}0%20\\6%20\\7%20\\5\end{bmatrix}" alt="https://latex.codecogs.com/svg.image?\begin{bmatrix} -2 \\  2\\ 4 \\ 0\end{bmatrix},\begin{bmatrix} 0 \\ 6 \\ 7 \\ 5 \end{bmatrix} ">
+<img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}-2%20\\%202\\6%20\\0\end{bmatrix},\begin{bmatrix}0%20\\6%20\\7%20\\5\end{bmatrix}" alt="https://latex.codecogs.com/svg.image?\begin{bmatrix} -2 \\  2\\ 6 \\ 0\end{bmatrix},\begin{bmatrix} 0 \\ 6 \\ 7 \\ 5 \end{bmatrix} ">
 
 ##  9.3. Changes of basis vectors
 Let say our first basis vector set is:
@@ -1205,14 +1201,14 @@ Two ways to describe a vector in basis vectors:
 
 1) Parallel Projection Counting how many unit vectors we should add to get our vector. In our example:
 
-<img src="https://latex.codecogs.com/svg.latex?-1%5Ctimes%20%5Cbegin%7Bbmatrix%7D%202%5C%5C%201%5Cend%7Bbmatrix%7D%20&plus;%202%5Ctimes%5Cbegin%7Bbmatrix%7D%20-1%5C%5C%201%5Cend%7Bbmatrix%7D%3D0" alt="https://latex.codecogs.com/svg.latex?-1\times \begin{bmatrix} 2\\ 1\end{bmatrix} + 2\times\begin{bmatrix} -1\\ 1\end{bmatrix}=0" />
+<img src="https://latex.codecogs.com/svg.latex?-1%5Ctimes%20%5Cbegin%7Bbmatrix%7D%202%5C%5C%201%5Cend%7Bbmatrix%7D%20&plus;%202%5Ctimes%5Cbegin%7Bbmatrix%7D%20-1%5C%5C%201%5Cend%7Bbmatrix%7D%3D%5Cbegin%7Bbmatrix%7D-4%5C%5C1%5Cend%7Bbmatrix%7D" alt="https://latex.codecogs.com/svg.latex?-1\times \begin{bmatrix} 2\\ 1\end{bmatrix} + 2\times\begin{bmatrix} -1\\ 1\end{bmatrix}=\begin{bmatrix} -4\\ 1\end{bmatrix}" />
 
 2)perpendicular projection Dot product our vector with basis vector:
 
 <img src="https://latex.codecogs.com/svg.latex?%5Cbegin%7Bbmatrix%7D%20-1%2C%202%5Cend%7Bbmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%202%5C%5C1%5Cend%7Bbmatrix%7D%3D0" alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix} -1, 2\end{bmatrix} \cdot \begin{bmatrix} 2\\1\end{bmatrix}=0" />
 
 
-<img src="https://latex.codecogs.com/svg.latex?%5Cbegin%7Bbmatrix%7D%20-1%2C%202%5Cend%7Bbmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20-1%5C%5C1%5Cend%7Bbmatrix%7D%3D4" alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix} -1, 2\end{bmatrix} \cdot \begin{bmatrix} -1\\1\end{bmatrix}=4" />
+<img src="https://latex.codecogs.com/svg.latex?%5Cbegin%7Bbmatrix%7D%20-1%2C%202%5Cend%7Bbmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20-1%5C%5C1%5Cend%7Bbmatrix%7D%3D3" alt="https://latex.codecogs.com/svg.latex?\begin{bmatrix} -1, 2\end{bmatrix} \cdot \begin{bmatrix} -1\\1\end{bmatrix}=3" />
 
 
 If we double the size of the basis vectors, our new basis is:
