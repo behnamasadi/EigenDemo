@@ -197,4 +197,14 @@ production libraries optimize maps with thousands of poses in milliseconds:
 | Sparse multifrontal Cholesky + COLAMD | `O(n)`–`O(n^{3/2})` | `κ²` | full | **GTSAM / Ceres default** |
 | Sparse QR | `O(n^{3/2})` | `κ` | full | marginalization |
 
+Putting it together, the choice of decomposition for the SLAM normal equations
+`(JᵀJ)Δ = -Jᵀε₀` comes down to a few questions — problem size, whether maximum
+numerical stability is needed, and whether the step involves marginalization:
+
+<img src="images/slam_solver_decision_tree.jpeg" width="750" />
+
+*Decision tree credit: Hyungtae Lim, "Matrix Decompositions for SLAM"
+([LinkedIn post](https://www.linkedin.com/posts/hyungtae-lim_slam-robotics-gtsam-activity-7457696218987741185-mv0n/)).
+The SLAM section of this chapter is based on that lecture material.*
+
 [<< Previous ](9_Numerical_Optimization.md)  [Home](README.md)
