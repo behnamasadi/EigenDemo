@@ -101,7 +101,7 @@ void elementAccess() {
   std::cout << "matrix is:\n" << matrix << std::endl;
 
   std::cout << "All Eigen matrices default to column-major storage order. That "
-               "means, matrix(2) is  matix(2,0):"
+               "means matrix(2) is the same as matrix(2,0):"
             << std::endl;
 
   std::cout << "matrix(2): " << matrix(2) << std::endl;
@@ -200,10 +200,10 @@ void convertingMatrixtoArray() {
   Eigen::Array<double, 4, 4> array1 = mat1.array();
   Eigen::Array<double, 4, 4> array2 = mat2.array();
 
-  std::cout << "Matrix multipication:\n" << mat1 * mat2 << std::endl;
-  std::cout << "Array multipication(coefficientsweise) :\n"
+  std::cout << "Matrix multiplication:\n" << mat1 * mat2 << std::endl;
+  std::cout << "Array multiplication (coefficient-wise):\n"
             << array1 * array2 << std::endl;
-  std::cout << "Matrix coefficientsweise multipication :\n"
+  std::cout << "Matrix coefficient-wise multiplication:\n"
             << mat1.cwiseProduct(mat2) << std::endl;
 }
 
@@ -288,22 +288,42 @@ void scalarMultiplicationDivision() {}
 
 void multiplicationDotCrossProduct() {}
 
-void casingMatrices() {
+void convertingArrayToMatrix() {
+  std::cout << "//////////////////Array <-> Matrix////////////////////"
+            << std::endl;
+  Eigen::Array<double, 4, 4> array1 = Eigen::Array<double, 4, 4>::Random();
+  Eigen::Matrix<double, 4, 4> mat1 = array1.matrix();
+
+  std::cout << "array1:\n" << array1 << std::endl;
+  std::cout << "array1 viewed as a matrix:\n" << mat1 << std::endl;
+}
+
+void castingMatrices() {
+  std::cout << "//////////////////Casting Matrices////////////////////"
+            << std::endl;
 
   Eigen::Matrix<float, 2, 3> matrix_23;
-  // Eigen::Matrix<float, 3, 1> vd_3d;
-  Eigen::Vector3d v_3d;
+  matrix_23 << 1, 2, 3, 4, 5, 6;
+  Eigen::Vector3d v_3d(1, 2, 3);
 
-  // wrong Eigen::Matrix<double, 2, 1> result_wrong_type = matrix_23 ∗ v_3d;
+  // This would NOT compile: a float matrix cannot multiply a double vector.
+  // Eigen::Matrix<double, 2, 1> wrong = matrix_23 * v_3d;
 
+  // Cast the float matrix to double so both operands share the scalar type:
   Eigen::Matrix<double, 2, 1> result = matrix_23.cast<double>() * v_3d;
+
+  std::cout << "matrix_23.cast<double>() * v_3d =\n" << result << std::endl;
 }
+
 int main() {
-  // buildMatrixFromVector();
-  // vectorCreation();
-  // elementAccess();
-  // matrixResizing();
-  // coefficientWiseOperations();
-  // convertingMatrixtoArray();
-  // maskingArray();
+  matrixCreation();
+  arrayCreation();
+  vectorCreation();
+  buildMatrixFromVector();
+  initialization();
+  elementAccess();
+  convertingArrayToMatrix();
+  convertingMatrixtoArray();
+  castingMatrices();
+  matrixResizing();
 }
