@@ -1,5 +1,34 @@
 # Linear Algebra With Eigen and C++
-This repository contains my tutorials on mastering Matrix operation and numerical optimization with Eigen and C++. The following will be the outline of this repository:
+
+[![CI](https://github.com/behnamasadi/EigenDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/behnamasadi/EigenDemo/actions/workflows/ci.yml)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE)
+![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
+
+This repository contains my tutorials on mastering Matrix operation and numerical optimization with Eigen and C++.
+Every chapter below is a written tutorial paired with a self-contained, compilable example in [`src/`](src) — from
+basic matrix arithmetic up to SVD-based camera calibration, point-cloud registration and sparse SLAM pose-graph solving.
+
+## Build and run
+
+Requires a C++17 compiler, [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
+[Eigen 3](https://eigen.tuxfamily.org/) (`sudo apt install libeigen3-dev` on Debian/Ubuntu).
+
+```bash
+git clone https://github.com/behnamasadi/EigenDemo.git
+cd EigenDemo
+cmake --preset ninja-multi
+cmake --build build --config Release
+```
+
+The binaries land in `build/Release/`, one per example, so you can run any topic directly:
+
+```bash
+./build/Release/singular_value_decomposition
+./build/Release/quaternion
+./build/Release/slam_pose_graph
+```
+
+The following is the outline of this repository:
 
 # [Chapter 1 Introduction and Installation](1_Intro_Installation.md)
 - [About Eigen](1_Intro_Installation.md#about-eigen)
