@@ -132,6 +132,7 @@ struct QuadraticFunctor {
 
       fvec(i) = yValue - (aParam * xValue * xValue + bParam * xValue + cParam);
     }
+    return 0;
   }
 
   // Compute the jacobian of the errors
@@ -163,6 +164,7 @@ struct QuadraticFunctor {
 
       fjac.block(0, i, values(), 1) = fvecDiff;
     }
+    return 0;
   }
 
   // Number of data points, i.e. values.
