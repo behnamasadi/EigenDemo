@@ -1,7 +1,15 @@
 #include <Eigen/Dense>
 #include <iostream>
+#include <random>
 #include <unsupported/Eigen/NonLinearOptimization>
 #include <unsupported/Eigen/NumericalDiff>
+
+// Measurement noise in [0, 0.1). Fixed seed: every run fits the same data.
+static double noise() {
+  static std::mt19937 engine(42);
+  static std::uniform_real_distribution<double> dist(0.0, 0.1);
+  return dist(engine);
+}
 
 // Generic functor
 template <typename _Scalar, int NX = Eigen::Dynamic, int NY = Eigen::Dynamic>
@@ -71,7 +79,7 @@ Point2DVector GeneratePoints(const unsigned int numberOfPoints) {
     double x = static_cast<double>(i);
     Eigen::Vector2d point;
     point(0) = x;
-    point(1) = 2.0 * x + 5.0 + drand48() / 10.0;
+    point(1) = 2.0 * x + 5.0 + noise();
     points.push_back(point);
   }
 
@@ -193,7 +201,7 @@ void quadraticPointsGenerator(std::vector<double> &x_values,
 
   for (unsigned int i = 0; i < numberOfPoints; ++i) {
     x = x_start + static_cast<double>(i) * (x_end - x_start) / numberOfPoints;
-    y = a * pow(x, 2) + b * x + c + drand48() / 10.0;
+    y = a * pow(x, 2) + b * x + c + noise();
     x_values.push_back(x);
     y_values.push_back(y);
   }
