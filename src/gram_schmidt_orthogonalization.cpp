@@ -1,4 +1,5 @@
 #include <Eigen/Dense>
+#include <cmath>
 #include <iostream>
 
 void gramSchmidtOrthogonalization(Eigen::MatrixXd &matrix,
@@ -72,7 +73,7 @@ void gramSchmidtOrthogonalization(Eigen::MatrixXd &matrix,
   std::cout << Q << std::endl;
 
   std::cout << "R" << std::endl;
-  std::cout << R.unaryExpr(std::ptr_fun(exp)) << std::endl;
+  std::cout << R.unaryExpr([](double x) { return std::exp(x); }) << std::endl;
 
   // MatrixXd A(4,3), thinQ(4,3), Q(4,4);
 
