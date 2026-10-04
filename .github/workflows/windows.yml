@@ -1,0 +1,40 @@
+name: Windows
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: MSVC
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # vcpkg ships on the runner image; Eigen is header-only so this is quick.
+      - name: Install Eigen
+        run: vcpkg install eigen3:x64-windows
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Smoke test (run a few examples)
+        shell: bash
+        run: |
+          for exe in main matrix_array_vector quaternion eigen_value_eigen_vector; do
+            echo "::group::$exe"
+            "$(find build -path "*Release*" -name "$exe.exe" | head -n 1)"
+            echo "::endgroup::"
+          done

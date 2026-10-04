@@ -1,0 +1,37 @@
+name: macOS
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: brew install ninja eigen glm
+
+      - name: Configure
+        run: cmake --preset ninja-multi
+
+      - name: Build
+        run: cmake --build --preset ninja-multi-release
+
+      - name: Smoke test (run a few examples)
+        run: |
+          for exe in main matrix_array_vector quaternion eigen_value_eigen_vector; do
+            echo "::group::$exe"
+            "build/bin/Release/$exe"
+            echo "::endgroup::"
+          done
