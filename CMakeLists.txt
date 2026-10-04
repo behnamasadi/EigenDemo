@@ -53,6 +53,11 @@ message(STATUS "orocos_kdl found:  ${orocos_kdl_FOUND}")
 # opts in by linking it. Warnings only — never -Werror, so the tutorials build
 # cleanly everywhere.
 # ----------------------------------------------------------------------------
+# MSVC's <cmath> only defines M_PI and friends when asked to.
+if(MSVC)
+    add_compile_definitions(_USE_MATH_DEFINES)
+endif()
+
 add_library(project_warnings INTERFACE)
 if(MSVC)
     target_compile_options(project_warnings INTERFACE /W3)
