@@ -74,7 +74,10 @@ In your `CMakeLists.txt`, locate Eigen and link the imported target
 `Eigen3::Eigen` to your executable:
 
 ```cmake
-find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+find_package(Eigen3 5 QUIET NO_MODULE)       # Eigen 5 ...
+if(NOT Eigen3_FOUND)
+    find_package(Eigen3 3.4 REQUIRED NO_MODULE) # ... or 3.4
+endif()
 
 add_executable(example example.cpp)
 target_link_libraries(example PRIVATE Eigen3::Eigen)

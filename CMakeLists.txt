@@ -15,8 +15,10 @@ project(Mastering_Eigen
 # ----------------------------------------------------------------------------
 # Language standard (applied per target via target_compile_features below).
 # ----------------------------------------------------------------------------
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# No C++20 modules here; skip the dependency scan (Clang would need clang-scan-deps).
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Generate compile_commands.json for clangd / editor tooling.
@@ -39,7 +41,12 @@ endif()
 # ----------------------------------------------------------------------------
 # Dependencies
 # ----------------------------------------------------------------------------
-find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+# Prefer Eigen 5; fall back to 3.4 (slicing needs it). Eigen's version file only
+# accepts its own major version, so a 3.4...<6 range never matches.
+find_package(Eigen3 5 QUIET NO_MODULE)
+if(NOT Eigen3_FOUND)
+    find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+endif()
 message(STATUS "Found Eigen3 ${Eigen3_VERSION}: ${EIGEN3_INCLUDE_DIR}")
 
 # Optional dependencies — examples that need them are only built when present.
@@ -50,8 +57,8 @@ message(STATUS "orocos_kdl found:  ${orocos_kdl_FOUND}")
 
 # ----------------------------------------------------------------------------
 # Common warning flags, exposed through an INTERFACE target so every example
-# opts in by linking it. Warnings only — never -Werror, so the tutorials build
-# cleanly everywhere.
+# opts in by linking it. Warnings only, except falling off the end of a
+# non-void function: that is undefined behaviour and crashed levenberg_marquardt.
 # ----------------------------------------------------------------------------
 # MSVC's <cmath> only defines M_PI and friends when asked to.
 if(MSVC)
@@ -62,7 +69,7 @@ add_library(project_warnings INTERFACE)
 if(MSVC)
     target_compile_options(project_warnings INTERFACE /W3)
 else()
-    target_compile_options(project_warnings INTERFACE -Wall -Wextra)
+    target_compile_options(project_warnings INTERFACE -Wall -Wextra -Werror=return-type)
 endif()
 
 # ----------------------------------------------------------------------------
@@ -71,7 +78,7 @@ endif()
 function(add_eigen_example name)
     add_executable(${name} src/${name}.cpp)
     target_link_libraries(${name} PRIVATE Eigen3::Eigen project_warnings)
-    target_compile_features(${name} PRIVATE cxx_std_17)
+    target_compile_features(${name} PRIVATE cxx_std_23)
 endfunction()
 
 set(EIGEN_EXAMPLES
@@ -135,5 +142,5 @@ endif()
 if(glm_FOUND)
     add_executable(glm_example src/glm.cpp)
     target_link_libraries(glm_example PRIVATE glm::glm project_warnings)
-    target_compile_features(glm_example PRIVATE cxx_std_17)
+    target_compile_features(glm_example PRIVATE cxx_std_23)
 endif()

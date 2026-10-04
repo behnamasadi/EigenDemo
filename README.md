@@ -9,8 +9,8 @@
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/behnamasadi/EigenDemo/badge)](https://scorecard.dev/viewer/?uri=github.com/behnamasadi/EigenDemo)
 
 **Stack**  
-![C++17](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white)
-[![Eigen 3.3+](https://img.shields.io/badge/Eigen-3.3%2B-2E6DB4)](https://eigen.tuxfamily.org/)
+![C++23](https://img.shields.io/badge/C%2B%2B-23-00599C?logo=cplusplus&logoColor=white)
+[![Eigen 3.4 | 5](https://img.shields.io/badge/Eigen-3.4%20%7C%205-2E6DB4)](https://eigen.tuxfamily.org/)
 ![CMake](https://img.shields.io/badge/CMake-3.21%2B-064F8C?logo=cmake&logoColor=white)
 ![Platforms](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)
 
@@ -32,8 +32,8 @@ basic matrix arithmetic up to SVD-based camera calibration, point-cloud registra
 
 ## Build and run
 
-Requires a C++17 compiler, [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
-[Eigen 3](https://eigen.tuxfamily.org/) (`sudo apt install libeigen3-dev` on Debian/Ubuntu).
+Requires a C++23 compiler (GCC 13+, Clang 17+, Apple Clang 15+, MSVC 2022), [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
+[Eigen](https://eigen.tuxfamily.org/) 3.4 or 5 (`sudo apt install libeigen3-dev` on Debian/Ubuntu).
 
 ```bash
 git clone https://github.com/behnamasadi/EigenDemo.git

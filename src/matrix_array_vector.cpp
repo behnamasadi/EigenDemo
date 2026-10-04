@@ -166,16 +166,25 @@ void matrixReshaping() {
 // arbitrary sub-blocks, strided ranges, or whole rows/columns.
 // https://eigen.tuxfamily.org/dox/group__TutorialSlicingIndexing.html
 void matrixSlicing() {
+  // Eigen 5 moved `all` and `last` into Eigen::placeholders (3.4 has both,
+  // but deprecates the placeholders:: spelling).
+#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
+  using Eigen::placeholders::all;
+  using Eigen::placeholders::last;
+#else
+  using Eigen::all;
+  using Eigen::last;
+#endif
   std::cout << "//////////////////Matrix Slicing////////////////////"
             << std::endl;
   Eigen::MatrixXd m(4, 4);
   m << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16;
 
   std::cout << "rows 1..2, all columns:\n"
-            << m(Eigen::seq(1, 2), Eigen::all) << std::endl;
+            << m(Eigen::seq(1, 2), all) << std::endl;
   std::cout << "every other row, all columns:\n"
-            << m(Eigen::seq(0, Eigen::last, 2), Eigen::all) << std::endl;
-  std::cout << "the last column:\n" << m(Eigen::all, Eigen::last) << std::endl;
+            << m(Eigen::seq(0, last, 2), all) << std::endl;
+  std::cout << "the last column:\n" << m(all, last) << std::endl;
 }
 void matrixResizing() {
   std::cout << "//////////////////Matrix Resizing////////////////////"
