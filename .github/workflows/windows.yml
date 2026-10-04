@@ -30,11 +30,13 @@ jobs:
       - name: Build
         run: cmake --build build --config Release --parallel
 
-      - name: Smoke test (run a few examples)
+      - name: Run every example
         shell: bash
         run: |
-          for exe in main matrix_array_vector quaternion eigen_value_eigen_vector; do
-            echo "::group::$exe"
-            "$(find build -path "*Release*" -name "$exe.exe" | head -n 1)"
+          status=0
+          for exe in $(find build -path '*Release*' -name '*.exe' -not -path '*CMakeFiles*'); do
+            echo "::group::$(basename "$exe")"
+            "$exe" < /dev/null || { echo "::error::$(basename "$exe") failed"; status=1; }
             echo "::endgroup::"
           done
+          exit $status
