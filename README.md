@@ -2,7 +2,6 @@
 
 **CI**  
 [![Linux GCC/Clang](https://github.com/behnamasadi/EigenDemo/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/behnamasadi/EigenDemo/actions/workflows/ci.yml)
-[![macOS](https://github.com/behnamasadi/EigenDemo/actions/workflows/macos.yml/badge.svg?branch=master)](https://github.com/behnamasadi/EigenDemo/actions/workflows/macos.yml)
 [![Windows MSVC](https://github.com/behnamasadi/EigenDemo/actions/workflows/windows.yml/badge.svg?branch=master)](https://github.com/behnamasadi/EigenDemo/actions/workflows/windows.yml)
 [![Links](https://github.com/behnamasadi/EigenDemo/actions/workflows/links.yml/badge.svg?branch=master)](https://github.com/behnamasadi/EigenDemo/actions/workflows/links.yml)
 [![CodeQL](https://github.com/behnamasadi/EigenDemo/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/behnamasadi/EigenDemo/actions/workflows/codeql.yml)
@@ -12,7 +11,7 @@
 ![C++23](https://img.shields.io/badge/C%2B%2B-23-00599C?logo=cplusplus&logoColor=white)
 [![Eigen 3.4 | 5](https://img.shields.io/badge/Eigen-3.4%20%7C%205-2E6DB4)](https://eigen.tuxfamily.org/)
 ![CMake](https://img.shields.io/badge/CMake-3.21%2B-064F8C?logo=cmake&logoColor=white)
-![Platforms](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)
+![Platforms](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey)
 
 **Repository**  
 [![License](https://img.shields.io/github/license/behnamasadi/EigenDemo)](LICENSE)
