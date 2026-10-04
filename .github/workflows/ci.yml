@@ -42,7 +42,8 @@ jobs:
         run: |
           curl -fsSL "https://gitlab.com/libeigen/eigen/-/archive/${{ matrix.eigen }}/eigen-${{ matrix.eigen }}.tar.gz" | tar xz -C "$RUNNER_TEMP"
           cmake -S "$RUNNER_TEMP/eigen-${{ matrix.eigen }}" -B "$RUNNER_TEMP/eigen-build" -G Ninja \
-            -DEIGEN_BUILD_DOC=OFF -DEIGEN_BUILD_TESTING=OFF -DBUILD_TESTING=OFF
+            -DEIGEN_BUILD_DOC=OFF -DEIGEN_BUILD_TESTING=OFF -DBUILD_TESTING=OFF \
+            -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DEIGEN_BUILD_DEMOS=OFF
           cmake --install "$RUNNER_TEMP/eigen-build" --prefix "$RUNNER_TEMP/eigen"
           echo "CMAKE_PREFIX_PATH=$RUNNER_TEMP/eigen" >> "$GITHUB_ENV"
 
