@@ -30,7 +30,7 @@ For example, given `w = x + y + z`, Eigen does not materialize a temporary for
 
 # Installation
 
-Eigen 3.4 or newer is recommended. Pick whichever method matches your platform.
+Eigen 3.4 or 5 works; this project pins Eigen 5 through vcpkg. Pick whichever method matches your platform.
 
 ## Debian / Ubuntu
 
@@ -49,8 +49,23 @@ conda install -c conda-forge eigen
 
 ## vcpkg
 
+The recommended way for a CMake project: declare the dependency in a
+`vcpkg.json` manifest next to `CMakeLists.txt` and pin the port versions with a
+`builtin-baseline` (a commit of the vcpkg repository):
+
+```json
+{
+  "name": "my-project",
+  "builtin-baseline": "<vcpkg commit sha>",
+  "dependencies": ["eigen3"]
+}
+```
+
+Configure with vcpkg's toolchain file and it installs the pinned versions on
+first configure (this repository's `vcpkg` preset does exactly this):
+
 ```bash
-vcpkg install eigen3
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 ```
 
 ## Building from source

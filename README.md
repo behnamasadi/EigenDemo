@@ -31,22 +31,34 @@ basic matrix arithmetic up to SVD-based camera calibration, point-cloud registra
 
 ## Build and run
 
-Requires a C++23 compiler (GCC 13+, Clang 17+, MSVC 2022), [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
-[Eigen](https://eigen.tuxfamily.org/) 3.4 or 5 (`sudo apt install libeigen3-dev` on Debian/Ubuntu).
+Requires a C++23 compiler (GCC 13+, Clang 17+, MSVC 2022), [CMake](https://cmake.org/) >= 3.21 and
+[Ninja](https://ninja-build.org/). Dependencies ([Eigen](https://eigen.tuxfamily.org/) 5, glm, orocos-kdl) are
+declared in [`vcpkg.json`](vcpkg.json) and pinned by its `builtin-baseline`.
+
+**With [vcpkg](https://learn.microsoft.com/vcpkg/) (Linux, Windows)** — installs the pinned versions on first configure:
 
 ```bash
 git clone https://github.com/behnamasadi/EigenDemo.git
 cd EigenDemo
-cmake --preset ninja-multi
-cmake --build build --config Release
+export VCPKG_ROOT=/path/to/vcpkg   # Windows: $env:VCPKG_ROOT = "C:\path\to\vcpkg"
+cmake --preset vcpkg
+cmake --build --preset vcpkg-release
 ```
 
-The binaries land in `build/Release/`, one per example, so you can run any topic directly:
+**With system packages** — Eigen 3.4 or 5; glm and orocos-kdl are optional:
 
 ```bash
-./build/Release/singular_value_decomposition
-./build/Release/quaternion
-./build/Release/slam_pose_graph
+sudo apt install libeigen3-dev libglm-dev liborocos-kdl-dev   # Debian/Ubuntu
+cmake --preset ninja-multi
+cmake --build --preset ninja-multi-release
+```
+
+The binaries land in `build/bin/Release/`, one per example, so you can run any topic directly:
+
+```bash
+./build/bin/Release/singular_value_decomposition
+./build/bin/Release/quaternion
+./build/bin/Release/slam_pose_graph
 ```
 
 The following is the outline of this repository:
