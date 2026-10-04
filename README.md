@@ -31,7 +31,7 @@ basic matrix arithmetic up to SVD-based camera calibration, point-cloud registra
 
 ## Build and run
 
-Requires a C++23 compiler (GCC 13+, Clang 17+, Apple Clang 15+, MSVC 2022), [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
+Requires a C++23 compiler (GCC 13+, Clang 17+, MSVC 2022), [CMake](https://cmake.org/) >= 3.21, [Ninja](https://ninja-build.org/) and
 [Eigen](https://eigen.tuxfamily.org/) 3.4 or 5 (`sudo apt install libeigen3-dev` on Debian/Ubuntu).
 
 ```bash
