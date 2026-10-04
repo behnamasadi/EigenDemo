@@ -3,12 +3,6 @@
 #include <iostream>
 #include <vector>
 
-double exp(double x) // the functor we want to apply
-{
-  std::setprecision(5);
-  return std::trunc(x);
-}
-
 void MatrixPowersPolynomials() {
 
   // Rectangular Diagonal
