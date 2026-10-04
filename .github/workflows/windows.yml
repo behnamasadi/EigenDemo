@@ -15,26 +15,35 @@ concurrency:
 
 jobs:
   build:
-    name: MSVC
+    name: MSVC / ${{ matrix.build_type }}
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+
     steps:
       - uses: actions/checkout@v7
 
-      # vcpkg ships on the runner image; Eigen is header-only so this is quick.
-      - name: Install Eigen
-        run: vcpkg install eigen3:x64-windows
+      # cl.exe on PATH for the Ninja generator.
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set up vcpkg
+        uses: lukka/run-vcpkg@v11.6
+        with:
+          vcpkgJsonGlob: vcpkg.json
 
       - name: Configure
-        run: cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+        run: cmake --preset vcpkg
 
       - name: Build
-        run: cmake --build build --config Release --parallel
+        run: cmake --build build --config ${{ matrix.build_type }}
 
       - name: Run every example
         shell: bash
         run: |
           status=0
-          for exe in $(find build -path '*Release*' -name '*.exe' -not -path '*CMakeFiles*'); do
+          for exe in build/bin/${{ matrix.build_type }}/*.exe; do
             echo "::group::$(basename "$exe")"
             "$exe" < /dev/null || { echo "::error::$(basename "$exe") failed"; status=1; }
             echo "::endgroup::"

@@ -16,52 +16,44 @@ concurrency:
 
 jobs:
   build:
-    name: ${{ matrix.compiler }} / ${{ matrix.build_type }} / Eigen ${{ matrix.eigen }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.compiler }} / ${{ matrix.build_type }} / ${{ matrix.deps }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         compiler: [gcc, clang]
         build_type: [Debug, Release]
-        # 3.4 from apt (Ubuntu's package); 5 built from the upstream release.
-        eigen: ['3.4', '5.0.1']
+        # vcpkg: versions pinned by vcpkg.json (Eigen 5).
+        # apt: Ubuntu's own packages (Eigen 3.4), what `apt install` users get.
+        deps: [vcpkg, apt]
+    env:
+      CC: ${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
+      CXX: ${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
+      PRESET: ${{ matrix.deps == 'vcpkg' && 'vcpkg' || 'ninja-multi' }}
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install dependencies
+      - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            cmake ninja-build \
-            libeigen3-dev libglm-dev liborocos-kdl-dev
+          sudo apt-get install -y --no-install-recommends cmake ninja-build
 
-      - name: Install Eigen ${{ matrix.eigen }} from source
-        if: matrix.eigen != '3.4'
-        run: |
-          curl -fsSL "https://gitlab.com/libeigen/eigen/-/archive/${{ matrix.eigen }}/eigen-${{ matrix.eigen }}.tar.gz" | tar xz -C "$RUNNER_TEMP"
-          cmake -S "$RUNNER_TEMP/eigen-${{ matrix.eigen }}" -B "$RUNNER_TEMP/eigen-build" -G Ninja \
-            -DEIGEN_BUILD_DOC=OFF -DEIGEN_BUILD_TESTING=OFF -DBUILD_TESTING=OFF \
-            -DEIGEN_BUILD_BLAS=OFF -DEIGEN_BUILD_LAPACK=OFF -DEIGEN_BUILD_DEMOS=OFF
-          cmake --install "$RUNNER_TEMP/eigen-build" --prefix "$RUNNER_TEMP/eigen"
-          echo "CMAKE_PREFIX_PATH=$RUNNER_TEMP/eigen" >> "$GITHUB_ENV"
+      - name: Install dependencies (apt)
+        if: matrix.deps == 'apt'
+        run: sudo apt-get install -y --no-install-recommends libeigen3-dev libglm-dev liborocos-kdl-dev
 
-      - name: Select compiler
-        run: |
-          if [ "${{ matrix.compiler }}" = "clang" ]; then
-            echo "CC=clang"   >> "$GITHUB_ENV"
-            echo "CXX=clang++" >> "$GITHUB_ENV"
-          else
-            echo "CC=gcc"      >> "$GITHUB_ENV"
-            echo "CXX=g++"     >> "$GITHUB_ENV"
-          fi
+      - name: Set up vcpkg
+        if: matrix.deps == 'vcpkg'
+        uses: lukka/run-vcpkg@v11.6
+        with:
+          vcpkgJsonGlob: vcpkg.json
 
       - name: Configure
-        run: cmake --preset ninja-multi
+        run: cmake --preset "$PRESET"
 
       - name: Build
-        run: cmake --build --preset ninja-multi-${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
+        run: cmake --build build --config ${{ matrix.build_type }}
 
       - name: Run every example
         run: |

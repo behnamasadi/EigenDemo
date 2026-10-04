@@ -3,3 +3,4 @@ sandbox/*
 *.user
 *.kdev4
 narration_scripts/*
+vcpkg_installed/
