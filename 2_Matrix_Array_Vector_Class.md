@@ -5,13 +5,13 @@
   * [Converting Array to Matrix](#converting-array-to-matrix)
   * [Converting Matrix to Array](#converting-matrix-to-array)
 - [Initialization](#initialization)
-- [Accessing Elements (Coefficient)](#accessing-elements--coefficient-)
+- [Accessing Elements (Coefficient)](#accessing-elements-coefficient)
   * [Accessing via parenthesis](#accessing-via-parenthesis)
   * [Accessing via pointer to data](#accessing-via-pointer-to-data)
   * [Row Major Access](#row-major-access)
   * [Accessing a block of data](#accessing-a-block-of-data)
 - [Casting Matrices](#casting-matrices)
-- [Reshaping, Resizing, Slicing](#reshaping--resizing--slicing)
+- [Reshaping, Resizing, Slicing](#reshaping-resizing-slicing)
 - [Tensor Module](#tensor-module)
 
 The runnable code for this chapter is in
