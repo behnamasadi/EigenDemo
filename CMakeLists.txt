@@ -60,9 +60,11 @@ message(STATUS "orocos_kdl found:  ${orocos_kdl_FOUND}")
 # opts in by linking it. Warnings only, except falling off the end of a
 # non-void function: that is undefined behaviour and crashed levenberg_marquardt.
 # ----------------------------------------------------------------------------
-# MSVC's <cmath> only defines M_PI and friends when asked to.
+# MSVC: <cmath> only defines M_PI and friends when asked to, and Eigen's
+# templates overflow the default COFF section limit in Debug (C1128).
 if(MSVC)
     add_compile_definitions(_USE_MATH_DEFINES)
+    add_compile_options(/bigobj)
 endif()
 
 add_library(project_warnings INTERFACE)
