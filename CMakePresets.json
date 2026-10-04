@@ -17,6 +17,13 @@
       }
     },
     {
+      "name": "vcpkg",
+      "inherits": "ninja-multi",
+      "displayName": "Ninja Multi-Config + vcpkg",
+      "description": "Dependencies from vcpkg.json (manifest mode); needs VCPKG_ROOT",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
       "name": "default",
       "displayName": "Unix Makefiles (Release)",
       "description": "Single-config Release build with the default generator",
@@ -50,6 +57,16 @@
     {
       "name": "default",
       "configurePreset": "default"
+    },
+    {
+      "name": "vcpkg-debug",
+      "configurePreset": "vcpkg",
+      "configuration": "Debug"
+    },
+    {
+      "name": "vcpkg-release",
+      "configurePreset": "vcpkg",
+      "configuration": "Release"
     }
   ]
 }

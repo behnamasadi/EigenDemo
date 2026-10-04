@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "eigen-demo",
+  "version-string": "0",
+  "description": "Tutorials on linear algebra and numerical optimization with Eigen and C++",
+  "builtin-baseline": "5dd2e1600d049b498ff9fb9fe15997533ae0c804",
+  "dependencies": [
+    "eigen3",
+    "glm",
+    "orocos-kdl"
+  ]
+}
