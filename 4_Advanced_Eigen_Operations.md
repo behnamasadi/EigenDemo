@@ -37,7 +37,7 @@ local variables, but two situations need care:
 These caveats apply only to *fixed-size, vectorizable* types (sizes that are a
 multiple of 16 bytes, e.g. `Vector4f`, `Vector2d`, `Matrix4d`). Dynamic-size
 types (`MatrixXd`, `VectorXd`) and small types like `Vector3f` are unaffected.
-Building with C++17 (which this project does) also lets the compiler use aligned
+Building with C++17 or newer (this project uses C++23) also lets the compiler use aligned
 `new`, removing many of these requirements.
 
 # Passing Eigen objects by value to functions

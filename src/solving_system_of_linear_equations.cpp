@@ -9,9 +9,15 @@ void solvingSystemOfLinearEquationsUsingSVD() {
   std::cout << "Here is the matrix A:\n" << A << std::endl;
   Eigen::VectorXf b = Eigen::VectorXf::Random(3);
   std::cout << "Here is the right hand side b:\n" << b << std::endl;
-  std::cout << "The least-squares solution is:\n"
-            << A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(b)
-            << std::endl;
+  // Eigen 5 takes the SVD options as a template argument; 3.4 only at runtime.
+#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
+  const Eigen::VectorXf x =
+      A.bdcSvd<Eigen::ComputeThinU | Eigen::ComputeThinV>().solve(b);
+#else
+  const Eigen::VectorXf x =
+      A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(b);
+#endif
+  std::cout << "The least-squares solution is:\n" << x << std::endl;
 }
 
 void solvingSystemOfLinearEquationsUsingQRDecomposition() {

@@ -12,7 +12,14 @@ Eigen::Matrix3d eulerAnglesToRotationMatrix(double roll, double pitch,
 }
 
 Eigen::Vector3d rotationMatrixToEulerAngles(Eigen::Matrix3d rotationMatrix) {
-  Eigen::Vector3d euler_angles = rotationMatrix.eulerAngles(2, 1, 0);
+  Eigen::Vector3d euler_angles;
+#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
+  // Eigen 5 deprecates eulerAngles(); canonicalEulerAngles() picks the
+  // representative with the first angle in [-pi, pi].
+  euler_angles = rotationMatrix.canonicalEulerAngles(2, 1, 0);
+#else
+  euler_angles = rotationMatrix.eulerAngles(2, 1, 0);
+#endif
   return euler_angles;
 }
 

@@ -297,6 +297,8 @@ m(Eigen::seq(0, Eigen::last, 2), Eigen::all); // every other row (stride 2)
 m(Eigen::all, Eigen::last);                 // the last column
 ```
 
+> Eigen 5 moved `all` and `last` into `Eigen::placeholders` (`Eigen::placeholders::all`, `Eigen::placeholders::last`); Eigen 3.4 accepts both spellings.
+
 # Tensor Module
 
 Eigen also ships an (unsupported) `Tensor` module for multi-dimensional arrays,
